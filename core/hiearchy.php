@@ -2,9 +2,6 @@
 global $LoggedIn;
 
 $Hiearchy = array(
-	"/cms_api/" => array(
-
-	),
 	"/admin/" => array(
 		"Template" => "default",
 		"Config" => array(
@@ -20,6 +17,15 @@ $Hiearchy = array(
 		"Content" => array(
 			"main" => array(
 
+			)
+		),
+
+		"/admin/api/" => array(
+			"Template" => "api",
+			"Content" => array(
+				"main" => array(
+					array("module" => "admin/api/dispatcher")			
+				)
 			)
 		),
 
@@ -141,7 +147,7 @@ $Hiearchy = array(
 				),
 				"Content" => array(
 					"main" => array(
-
+						array("module" => "admin/settings/modulerights")
 					)
 				)
 			),

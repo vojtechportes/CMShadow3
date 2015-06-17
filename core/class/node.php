@@ -15,7 +15,7 @@ Class Node Extends Minimal {
 	protected $blacklist = ["Template", "Content", "Config"];
 
 	public function __construct () {
-		global $Path;
+		global $Path, $M;
 		$this->getHiearchy();
 	}
 
@@ -31,7 +31,7 @@ Class Node Extends Minimal {
 	}
 
 	private function getNode (array $array, $depth) {
-		global $Path, $Template;
+		global $Path, $Template, $M;
 
 		foreach($array as $path => $node) {
 			if (is_array($node))
@@ -42,6 +42,9 @@ Class Node Extends Minimal {
 				self::getNode($node, ($depth + 1));
 			} else if ($path === $Path) {
 				$selected = false;
+
+				if (!array_key_exists("Content", $node))
+					$node["Content"] = array();
 
 				if (!array_key_exists("Template", $node)) {
 					foreach ($this->_tpl as $key => $val) {
@@ -62,6 +65,9 @@ Class Node Extends Minimal {
 	private function getNodes (array $array, $depth, $filter = true) {
 		foreach ($array as $path => $node) {			
 			if (in_array($path, $this->blacklist) === false) {
+				if (!array_key_exists("Config", $node))
+					$node["Config"] = array();
+
 				if ((bool) $filter) {
 					if (array_search_multi($node, $filter)) {
 						$this->nodes[] = array("Config" => $node["Config"], "Path" => $path);
@@ -185,26 +191,28 @@ Class Node Extends Minimal {
 		if ($this->node) {
 			$slots = self::modulesConcat($this->node['Content'], $this->template['Content']);
 			$content = array();
-			foreach ($slots as $slot => $modules) {
-				$content['slot'][$slot] = '';
-				foreach ($modules as $module) {
-					$Right = $this->checkModuleRights($module['module']);
+			if ($slots) {
+				foreach ($slots as $slot => $modules) {
+					$content['slot'][$slot] = '';
+					foreach ($modules as $module) {
+						$Right = $this->checkModuleRights($module['module']);
 
-					
-					ob_start();
-					if ($Right) {
-						parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module, false);			
-					} else {
-						parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger"), false);						
+						
+						ob_start();
+						if ($Right) {
+							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module, false);			
+						} else {
+							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger"), false);						
+						}
+						$view = ob_get_contents(); ob_end_clean();	
+
+						if ($this->stringtable !== false) {
+							$Substitute = new Stringtable();
+							$view = $Substitute->substitute((array) $this->stringtable, $view);
+						}
+
+						$content['slot'][$slot] .= $view;
 					}
-					$view = ob_get_contents(); ob_end_clean();	
-
-					if ($this->stringtable !== false) {
-						$Substitute = new Stringtable();
-						$view = $Substitute->substitute((array) $this->stringtable, $view);
-					}
-
-					$content['slot'][$slot] .= $view;
 				}
 			}
 
@@ -236,7 +244,8 @@ Class Node Extends Minimal {
 	private function loadTemplate() {
 		if ($this->node) {
 			$this->loadModules();
-			$this->template["Content"] = $this->modules['slot'];
+			if (count($this->modules) > 0)
+				$this->template["Content"] = $this->modules['slot'];
 
 			if (!array_key_exists("Config", $this->node))
 				$this->node["Config"] = array();
@@ -262,7 +271,7 @@ Class Node Extends Minimal {
 	}
 
 	public function output () {
-		global $Path, $LoggedIn;
+		global $Path, $LoggedIn, $M;
 		if ($this->hiearchy)
 			$this->getNode($this->hiearchy, 0);
 

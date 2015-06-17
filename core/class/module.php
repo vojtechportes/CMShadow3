@@ -27,8 +27,16 @@ Class Module Extends Minimal {
 
 	public function output () {
 		if ($this->template !== false) {
+			$path = DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template;
+
 			ob_start();
-			parent::load(DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template, $this->output);
+			if (file_exists($path.'.tpl')) {
+				parent::load($path, $this->output);
+			} else {
+				$Message = new Module();
+				$Message->addModule(new Message(), array("html" => "{_'default_file_missing_error', sprintf($path)}", "class" => "alert-danger"));
+				$Message->output();			
+			}
 			$html = ob_get_contents(); ob_end_clean();
 			echo $html;
 		}

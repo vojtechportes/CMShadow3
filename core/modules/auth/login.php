@@ -46,8 +46,6 @@ if ($Output) {
 	$User->password = filter_input(INPUT_POST, "password");
 	$Result = $User->setUserSession();
 
-	var_dump($Result);
-
 	if ($Result === true) {
 			redirect(ADMIN_PATH);	
 	} else {

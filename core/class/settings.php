@@ -17,6 +17,10 @@ Class Settings Extends Module {
 				$this->template = '/admin/settings/noderights';
 				$this->getNodeRights();
 				break;
+			case 'getModuleRights':
+				$this->template = '/admin/settings/modulerights';
+				$this->getModuleRights();
+				break;
 		}
 	}
 
@@ -28,7 +32,7 @@ Class Settings Extends Module {
 	}
 
 	protected function getNodeRights () {
-		global $DB; global $M;
+		global $DB;
 		$_rights = array();
 		$_groups = array();
 
@@ -51,6 +55,23 @@ Class Settings Extends Module {
 		}
 
 		$this->output["Rights"] = $_rights + $_groups;
+	}
+
+
+	protected function getModuleRights () {
+		global $DB, $M;
+
+		$_modules = array();
+
+		$Stm = $DB->prepare("SELECT `Module`, `Group` FROM T_ModuleRights");
+		$Stm->execute();
+		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
+
+		$Modules = new FileSystem(false, true);
+		$Modules->path = './core/modules/';
+		$Modules = $Modules->output();
+
+		$M->debug($Modules);
 	}
 }
 
