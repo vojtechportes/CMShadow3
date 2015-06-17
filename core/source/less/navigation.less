@@ -1,0 +1,595 @@
+//
+// navigations
+// --------------------------------------------------
+
+
+// Wrapper and base class
+//
+// Provide a static navigation from which we expand to create full-width, fixed, and
+// other navigation variations.
+
+.navigation {
+  position: relative;
+  min-height: @navigation-height; // Ensure a navigation always shows (e.g., without a .navigation-brand in collapsed mode)
+  margin-bottom: @navigation-margin-bottom;
+  border: 1px solid transparent;
+
+  .btn-gray {
+    height: 51px;
+    line-height: 31px;
+    font-size: 16px;
+  }
+
+  // Prevent floats from breaking the navigation
+  &:extend(.clearfix all);
+
+  &.navigation-default {
+    @media (min-width: @grid-float-breakpoint) {
+      border-radius: @navigation-border-radius;
+    }
+  }
+}
+
+
+// navigation heading
+//
+// Groups `.navigation-brand` and `.navigation-toggle` into a single component for easy
+// styling of responsive aspects.
+
+.navigation-header {
+  &:extend(.clearfix all);
+
+  &.navigation-header-default {
+    @media (min-width: @grid-float-breakpoint) {
+      float: left;
+    }
+  }
+}
+
+
+// navigation collapse (body)
+//
+// Group your navigation content into this for easy collapsing and expanding across
+// various device sizes. By default, this content is collapsed when <768px, but
+// will expand past that for a horizontal display.
+//
+// To start (on mobile devices) the navigation links, forms, and buttons are stacked
+// vertically and include a `max-height` to overflow in case you have too much
+// content for the user's viewport.
+
+.navigation-collapse {
+  &.full {
+
+    position: absolute;
+    width: 300px;
+    right: -285px;
+    background: @navigation-default-bg;
+    top: 0; 
+
+    form {
+      padding: 20px;
+      border-bottom: 1px solid @navigation-default-border; 
+    }
+
+    @media (min-width: @grid-float-breakpoint) {
+      right: -300px;
+    }
+  }
+
+  &.navigation-collapse-default {
+    overflow-x: visible;
+    padding-right: @navigation-padding-horizontal;
+    padding-left:  @navigation-padding-horizontal;
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+    &:extend(.clearfix all);
+    -webkit-overflow-scrolling: touch;
+
+    &.in {
+      overflow-y: auto;
+    }
+
+    @media (min-width: @grid-float-breakpoint) {
+      width: auto;
+      border-top: 0;
+      box-shadow: none;
+
+      &.collapse {
+        display: block !important;
+        visibility: visible !important;
+        height: auto !important;
+        padding-bottom: 0; // Override default setting
+        overflow: visible !important;
+      }
+
+      &.in {
+        overflow-y: visible;
+      }
+
+      // Undo the collapse side padding for navigations with containers to ensure
+      // alignment of right-aligned contents.
+      .navigation-fixed-top &,
+      .navigation-static-top &,
+      .navigation-fixed-bottom & {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.navigation-default {
+  &.navigation-fixed-top,
+  &.navigation-fixed-bottom {
+    .navigation-collapse {
+      max-height: @navigation-collapse-max-height;
+
+      @media (max-device-width: @screen-xs-min) and (orientation: landscape) {
+        max-height: 200px;
+      }
+    }
+  }
+}
+
+
+// Both navigation header and collapse
+//
+// When a container is present, change the behavior of the header and collapse.
+
+.container,
+.container-fluid {
+  > .navigation-header,
+  > .navigation-collapse {
+    margin-right: -@navigation-padding-horizontal;
+    margin-left:  -@navigation-padding-horizontal;
+
+    @media (min-width: @grid-float-breakpoint) {
+      margin-right: 0;
+      margin-left:  0;
+    }
+  }
+}
+
+
+//
+// navigation alignment options
+//
+// Display the navigation across the entirety of the page or fixed it to the top or
+// bottom of the page.
+
+// Static top (unfixed, but 100% wide) navigation
+.navigation-static-top {
+  z-index: @zindex-navigation;
+  border-width: 0 0 1px;
+
+  &.navigation-static-top-default {
+    @media (min-width: @grid-float-breakpoint) {
+      border-radius: 0;
+    }
+  }
+}
+
+// Fix the top/bottom navigations when screen real estate supports it
+.navigation-fixed-top,
+.navigation-fixed-bottom {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: @zindex-navigation-fixed;
+
+  // Undo the rounded corners
+  @media (min-width: @grid-float-breakpoint) {
+    border-radius: 0;
+  }
+}
+.navigation-fixed-top {
+  top: 0;
+  border-width: 0 0 1px;
+}
+.navigation-fixed-bottom {
+  bottom: 0;
+  margin-bottom: 0; // override .navigation defaults
+  border-width: 1px 0 0;
+}
+
+
+// Brand/project name
+
+.navigation-brand {
+  float: left;
+  padding: @navigation-padding-vertical @navigation-padding-horizontal;
+  font-size: @font-size-large;
+  line-height: @line-height-computed;
+  height: @navigation-height;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  > img {
+    display: block;
+  }
+
+  &.navigation-brand-default {
+    @media (min-width: @grid-float-breakpoint) {
+      .navigation > .container &,
+      .navigation > .container-fluid & {
+        margin-left: -@navigation-padding-horizontal;
+      }
+    }
+  }
+}
+
+
+// navigation toggle
+//
+// Custom button for toggling the `.navigation-collapse`, powered by the collapse
+// JavaScript plugin.
+
+.navigation-toggle {
+  position: relative;
+  float: right;
+  margin-right: @navigation-padding-horizontal;
+  padding: 9px 10px;
+  .navigation-vertical-align(34px);
+  background-color: transparent;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  border-radius: @border-radius-base;
+
+  // We remove the `outline` here, but later compensate by attaching `:hover`
+  // styles to `:focus`.
+  &:focus {
+    outline: 0;
+  }
+
+  // Bars
+  .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+  }
+  .icon-bar + .icon-bar {
+    margin-top: 4px;
+  }
+
+  &.navigation-toggle-default {
+    @media (min-width: @grid-float-breakpoint) {
+      display: none;
+    }
+  }
+}
+
+// navigation nav links
+//
+// Builds on top of the `.nav` components with its own modifier class to make
+// the nav the full height of the horizontal nav (above 768px).
+
+.navigation-nav {
+  > li {
+    border-bottom: 1px solid @navigation-default-border; 
+  }
+
+  > li > a {
+    padding-top:    10px;
+    padding-bottom: 10px;
+    line-height: @line-height-computed;
+  }
+
+  // Uncollapse the nav
+  &.navigation-nav-default {
+    margin: (@navigation-padding-vertical / 2) -@navigation-padding-horizontal;
+
+    @media (min-width: @grid-float-breakpoint) {
+      float: left;
+      margin: 0;
+
+      > li {
+        float: left;
+        > a {
+          padding-top:    @navigation-padding-vertical;
+          padding-bottom: @navigation-padding-vertical;
+        }
+      }
+    }
+  }
+}
+
+// Component alignment
+//
+// Repurpose the pull utilities as their own navigation utilities to avoid specificity
+// issues with parents and chaining. Only do this when the navigation is uncollapsed
+// though so that navigation contents properly stack and align in mobile.
+//
+// Declared after the navigation components to ensure more specificity on the margins.
+
+@media (min-width: @grid-float-breakpoint) {
+  .navigation-left  { .pull-left(); }
+  .navigation-right {
+    .pull-right();
+    margin-right: -@navigation-padding-horizontal;
+
+    ~ .navigation-right {
+      margin-right: 0;
+    }
+  }
+}
+
+
+// Alternate navigations
+// --------------------------------------------------
+
+// Default navigation
+.navigation-default {
+  background-color: @navigation-default-bg;
+  border-color: @navigation-default-border;
+
+  .navigation-brand {
+    color: @navigation-default-brand-color;
+    &:hover,
+    &:focus {
+      color: @navigation-default-brand-hover-color;
+      background-color: @navigation-default-brand-hover-bg;
+    }
+  }
+
+  .navigation-text {
+    color: @navigation-default-color;
+  }
+
+  .navigation-nav {
+    > li > a {
+      color: @navigation-default-link-color;
+
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-hover-color;
+        background-color: @navigation-default-link-hover-bg;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-active-color;
+        background-color: @navigation-default-link-active-bg;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-disabled-color;
+        background-color: @navigation-default-link-disabled-bg;
+      }
+    }
+  }
+
+  .navigation-toggle {
+    border-color: @navigation-default-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: @navigation-default-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: @navigation-default-toggle-icon-bar-bg;
+    }
+  }
+
+  .navigation-collapse,
+  .navigation-form {
+    border-color: @navigation-default-border;
+  }
+
+  // Dropdown menu items
+  .navigation-nav {
+    // Remove background color from open dropdown
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @navigation-default-link-active-bg;
+        color: @navigation-default-link-active-color;
+      }
+    }
+
+    &.navigation-nav-default {
+      @media (max-width: @grid-float-breakpoint-max) {
+        // Dropdowns get custom display when collapsed
+        .open .dropdown-menu {
+          > li > a {
+            color: @navigation-default-link-color;
+            &:hover,
+            &:focus {
+              color: @navigation-default-link-hover-color;
+              background-color: @navigation-default-link-hover-bg;
+            }
+          }
+          > .active > a {
+            &,
+            &:hover,
+            &:focus {
+              color: @navigation-default-link-active-color;
+              background-color: @navigation-default-link-active-bg;
+            }
+          }
+          > .disabled > a {
+            &,
+            &:hover,
+            &:focus {
+              color: @navigation-default-link-disabled-color;
+              background-color: @navigation-default-link-disabled-bg;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  // Links in navigations
+  //
+  // Add a class to ensure links outside the navigation nav are colored correctly.
+
+  .navigation-link {
+    color: @navigation-default-link-color;
+    &:hover {
+      color: @navigation-default-link-hover-color;
+    }
+  }
+
+  .btn-link {
+    color: @navigation-default-link-color;
+    &:hover,
+    &:focus {
+      color: @navigation-default-link-hover-color;
+    }
+    &[disabled],
+    fieldset[disabled] & {
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-disabled-color;
+      }
+    }
+  }
+}
+
+// Inverse navigation
+
+.navigation-inverse {
+  background-color: @navigation-inverse-bg;
+  border-color: @navigation-inverse-border;
+
+  .navigation-brand {
+    color: @navigation-inverse-brand-color;
+    &:hover,
+    &:focus {
+      color: @navigation-inverse-brand-hover-color;
+      background-color: @navigation-inverse-brand-hover-bg;
+    }
+  }
+
+  .navigation-text {
+    color: @navigation-inverse-color;
+  }
+
+  .navigation-nav {
+    > li > a {
+      color: @navigation-inverse-link-color;
+      font-weight: 500;
+
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-hover-color;
+        background-color: @navigation-default-link-hover-bg;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-active-color;
+        background-color: @navigation-default-link-active-bg;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @navigation-default-link-disabled-color;
+        background-color: @navigation-default-link-disabled-bg;
+      }
+    }
+  }
+
+  // Darken the responsive nav toggle
+  .navigation-toggle {
+    border-color: @navigation-inverse-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: @navigation-inverse-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: @navigation-inverse-toggle-icon-bar-bg;
+    }
+  }
+
+  .navigation-collapse,
+  .navigation-form {
+    border-color: darken(@navigation-inverse-bg, 7%);
+  }
+
+  // Dropdowns
+  .navigation-nav {
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @navigation-inverse-link-active-bg;
+        color: @navigation-inverse-link-active-color;
+      }
+    }
+
+    &.navigation-nav-default {
+      @media (max-width: @grid-float-breakpoint-max) {
+        // Dropdowns get custom display
+        .open .dropdown-menu {
+          > .dropdown-header {
+            border-color: @navigation-inverse-border;
+          }
+          .divider {
+            background-color: @navigation-inverse-border;
+          }
+          > li > a {
+            color: @navigation-inverse-link-color;
+            &:hover,
+            &:focus {
+              color: @navigation-inverse-link-hover-color;
+              background-color: @navigation-inverse-link-hover-bg;
+            }
+          }
+          > .active > a {
+            &,
+            &:hover,
+            &:focus {
+              color: @navigation-inverse-link-active-color;
+              background-color: @navigation-inverse-link-active-bg;
+            }
+          }
+          > .disabled > a {
+            &,
+            &:hover,
+            &:focus {
+              color: @navigation-inverse-link-disabled-color;
+              background-color: @navigation-inverse-link-disabled-bg;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .navigation-link {
+    color: @navigation-inverse-link-color;
+    &:hover {
+      color: @navigation-inverse-link-hover-color;
+    }
+  }
+
+  .btn-link {
+    color: @navigation-inverse-link-color;
+    &:hover,
+    &:focus {
+      color: @navigation-inverse-link-hover-color;
+    }
+    &[disabled],
+    fieldset[disabled] & {
+      &:hover,
+      &:focus {
+        color: @navigation-inverse-link-disabled-color;
+      }
+    }
+  }
+}

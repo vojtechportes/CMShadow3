@@ -1,0 +1,9 @@
+#
+# CMSShadow .htaccess
+#
+# Do NOT edit!
+#
+
+#: modify-domain = none
+
+deny from all
