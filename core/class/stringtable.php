@@ -22,7 +22,6 @@ Class Stringtable Extends Minimal {
 				if (array_key_exists($matches[1], $array)) {
 					$args = array_values(array_filter($matches));
 					if (count($args) > 2) {
-						//parent::debug($args);
 						switch($args[2]) {
 							case "sprintf":
 									return  sprintf($array[$args[1]], $args[3]);							
@@ -47,3 +46,5 @@ Class Stringtable Extends Minimal {
 		return $output;
 	}
 }
+
+?>

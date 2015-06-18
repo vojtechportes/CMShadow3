@@ -134,3 +134,5 @@ Class User Extends Minimal {
 		}
 	}
 }
+
+?>

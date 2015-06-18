@@ -12,6 +12,7 @@ $Stringtable = array(
 	'pages_login_title' => 'Login',
 	'pages_settings-module-rights_title' => 'Module Rights',
 	'pages_settings-node-rights_title' => 'Node Rights',
+	'page_settings-api-rights_title' => 'API Rights',
 	'pages_settings-config-pages_title' => 'Pages',
 	'pages_settings-admin-home_title' => 'Admin Home',
 	'pages_settings-config-triggers_title' => 'Triggers'	

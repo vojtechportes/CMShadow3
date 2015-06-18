@@ -4,12 +4,16 @@ global $M;
 
 $ModuleRights = array();
 $NodeRights = array();
+$APIRights = array();
+
 $MRights = file_get_contents(DEFAULT_CORE_PATH."modulerights.conf.json", false);
 $MRights = (array) json_decode($MRights);
 
 $NRights = file_get_contents(DEFAULT_CORE_PATH."noderights.conf.json", false);
 $NRights = (array) json_decode($NRights);
 
+$ARights = file_get_contents(DEFAULT_CORE_PATH."apirights.conf.json", false);
+$ARights = (array) json_decode($ARights);
 
 $Files = new FileSystem (false, true);
 $Files->path = DEFAULT_MODULE_PATH;
@@ -31,6 +35,12 @@ foreach ($Modules as $Module) {
 foreach ($NRights as $Node => $Groups) {
 	foreach ($Groups as $Group) {
 		$NodeRights[] = array("Node" => $Node, "Group" => $Group);
+	}
+}
+
+foreach ($ARights as $Command => $Groups) {
+	foreach ($Groups as $Group) {
+		$APIRights[] = array("Command" => $Command, "Group" => $Group);
 	}
 }
 
@@ -75,6 +85,12 @@ $Database = array(
 		"exec-repeat(\$NodeRights as \$Node)" => "INSERT INTO `T_NodeRights` (`Node`, `Group`) VALUES ('\$Node[\"Node\"]', \$Node[\"Group\"])"
 	),
 	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_APIRights` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Command` TEXT(600), `Group` INT(11) NOT NULL) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
+	),
+	array(
+		"exec-repeat(\$APIRights as \$Command)" => "INSERT INTO `T_APIRights` (`Command`, `Group`) VALUES ('\$Command[\"Command\"]', \$Command[\"Group\"])"
+	),	
+	array(
 		"query" => "CREATE TABLE IF NOT EXISTS `T_ConfigCategories` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Title` TEXT(600)  NOT NULL, `Path` TEXT(300) NOT NULL, `Icon` CHAR(100)) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
 	),		
 	array(
@@ -109,6 +125,7 @@ $DatabaseValues = array(
 	),
 	"ModuleRights" => $ModuleRights,
 	"NodeRights" => $NodeRights,
+	"APIRights" => $APIRights,	
 	"ConfigCategories" => array(
 		array(
 			"Title" => "{_\'pages_settings-module-rights_title\'}",
@@ -119,6 +136,11 @@ $DatabaseValues = array(
 			"Title" => "{_\'pages_settings-node-rights_title\'}",
 			"Path" => "/admin/settings/node-rights/",
 			"Icon" => "glyphicon glyphicon-th-list"
+		),
+		array(
+			"Title" => "{_\'page_settings-api-rights_title\'}",
+			"Path" => "/admin/settings/api-rights/",
+			"Icon" => "glyphicon glyphicon-share"
 		),
 		array(
 			"Title" => "{_\'pages_settings-config-pages_title\'}",

@@ -21,6 +21,10 @@ Class Settings Extends Module {
 				$this->template = '/admin/settings/modulerights';
 				$this->getModuleRights();
 				break;
+			case 'getAPIRights':
+				$this->template = '/admin/settings/apirights';
+				$this->getAPIRights();
+				break;				
 		}
 	}
 
@@ -59,20 +63,68 @@ Class Settings Extends Module {
 
 
 	protected function getModuleRights () {
-		global $DB, $M;
+		global $DB;
 
-		$_modules = array();
+		$_rights = array();
+		$_groups = array();
 
 		$Stm = $DB->prepare("SELECT `Module`, `Group` FROM T_ModuleRights");
 		$Stm->execute();
 		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
 
+		$Groups = new UserGroup();
 		$Modules = new FileSystem(false, true);
 		$Modules->path = './core/modules/';
-		$Modules = $Modules->output();
+		$Modules->pathStrip = true;
+		$Modules->extensionStrip = true;
 
-		$M->debug($Modules);
+		$this->output["Groups"] = $Groups->getGroups();
+		$this->output["Modules"] = $Modules->output();
+
+		foreach ($this->output["Groups"] as $group) {
+			$_groups[$group['ID']] = array();
+		}
+
+		foreach ($Res as $rights) {
+			$_rights[$rights['Group']][] = $rights['Module'];
+		}
+
+		$this->output["Rights"] = $_rights + $_groups;
 	}
+
+	protected static function getAPICommands () {
+		return array(
+			"settingsNodeRigtsAssign",
+			"settignsModuleRightsAssign",
+			"settingsAPIRightsAssign"
+		);
+	}
+
+	protected function getAPIRights () {
+		global $DB;
+
+		$_rights = array();
+		$_groups = array();
+
+		$Stm = $DB->prepare("SELECT `Module`, `Group` FROM T_APIRights");
+		$Stm->execute();
+		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
+
+		$Groups = new UserGroup();
+
+		$this->output["Groups"] = $Groups->getGroups();
+		$this->output["Commands"] = self::getAPICommands();
+
+		foreach ($this->output["Groups"] as $group) {
+			$_groups[$group['ID']] = array();
+		}
+
+		foreach ($Res as $rights) {
+			$_rights[$rights['Group']][] = $rights['Module'];
+		}
+
+		$this->output["Rights"] = $_rights + $_groups;
+	}	
 }
 
 ?>

@@ -1,11 +1,8 @@
-<?php
-global $M;
-?>
 <div class="node-rights rights">
 	<table class="table table-condensed">
 	  <thead>
 	    <tr>
-	      <th>Page Name</th>
+	      <th>{_'settings_node_rights_title'}</th>
 	      <?php foreach ($return['Groups'] as $group) { ?>
 	      <th class="text-center"><?php echo $group['Name'] ?></th>
 	      <?php } ?>

@@ -152,6 +152,17 @@ $Hiearchy = array(
 				)
 			),
 
+			"/admin/settings/api-rights/" => array(
+				"Config" => array(
+					"Title" => "{_'page_settings-api-rights_title'}"
+				),
+				"Content" => array(
+					"main" => array(
+						array("module" => "admin/settings/apirights")
+					)
+				)
+			),			
+
 			"/admin/settings/pages/" => array(
 				"Config" => array(
 					"Title" => "{_'pages_settings-pages_title'}"

@@ -14,7 +14,7 @@
 			$Stm->execute();
 			$Res = $Stm->fetchAll(PDO::FETCH_COLUMN, 0);
 
-			if (count($Res) == "0") {
+			if (count($Res) == 0) {
 				foreach ($Database as $item) {
 					foreach ($item as $key => $val) {
 						if ($key == 'query') {

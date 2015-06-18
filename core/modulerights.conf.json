@@ -1,1 +1,1 @@
-{"auth/login": [4], "message/show": [1, 2, 3, 4], "admin/navigation/show": [1, 2], "admin/settings/categories": [1], "admin/settings/noderights": [1]}
+{"auth/login": [4], "message/show": [1, 2, 3, 4], "admin/navigation/show": [1, 2], "admin/settings/categories": [1], "admin/settings/noderights": [1], "admin/settings/apirights": [1]}

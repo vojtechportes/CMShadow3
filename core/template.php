@@ -15,7 +15,8 @@ $Template = array(
 			"stringtable_default",
 			"stringtable_pages",	
 			"stringtable_navigations",		
-			"stringtable_forms"
+			"stringtable_forms",
+			"stringtable_settings"
 		),
 		"Content" => array(
 			"header" => array(
@@ -67,7 +68,7 @@ $Template = array(
 		),
 		"Content" => array(
 			"main" => array(
-				array("module" => "message/show", "html" => "{_'default_node_right_error'}")
+				array("module" => "message/show", "html" => "{_'default_node_right_error'}", "class" => "alert-danger")
 			)
 		)
 	),

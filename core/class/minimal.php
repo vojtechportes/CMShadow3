@@ -6,7 +6,7 @@ Class Minimal {
 		echo "<pre style=\"padding: 20px; margin: 20px; border: 1px solid #EEE;\"><strong>Debug: (".$identifier.")</strong><p style=\"margin: 25px 0; padding: 25px 0; border-top: 1px solid #EEE; border-bottom: 1px solid #EEE;\">", var_dump((!$data) ? $this : $data), "</p><strong>Backtrace:</strong><p style=\"color: #777;\">", debug_print_backtrace(), "</p></pre>";
 	}
 
-	protected function filter ($str) {
+	public function filter ($str) {
 		return htmlspecialchars($str);
 	}	
 
