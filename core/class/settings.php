@@ -94,19 +94,19 @@ Class Settings Extends Module {
 
 	protected static function getAPICommands () {
 		return array(
-			"settingsNodeRigtsAssign",
+			"settingsNodeRightsAssign",
 			"settignsModuleRightsAssign",
 			"settingsAPIRightsAssign"
 		);
 	}
 
 	protected function getAPIRights () {
-		global $DB;
+		global $DB, $M;
 
 		$_rights = array();
 		$_groups = array();
 
-		$Stm = $DB->prepare("SELECT `Module`, `Group` FROM T_APIRights");
+		$Stm = $DB->prepare("SELECT `Command`, `Group` FROM T_APIRights");
 		$Stm->execute();
 		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
 
@@ -120,7 +120,7 @@ Class Settings Extends Module {
 		}
 
 		foreach ($Res as $rights) {
-			$_rights[$rights['Group']][] = $rights['Module'];
+			$_rights[$rights['Group']][] = $rights['Command'];
 		}
 
 		$this->output["Rights"] = $_rights + $_groups;
