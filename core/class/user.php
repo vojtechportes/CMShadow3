@@ -19,8 +19,8 @@ Class User Extends Minimal {
 			$_SESSION["LifeTime"] = (time() + 1800);
 			$_SESSION["SSID"] = session_id();
 
-			$Stm = $DB->prepare("UPDATE T_User SET `SSID` = '".session_id()."' WHERE `ID` = '".$User["id"]."'");
-			$Stm->execute();
+			$Stm = $DB->prepare("UPDATE T_User SET `SSID` = :SSID WHERE `ID` = :ID");
+			$Stm->execute(array(':SSID' => session_id(), ':ID' => $User["id"]));
 			$Res = $Stm->rowCount();		
 
 			if ($Res == 1) {

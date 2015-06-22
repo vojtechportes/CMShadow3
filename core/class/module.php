@@ -7,10 +7,14 @@ Class Module Extends Minimal {
 	protected $module;
 	protected $output = array();
 
+	/*protected function __construct () {
+		var_dump($this->output);
+	}*/
+
 	public function addModule (Module $Class, $output = array()) {
 		$this->output = $output;
 		$this->module = $Class;
-
+		
 		if ($this->module->output)
 			$this->output = $this->output + $this->module->output;
 		
@@ -27,6 +31,9 @@ Class Module Extends Minimal {
 
 	public function output () {
 		if ($this->template !== false) {
+			if (array_key_exists("OutputStyle", $this->output))
+				$this->templateOutput = $this->output["OutputStyle"];
+
 			$path = DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template;
 
 			ob_start();

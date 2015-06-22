@@ -18,17 +18,22 @@ require(['jquery'], function($) {
 
 				var data = $(this).data('api');
 
-				console.log(data);
-
 				switch (data['command']) {
 					case 'settingsNodeRightsAssign':
-						//OCMAP.(data);
 						break;
 					case 'settingsModuleRightsAssign':
 						CMSAPI[data['command']](data);
 						break;
 					case 'settingsAPIRightsAssign':
-						CMSAPI.settingsAPIRightsAssign(data);
+						CMSAPI.settingsAPIRightsAssign(data,
+							function(){
+								CMSAPI.setStatus(this);				
+							},
+							function(){
+								CMSAPI.setStatus(this);	
+								console.log('success');	
+							}
+						);
 						break;
 				}
 			});

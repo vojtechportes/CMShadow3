@@ -40,10 +40,7 @@ Class Settings Extends Module {
 		$_rights = array();
 		$_groups = array();
 
-
-		$Stm = $DB->prepare("SELECT `Node`, `Group` FROM T_NodeRights");
-		$Stm->execute();
-		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);
+		$Res = UserRights::getAllNodeRights();
 
 		$Nodes = new Node();	
 		$Groups = new UserGroup();
@@ -68,9 +65,7 @@ Class Settings Extends Module {
 		$_rights = array();
 		$_groups = array();
 
-		$Stm = $DB->prepare("SELECT `Module`, `Group` FROM T_ModuleRights");
-		$Stm->execute();
-		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
+		$Res = UserRights::getAllModuleRights();
 
 		$Groups = new UserGroup();
 		$Modules = new FileSystem(false, true);
@@ -106,9 +101,7 @@ Class Settings Extends Module {
 		$_rights = array();
 		$_groups = array();
 
-		$Stm = $DB->prepare("SELECT `Command`, `Group` FROM T_APIRights");
-		$Stm->execute();
-		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);		
+		$Res = UserRights::getAllAPIRights();	
 
 		$Groups = new UserGroup();
 

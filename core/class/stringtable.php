@@ -17,8 +17,8 @@ Class Stringtable Extends Minimal {
 		}
 	}
 
-	public function substitute (array $array, $string) {
-		return preg_replace_callback($this->placeholder, function($matches) use ($array) {
+	public function substitute (array $array, $string, $encode = false) {
+		return preg_replace_callback($this->placeholder, function($matches) use ($array, $encode) {
 				if (array_key_exists($matches[1], $array)) {
 					$args = array_values(array_filter($matches));
 					if (count($args) > 2) {
@@ -31,7 +31,11 @@ Class Stringtable Extends Minimal {
 								break;
 						}
 					}
-					return  $array[$args[1]];
+					if ($encode) {
+						return  htmlentities($array[$args[1]]);
+					} else {
+						return  $array[$args[1]];
+					}
 				} else {
 					return '';
 				}

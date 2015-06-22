@@ -55,4 +55,9 @@ function array_search_multi ($array, $key, $depth = 0) {
 	}
 }
 
+function json_validate ($string) {
+	json_decode($string);
+	return (json_last_error() == JSON_ERROR_NONE);
+}
+
 ?>

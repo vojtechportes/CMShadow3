@@ -1,5 +1,7 @@
 <?php
 
+/* Requiring TEMPLATE and HIEARCHY should be moved somewhere else... */
+
 Class Node Extends Minimal {
 
 	protected $hiearchy;
@@ -28,6 +30,14 @@ Class Node Extends Minimal {
 		} else {
 			$this->hiearchy = false;
 		}
+	}
+
+	private function getTemplatePath () {
+		global $M;
+
+		if (array_key_exists('OutputStyle', $this->template))
+			return $this->template['OutputStyle'];
+		return DEFAULT_OUTPUT;
 	}
 
 	private function getNode (array $array, $depth) {
@@ -145,13 +155,10 @@ Class Node Extends Minimal {
 	}
 
 	private function checkModuleRights ($module) {
-		global $Rights, $DB;
+		global $Rights;
 		$ModuleRights = array();
 
-		$Stm = $DB->prepare("SELECT `Group` FROM T_ModuleRights WHERE `Module` = '".$module."' LIMIT 80");
-		$Stm->execute();
-		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);
-
+		$Res = UserRights::getModuleRights($module);
 
 		foreach ($Res as $MRight) {
 			array_push($ModuleRights, $MRight["Group"]);
@@ -167,12 +174,10 @@ Class Node Extends Minimal {
 	}
 
 	private function checkNodeRights () {
-		global $Rights, $DB;
+		global $Rights;
 		$NodeRights = array();
 
-		$Stm = $DB->prepare("SELECT `Group` FROM T_NodeRights WHERE `Node` = '".$this->nodeName."' LIMIT 80");
-		$Stm->execute();
-		$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);
+		$Res = UserRights::getNodeRights($this->nodeName);
 
 		foreach ($Res as $NRight) {
 			array_push($NodeRights, $NRight["Group"]);
@@ -196,23 +201,38 @@ Class Node Extends Minimal {
 					$content['slot'][$slot] = '';
 					foreach ($modules as $module) {
 						$Right = $this->checkModuleRights($module['module']);
+						$OutputStyle = $this->getTemplatePath();
+						$Encode = false;
 
-						
+						if ($this->template['OutputType'] === 'JSON')
+								$Encode = true;
+
 						ob_start();
 						if ($Right) {
-							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module, false);			
+							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle), false);			
 						} else {
-							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger"), false);						
+							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle), false);						
 						}
-						$view = ob_get_contents(); ob_end_clean();	
+						$view = ob_get_contents(); ob_end_clean();
 
 						if ($this->stringtable !== false) {
-							$Substitute = new Stringtable();
-							$view = $Substitute->substitute((array) $this->stringtable, $view);
+							$Substitute = new Stringtable();							
+							$view = $Substitute->substitute((array) $this->stringtable, $view, $Encode);
+
 						}
 
-						$content['slot'][$slot] .= $view;
+						if ($this->template['OutputType'] === 'JSON') {
+							if (json_validate($view))
+								$content['slot'][$slot][] = json_decode($view);
+						} else {
+							$content['slot'][$slot] .= $view;
+						}
 					}
+
+					if ($this->template['OutputType'] === 'JSON') {
+						$content['slot'][$slot] = json_encode(array_filter($content['slot'][$slot]));
+					}
+
 				}
 			}
 
@@ -220,41 +240,57 @@ Class Node Extends Minimal {
 		}
 	}
 
-	private function getTemplate ($template = false) {
+	private function getTemplate ($template = false, $info = false) {
 		if ($this->node) {
-			require_once TEMPLATE;
-			if ($template === false) {
-				$this->template = $Template[$this->node['Template']];	
-			} else {
-				$this->template = $Template[$template];	
-			}
-			if (array_key_exists('Stringtables', $this->template)) {
-				$Stringtables = new Stringtable();
-				foreach ($this->template['Stringtables'] as $stringtable) {
-					$Stringtables->load($stringtable);
+			require TEMPLATE;
+			if (!$info) {
+				if ($template === false) {
+					$this->template = $Template[$this->node['Template']];	
+				} else {
+					if (array_key_exists($template, $Template)) {
+						$this->template = $Template[$template];	
+					} else {
+						$this->template = false;
+					}
 				}
+				if (array_key_exists('Stringtables', $this->template)) {
+					$Stringtables = new Stringtable();
+					foreach ($this->template['Stringtables'] as $stringtable) {
+						$Stringtables->load($stringtable);
+					}
 
-				$this->stringtable = $Stringtables->output();
-			} else {
-				$this->stringtable = false;
-			}
+					$this->stringtable = $Stringtables->output();
+				} else {
+					$this->stringtable = false;
+				}
+			} elseif (!$template || $info) {
+				if (array_key_exists($template, $Template)) {
+					return $Template[$template];	
+				} else {
+					return false;
+				}
+			}				
 		}
 	}
 
 	private function loadTemplate() {
 		if ($this->node) {
+			if (!array_key_exists("Scripts", $this->template))
+				$this->template["Scripts"] = array();
+
+			if (!array_key_exists("Styles", $this->template))
+				$this->template["Styles"] = array();
+
+			if (!array_key_exists("OutputType", $this->template))
+				$this->template["OutputType"] = "HTML";		
+
 			$this->loadModules();
+
 			if (count($this->modules) > 0)
 				$this->template["Content"] = $this->modules['slot'];
 
 			if (!array_key_exists("Config", $this->node))
-				$this->node["Config"] = array();
-			
-			if (!array_key_exists("Scripts", $this->template))
-				$this->template["scripts"] = array();
-
-			if (!array_key_exists("Styles", $this->template))
-				$this->template["scripts"] = array();
+				$this->node["Config"] = array();	
 
 			ob_start();
 			parent::load(DEFAULT_TEMPLATE_PATH.$this->template['Output'], $this->template + array("NodeConfig" => $this->node["Config"]));
@@ -285,7 +321,11 @@ Class Node Extends Minimal {
 			$this->loadTemplate();
 			return $this->view;
 		} else {
-			$this->getTemplate("error");
+			if ($this->getTemplate($this->node['Template'], true)['OutputType'] === 'JSON') {
+				$this->getTemplate("error-json");
+			} else {
+				$this->getTemplate("error");
+			}
 			$this->loadTemplate();
 			return $this->view;
 		}

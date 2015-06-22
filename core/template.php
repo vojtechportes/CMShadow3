@@ -72,8 +72,25 @@ $Template = array(
 			)
 		)
 	),
+	"error-json" => array(
+		"Output" => "default-json/json",
+		"OutputStyle" => "default-json",
+		"OutputType" => "JSON",
+		"Slots" => array("main"),
+		"Stringtables" => array(
+			"stringtable_default"
+		),
+		"Content" => array(
+			"main" => array(
+				array("module" => "message/show", "html" => "{_'default_node_right_error'}", "class" => "alert-danger")
+			)
+		)
+	),	
 	"api" => array(
-		"Output" => "default-html/api",
+		"Output" => "default-json/json",
+		"OutputStyle" => "default-json",
+		"OutputArray" => true,
+		"OutputType" => "JSON",
 		"Slots" => array("main"),
 		"Content" => array()
 	)			
