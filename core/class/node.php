@@ -164,7 +164,7 @@ Class Node Extends Minimal {
 			array_push($ModuleRights, $MRight["Group"]);
 		}
 
-		foreach ($Rights as $Right) {
+		foreach ($Rights['Group'] as $Right) {
 			if (in_array($Right, $ModuleRights)) {
 				return true;
 			}
@@ -183,7 +183,7 @@ Class Node Extends Minimal {
 			array_push($NodeRights, $NRight["Group"]);
 		}
 
-		foreach ($Rights as $Right) {
+		foreach ($Rights['Group'] as $Right) {
 			if (in_array($Right, $NodeRights)) {
 				return true;
 			}
@@ -226,6 +226,8 @@ Class Node Extends Minimal {
 							$view = $Substitute->substitute((array) $this->stringtable, $view, $Encode);
 
 						}
+
+						//var_dump($view);
 
 						if ($OutputType === 'JSON') {
 							if (json_validate($view))
@@ -275,7 +277,10 @@ Class Node Extends Minimal {
 				}
 			} elseif (!$template || $info) {
 				if (array_key_exists($template, $Template)) {
-					return $Template[$template];	
+					$_template = $Template[$template];	
+					if (!array_key_exists("OutputType", $_template))
+						$_template["OutputType"] = "HTML";
+					return $_template;
 				} else {
 					return false;
 				}

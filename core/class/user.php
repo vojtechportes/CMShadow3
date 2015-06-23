@@ -11,7 +11,7 @@ Class User Extends Minimal {
 	public function setUserSession () {
 		global $DB;
 		$User = $this->getUserByNamePassword();
-		var_dump($User);
+
 		if ($User["name"] !== false && $User["password"] !== false) {
 			$_SESSION["UserID"] = $User["id"];
 			$_SESSION["UserName"] = $User["name"];
@@ -44,7 +44,15 @@ Class User Extends Minimal {
 		if ($this->getUserSessionStatus()) {
 			$Stm = $DB->prepare("SELECT T_UserRights.`Group` FROM T_UserRights LEFT JOIN T_User ON T_UserRights.`User` = T_User.`ID` AND T_User.`ID` = :ID LIMIT 80");
 			$Stm->execute(array(':ID' => $_SESSION["UserID"]));
-			return $Res = $Stm->fetch(PDO::FETCH_ASSOC);			
+			$Res = $Stm->fetchAll(PDO::FETCH_ASSOC);			
+
+			$rights = array();
+			foreach ($Res as $item) {
+				$rights['Group'][] = $item['Group'];
+			}
+
+			//var_dump($rights);
+			return $rights;
 		} else {
 			return array("Group" => DEFAULT_USER_GROUP);
 		}		
@@ -93,14 +101,14 @@ Class User Extends Minimal {
 		global $DB;
 		$Stm = $DB->prepare("SELECT `ID`, `SSID` FROM T_Users WHERE `Name` = :Name LIMIT 1");
 		$Stm->execute(array(':Name' => $this->userName));
-		return $Res = $Stm->fetch(PDO::FETCH_ASSOC);
+		return $Stm->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function setUserAttempts ($attempts) {
 		global $DB;
 		$Stm = $DB->prepare("UPDATE T_UserAttempts LEFT JOIN T_User ON T_User.`ID` = T_UserAttempts.`ID` AND T_User.`Name` = :Name SET T_UserAttempts.`Attempts` = :Attempts");
 		$Stm->execute(array(':Name' => $this->userName, ':Attempts' => $attempts));
-		return $Res = $Stm->rowCount();
+		return $Stm->rowCount();
 	}
 
 	public function getUserAttempts () {

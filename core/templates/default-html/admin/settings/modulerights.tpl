@@ -16,9 +16,9 @@
 	      <td class="text-center"><?php
 	      if (array_key_exists($group['ID'], $return['Rights'])) {
 	      	if (in_array($module, $return['Rights'][$group['ID']])) { ?>
-	      	<span class="glyphicon glyphicon-ok" data-role="{'action': 'remove', 'path': '<?php echo $module; ?>', 'role': '<?php echo $group['ID'] ?>'}"></span>
+	      	<span class="glyphicon glyphicon-ok" data-api='{"command": "settingsModuleRightsAssign", "action": "delete", "key": "<?php echo $module; ?>", "value": "<?php echo $group['ID'] ?>"}'></span>
 	      	<?php } else { ?>
-	      	<span class="glyphicon glyphicon-plus" data-role="{'action': 'add', 'path': '<?php echo $module; ?>', 'role': '<?php echo $group['ID'] ?>'}"></span>
+	      	<span class="glyphicon glyphicon-plus" data-api='{"command": "settingsModuleRightsAssign", "action": "set", "key": "<?php echo $module; ?>", "value": "<?php echo $group['ID'] ?>"}'></span>
 	      	<?php }
 	      }
 	      ?></td>

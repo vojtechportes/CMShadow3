@@ -15,6 +15,7 @@ Class API Extends Minimal {
 	}
 
 	private function validate () {
+
 		foreach (get_object_vars($this) as $variable) {
 			if ($variable === false)
 				return false;
@@ -26,20 +27,25 @@ Class API Extends Minimal {
 	}
 
 	public function proceed () {
+		$success 	= array('key' => $this->key, 'action' => $this->action, 'status' => 1);
+		$fail		= array('key' => $this->key, 'action' => $this->action, 'status' => 0);
 		if ($this->validate()) {
 			$reflection = new ReflectionMethod(__CLASS__, $this->command);
 			$reflection->setAccessible(true);
-			return $reflection->invoke(new API, $this->action, $this->key, $this->value);
+			$r = $reflection->invoke(new API, $this->action, $this->key, $this->value);
+			if ($r !== false)
+				return $success;
+			return $fail;
 		} else {
-			return false;
+			return $fail;
 		}
 	}
 
-	protected function settingModuleRightsAssign ($action, $key, $value) {
+	protected function settingsModuleRightsAssign ($action, $key, $value) {
 		switch ($action) {
 			case 'set':
 				$UR = new UserRights();
-				return $UR->setModuleRights($key, $value);
+				$UR->setModuleRights($key, $value);
 				break;
 			case 'delete':
 				$UR = new UserRights();
@@ -48,7 +54,7 @@ Class API Extends Minimal {
 		}
 	}	
 
-	protected function settingNodeRightsAssign ($action, $key, $value) {
+	protected function settingsNodeRightsAssign ($action, $key, $value) {
 		switch ($action) {
 			case 'set':
 				$UR = new UserRights();

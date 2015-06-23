@@ -24,7 +24,13 @@ Class Stringtable Extends Minimal {
 					if (count($args) > 2) {
 						switch($args[2]) {
 							case "sprintf":
-									return  sprintf($array[$args[1]], $args[3]);							
+									if (json_validate($args[3])) {
+										$args[3] = json_decode($args[3]);
+										array_unshift($args[3], $array[$args[1]]);
+										return call_user_func_array("sprintf", $args[3]);
+									} else {
+										return  sprintf($array[$args[1]], $args[3]);
+									}					
 								break;
 							case "replace":
 									return  str_replace($args[3], $args[4], $array[$args[1]]);

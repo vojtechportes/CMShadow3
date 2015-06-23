@@ -35,21 +35,33 @@ CMSAPI.prototype = {
 			$wrapper.append(elm);
 		});
 	},
-	"settingsNodeRightsAssign": function (query) {
-		if (!this.validate(item, action))
+	"settingsNodeRightsAssign": function (query, cberror, cbsuccess) {
+		if (!this.validate(query))
 			return;		
 
-		$.post(this.path + "?" + $.param(query), function(data) {
-			console.log(data);
-		});
+		$.post(this.path, query)
+			.done(function(data) {
+				if (typeof cbsuccess !== 'undefined')
+					cbsuccess.call(data);
+			})
+			.fail(function(data) {
+				if (typeof cberror !== 'undefined')
+					cberror.call(data.responseJSON);
+			});
 	},
-	"settingsModuleRightsAssign": function (query) {
-		if (!this.validate(item, action))
+	"settingsModuleRightsAssign": function (query, cberror, cbsuccess) {
+		if (!this.validate(query))
 			return;	
 
-		$.post(this.path + "?" + $.param(query), function(data) {
-			
-		});
+		$.post(this.path, query)
+			.done(function(data) {
+				if (typeof cbsuccess !== 'undefined')
+					cbsuccess.call(data);
+			})
+			.fail(function(data) {
+				if (typeof cberror !== 'undefined')
+					cberror.call(data.responseJSON);
+			});
 	},
 	"settingsAPIRightsAssign": function (query, cberror, cbsuccess) {
 		if (!this.validate(query))
