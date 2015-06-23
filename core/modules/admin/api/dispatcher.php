@@ -18,5 +18,9 @@ if ($API['status'] === 1) {
 	$Message = new Module();
 	$Message->addModule(new Message(), array("html" => "{_'settings_rights_error', sprintf([\"$v1\", \"$v2\"])}", "class" => "alert-warning", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 400));
 	$Message->output();	
+} else if ($API['status'] === -1) {
+	$Message = new Module();
+	$Message->addModule(new Message(), array("html" => "{_'settings_rights_error_unauthorized'}", "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 403));
+	$Message->output();		
 }
 ?>

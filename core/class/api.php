@@ -14,30 +14,52 @@ Class API Extends Minimal {
 		$this->value = $value;
 	}
 
-	private function validate () {
+	private function checkAPIRights ($command) {
+		global $Rights;
+		$APIRights = array();
 
-		foreach (get_object_vars($this) as $variable) {
-			if ($variable === false)
-				return false;
+		$Res = UserRights::getAPIRights($command);
+
+		foreach ($Res as $CRight) {
+			array_push($APIRights, $CRight["Group"]);
 		}
 
-		if (method_exists(__CLASS__, $this->command))
-			return true;
+		foreach ($Rights['Group'] as $Right) {
+			if (in_array($Right, $APIRights)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
+	private function validate () {
+		if ($this->checkAPIRights($this->command)) {
+			foreach (get_object_vars($this) as $variable) {
+				if ($variable === false)
+					return false;
+			}
+
+			if (method_exists(__CLASS__, $this->command))
+				return true;
+			return false;
+		} else {
+			return false;
+		}
+	}
+
 	public function proceed () {
-		$success 	= array('key' => $this->key, 'action' => $this->action, 'status' => 1);
-		$fail		= array('key' => $this->key, 'action' => $this->action, 'status' => 0);
+		$result 		= array('key' => $this->key, 'action' => $this->action);
+
 		if ($this->validate()) {
 			$reflection = new ReflectionMethod(__CLASS__, $this->command);
 			$reflection->setAccessible(true);
 			$r = $reflection->invoke(new API, $this->action, $this->key, $this->value);
 			if ($r !== false)
-				return $success;
-			return $fail;
+				return $result + array('status' => 1);
+			return $result + array('status' => 0);
 		} else {
-			return $fail;
+			return $result + array('status' => -1);
 		}
 	}
 
