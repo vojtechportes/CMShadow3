@@ -90,7 +90,7 @@ Class Settings Extends Module {
 	protected static function getAPICommands () {
 		return array(
 			"settingsNodeRightsAssign",
-			"settignsModuleRightsAssign",
+			"settingsModuleRightsAssign",
 			"settingsAPIRightsAssign"
 		);
 	}

@@ -49,7 +49,7 @@ Class API Extends Minimal {
 	}
 
 	public function proceed () {
-		$result 		= array('key' => $this->key, 'action' => $this->action);
+		$result = array('key' => $this->key, 'action' => $this->action);
 
 		if ($this->validate()) {
 			$reflection = new ReflectionMethod(__CLASS__, $this->command);
@@ -67,7 +67,7 @@ Class API Extends Minimal {
 		switch ($action) {
 			case 'set':
 				$UR = new UserRights();
-				$UR->setModuleRights($key, $value);
+				return $UR->setModuleRights($key, $value);
 				break;
 			case 'delete':
 				$UR = new UserRights();
