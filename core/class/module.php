@@ -30,6 +30,7 @@ Class Module Extends Minimal {
 	}
 
 	public function output () {
+		global $Content;
 		if ($this->template !== false) {
 			if (array_key_exists("OutputStyle", $this->output))
 				$this->templateOutput = $this->output["OutputStyle"];

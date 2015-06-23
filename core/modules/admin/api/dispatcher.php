@@ -9,11 +9,11 @@ $API = $API->proceed();
 
 if ($API === 1) {
 	$Message = new Module();
-	$Message->addModule(new Message(), array("html" => "{_'settings_rights_success', spritf($key)}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "Header" => 200));
-	echo $Message->output();
+	$Message->addModule(new Message(), array("html" => "{_'settings_rights_success', sprintf($key)}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->output();
 } else {
 	$Message = new Module();
-	$Message->addModule(new Message(), array("html" => "{_'settings_rights_error', spritf($key)}", "class" => "alert-warning", "OutputStyle" => $return["OutputStyle"], "Header" => 200));
-	echo $Message->output();	
+	$Message->addModule(new Message(), array("html" => "{_'settings_rights_error', sprintf($key)}", "class" => "alert-warning", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->output();	
 }
 ?>

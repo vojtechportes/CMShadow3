@@ -27,7 +27,6 @@ Class API Extends Minimal {
 
 	public function proceed () {
 		if ($this->validate()) {
-			var_dump($this->command);
 			$reflection = new ReflectionMethod(__CLASS__, $this->command);
 			$reflection->setAccessible(true);
 			return $reflection->invoke(new API, $this->action, $this->key, $this->value);

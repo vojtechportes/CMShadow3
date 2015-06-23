@@ -194,6 +194,8 @@ Class Node Extends Minimal {
 
 	private function loadModules () {
 		if ($this->node) {
+			global $M;
+
 			$slots = self::modulesConcat($this->node['Content'], $this->template['Content']);
 			$content = array();
 			if ($slots) {
@@ -204,16 +206,20 @@ Class Node Extends Minimal {
 						$OutputStyle = $this->getTemplatePath();
 						$Encode = false;
 
+						$OutputType = $this->template['OutputType'];
+
 						if ($this->template['OutputType'] === 'JSON')
 								$Encode = true;
 
 						ob_start();
 						if ($Right) {
-							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle), false);			
+							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
 						} else {
-							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle), false);						
+							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
 						}
+
 						$view = ob_get_contents(); ob_end_clean();
+
 
 						if ($this->stringtable !== false) {
 							$Substitute = new Stringtable();							
@@ -221,7 +227,7 @@ Class Node Extends Minimal {
 
 						}
 
-						if ($this->template['OutputType'] === 'JSON') {
+						if ($OutputType === 'JSON') {
 							if (json_validate($view))
 								$content['slot'][$slot][] = json_decode($view);
 						} else {
@@ -229,11 +235,11 @@ Class Node Extends Minimal {
 						}
 					}
 
-					if ($this->template['OutputType'] === 'JSON') {
+					if ($OutputType === 'JSON') {
 						if (gettype($content['slot'][$slot]) === "array") {
 							$content['slot'][$slot] = json_encode(array_filter($content['slot'][$slot]));
 						} else {
-							$content['slot'][$slot] = json_encode(array("fail" => 1));	
+							$content['slot'][$slot] = json_encode(array());	
 						}
 					}
 
