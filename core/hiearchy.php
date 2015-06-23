@@ -16,11 +16,11 @@ $Hiearchy = array(
 		),
 		"Content" => array(
 			"main" => array(
-
 			)
 		),
 
 		"/admin/api/" => array(
+			"Config" => array(),
 			"Template" => "api",
 			"Content" => array(
 				"main" => array(

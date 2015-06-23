@@ -21,7 +21,7 @@ function print_var_name($var) {
 * ================
 */
 
-global $DB, $Template, $M, $Path, $LoggedIn, $Rights;
+global $DB, $Template, $M, $Path, $LoggedIn, $Rights, $Node;
 
 /*
 * Config

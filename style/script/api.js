@@ -55,7 +55,7 @@ CMSAPI.prototype = {
 		if (!this.validate(query))
 			return;	
 
-		$.post(this.path + "?" + $.param(query))
+		$.post(this.path, query)
 			.done(function(data) {
 				if (typeof cbsuccess !== 'undefined')
 					cbsuccess.call(data);

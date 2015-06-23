@@ -17,6 +17,7 @@ require(['jquery'], function($) {
 				e.stopPropagation();
 
 				var data = $(this).data('api');
+				var $el = $(this);
 
 				switch (data['command']) {
 					case 'settingsNodeRightsAssign':
@@ -31,7 +32,12 @@ require(['jquery'], function($) {
 							},
 							function(){
 								CMSAPI.setStatus(this);	
-								console.log('success');	
+								console.log(this);
+								if ($el.hasClass('glyphicon-plus')) {
+									$el.toggleClass('glyphicon-ok');
+								} else {
+									$el.toggleClass('glyphicon-plus');
+								}
 							}
 						);
 						break;

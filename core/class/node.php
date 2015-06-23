@@ -230,7 +230,11 @@ Class Node Extends Minimal {
 					}
 
 					if ($this->template['OutputType'] === 'JSON') {
-						$content['slot'][$slot] = json_encode(array_filter($content['slot'][$slot]));
+						if (gettype($content['slot'][$slot]) === "array") {
+							$content['slot'][$slot] = json_encode(array_filter($content['slot'][$slot]));
+						} else {
+							$content['slot'][$slot] = json_encode(array("fail" => 1));	
+						}
 					}
 
 				}
@@ -319,12 +323,13 @@ Class Node Extends Minimal {
 		if ($this->node && $this->checkNodeRights()) {
 			$this->getTemplate();
 			$this->loadTemplate();
+
 			return $this->view;
 		} else {
 			if ($this->getTemplate($this->node['Template'], true)['OutputType'] === 'JSON') {
-				$this->getTemplate("error-json");
+				$Template = $this->getTemplate("error-json");
 			} else {
-				$this->getTemplate("error");
+				$Template = $this->getTemplate("error");
 			}
 			$this->loadTemplate();
 			return $this->view;

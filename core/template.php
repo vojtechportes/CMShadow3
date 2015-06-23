@@ -89,8 +89,10 @@ $Template = array(
 	"api" => array(
 		"Output" => "default-json/json",
 		"OutputStyle" => "default-json",
-		"OutputArray" => true,
 		"OutputType" => "JSON",
+		"Stringtables" => array(
+			"stringtable_settings"
+		),
 		"Slots" => array("main"),
 		"Content" => array()
 	)			
