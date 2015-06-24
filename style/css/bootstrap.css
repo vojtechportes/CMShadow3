@@ -6365,3 +6365,12 @@ body.login {
     font-size: 50px;
   }
 }
+.toolbar {
+  position: relative;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 15px 0;
+}
+.toolbar .btn {
+  float: right !important;
+}

@@ -48,6 +48,11 @@ Class API Extends Minimal {
 		}
 	}
 
+	public function callModule ($module, $arguments, $return) {
+		$Module = new Module(new $module($arguments, $return));
+		return $Module->output();
+	}
+
 	public function proceed () {
 		$result = array('key' => $this->key, 'action' => $this->action);
 
@@ -98,6 +103,21 @@ Class API Extends Minimal {
 			case 'delete':
 				$UR = new UserRights();
 				return $UR->deleteAPIRights($key, $value);
+				break;
+		}
+	}
+
+	protected function gadgets ($action, $key, $value) {
+		switch ($action) {
+			case 'get':
+				$GA = new Gadgets();
+				return $GA->getGadgets();
+				break;
+			case 'set':
+				break;
+			case 'delete':
+				break;
+			case 'update':
 				break;
 		}
 	}

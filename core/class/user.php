@@ -54,7 +54,7 @@ Class User Extends Minimal {
 			//var_dump($rights);
 			return $rights;
 		} else {
-			return array("Group" => DEFAULT_USER_GROUP);
+			return array("Group" => array(0 => DEFAULT_USER_GROUP));
 		}		
 	}
 

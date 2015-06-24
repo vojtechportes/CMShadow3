@@ -16,6 +16,7 @@ $Hiearchy = array(
 		),
 		"Content" => array(
 			"main" => array(
+				array("module" => "admin/gadget/show")
 			)
 		),
 

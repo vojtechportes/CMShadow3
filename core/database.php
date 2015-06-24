@@ -95,7 +95,10 @@ $Database = array(
 	),		
 	array(
 		"exec-repeat(\$ConfigCategories as \$Category)" => "INSERT INTO `T_ConfigCategories` (`Title`, `Path`, `Icon`) VALUES ('\$Category[\"Title\"]', '\$Category[\"Path\"]', '\$Category[\"Icon\"]')"
-	)		
+	),
+	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_Gadgets` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Gadget` TEXT(600)  NOT NULL, `User` INT(11) NOT NULL, `Weight` INT(5) NOT NULL DEFAULT 50) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
+	),					
 );
 
 $DatabaseValues = array(

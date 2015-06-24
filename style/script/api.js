@@ -1,8 +1,8 @@
 var CMSAPI = function () {
 	this.path = '/admin/api/';
-	this.actions = ['get', 'set', 'delete'];
+	this.actions = ['get', 'set', 'delete', 'update'];
 
-	if ($('[data-api]').length > 0) {
+	if ($('[data-api], [data-api-load]').length > 0) {
 		if ($('#APILoader').length === 0)
 			$('body').append('<div id="APILoader"></div>');
 
@@ -13,7 +13,7 @@ var CMSAPI = function () {
 
 CMSAPI.prototype = {
 	"validate": function (query) {
-		if (query instanceof Object && Object.keys(query).length === 4)
+		if (query instanceof Object)
 			return true;
 		return false;
 	},
@@ -76,7 +76,21 @@ CMSAPI.prototype = {
 				if (typeof cberror !== 'undefined')
 					cberror.call(data.responseJSON);
 			});
-	}
+	},
+	"gadgets": function (query, cberror, cbsuccess) {
+		if (!this.validate(query))
+			return;
+
+		$.post(this.path, query)
+			.done(function(data) {
+				if (typeof cbsuccess !== 'undefined')
+					cbsuccess.call(data);
+			})
+			.fail(function(data) {
+				if (typeof cberror !== 'undefined')
+					cberror.call(data.responseJSON);
+			});
+	}	
 }
 
 CMSAPI = new CMSAPI();
