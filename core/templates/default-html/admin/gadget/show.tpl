@@ -8,8 +8,12 @@
 		</button>
 	</div>
 </div>
-<div data-api-load='{"command": "gadgets", "action": "get", "module": "admin/gadget/show"}'>
+<div data-api-load='{"command": "gadgets", "action": "get", "type": "available", "message": false}'>
 </div>
+
+<div data-api-load='{"command": "loadModule", "message": false, "module": "admin/gadget/show"}'>
+</div>
+
 <div class="well well-lg">
 	<p class="lead">{_'gadgets_add', sprintf(["#", "data-toggle=\"modal\" data-target=\"#gadgetList\""])}</p>
 </div>

@@ -78,6 +78,8 @@ CMSAPI.prototype = {
 			});
 	},
 	"gadgets": function (query, cberror, cbsuccess) {
+		console.log('loadContent');
+
 		if (!this.validate(query))
 			return;
 
@@ -90,7 +92,23 @@ CMSAPI.prototype = {
 				if (typeof cberror !== 'undefined')
 					cberror.call(data.responseJSON);
 			});
-	}	
+	},
+	"loadModule": function (query, cberror, cbsuccess) {
+		console.log('loadContent');
+
+		if (!this.validate(query))
+			return;
+
+		$.post(this.path, query)
+			.done(function(data) {
+				if (typeof cbsuccess !== 'undefined')
+					cbsuccess.call(data);
+			})
+			.fail(function(data) {
+				if (typeof cberror !== 'undefined')
+					cberror.call(data.responseJSON);
+			});
+	}			
 }
 
 CMSAPI = new CMSAPI();

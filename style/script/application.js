@@ -20,10 +20,14 @@ function APIToggleState(icons, actions) {
 	}
 }
 
-function APICommands (data) {
+function APICommands (data, load, html) {
 	var $el = this;
 
-	console.log(data);
+	if (typeof load === 'undefined')
+		load = false;
+
+	if (typeof html === 'undefined')
+		html = false;	
 
 	switch (data['command']) {
 		case 'settingsNodeRightsAssign':
@@ -65,7 +69,27 @@ function APICommands (data) {
 					CMSAPI.setStatus(this);				
 				},
 				function(){
-					CMSAPI.setStatus(this);	
+					if (!load) {
+						CMSAPI.setStatus(this);
+					} else {
+						$el.text(JSON.stringify(this));
+					}
+				}
+			);
+			break;	
+		case 'loadModule':
+			CMSAPI.gadgets(data,
+				function(){
+					CMSAPI.setStatus(this);				
+				},
+				function(){
+					if (!load) {
+						CMSAPI.setStatus(this);
+					} else {
+						$.each(this, function(k, module){
+							$el.html(module['__html']);
+						});	
+					}
 				}
 			);
 			break;	
@@ -89,6 +113,6 @@ if ($('[data-api-load]').length > 0) {
 		var data = $(el).data('api-load');
 		var $el = $(el);
 
-		APICommands.call($el, data);
+		APICommands.call($el, data, true);
 	});
 }

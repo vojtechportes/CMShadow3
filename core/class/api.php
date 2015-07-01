@@ -6,13 +6,10 @@ Class API Extends Minimal {
 	public $action;
 	public $key;
 	public $value;
-
-	public function __construct ($command = false, $action = false, $key = false, $value = false) {
-		$this->command = $command;
-		$this->action = $action;
-		$this->key = $key;
-		$this->value = $value;
-	}
+	public $type;
+	public $arguments = array();
+	public $module;
+	protected $output = false;
 
 	private function checkAPIRights ($command) {
 		global $Rights;
@@ -34,11 +31,13 @@ Class API Extends Minimal {
 	}
 
 	private function validate () {
+
 		if ($this->checkAPIRights($this->command)) {
-			foreach (get_object_vars($this) as $variable) {
+
+			/*foreach (get_object_vars($this) as $variable) {
 				if ($variable === false)
 					return false;
-			}
+			}*/
 
 			if (method_exists(__CLASS__, $this->command))
 				return true;
@@ -48,77 +47,88 @@ Class API Extends Minimal {
 		}
 	}
 
-	public function callModule ($module, $arguments, $return) {
-		$Module = new Module(new $module($arguments, $return));
-		return $Module->output();
-	}
-
 	public function proceed () {
 		$result = array('key' => $this->key, 'action' => $this->action);
 
+		//var_dump($this);
+
 		if ($this->validate()) {
-			$reflection = new ReflectionMethod(__CLASS__, $this->command);
-			$reflection->setAccessible(true);
-			$r = $reflection->invoke(new API, $this->action, $this->key, $this->value);
+			$r = $this->{$this->command}();
+
 			if ($r !== false)
-				return $result + array('status' => 1);
+				return $result + array('status' => 1) + array("output" => $this->output);
 			return $result + array('status' => 0);
 		} else {
 			return $result + array('status' => -1);
 		}
 	}
 
-	protected function settingsModuleRightsAssign ($action, $key, $value) {
-		switch ($action) {
+	protected function settingsModuleRightsAssign () {
+		switch ($this->action) {
 			case 'set':
 				$UR = new UserRights();
-				return $UR->setModuleRights($key, $value);
+				return $UR->setModuleRights($this->key, $this->value);
 				break;
 			case 'delete':
 				$UR = new UserRights();
-				return $UR->deleteModuleRights($key, $value);
+				return $UR->deleteModuleRights($this->key, $this->value);
 				break;
 		}
 	}	
 
-	protected function settingsNodeRightsAssign ($action, $key, $value) {
-		switch ($action) {
+	protected function settingsNodeRightsAssign () {
+		switch ($this->action) {
 			case 'set':
 				$UR = new UserRights();
-				return $UR->setNodeRights($key, $value);
+				return $UR->setNodeRights($this->key, $this->value);
 				break;
 			case 'delete':
 				$UR = new UserRights();
-				return $UR->deleteNodeRights($key, $value);
+				return $UR->deleteNodeRights($this->key, $this->value);
 				break;
 		}
 	}	
 
-	protected function settingsAPIRightsAssign ($action, $key, $value) {
-		switch ($action) {
+	protected function settingsAPIRightsAssign () {
+		switch ($this->action) {
 			case 'set':
 				$UR = new UserRights();
-				return $UR->setAPIRights($key, $value);
+				return $UR->setAPIRights($this->key, $this->value);
 				break;
 			case 'delete':
 				$UR = new UserRights();
-				return $UR->deleteAPIRights($key, $value);
+				return $UR->deleteAPIRights($this->key, $this->value);
 				break;
 		}
 	}
 
-	protected function gadgets ($action, $key, $value) {
-		switch ($action) {
+	protected function gadgets () {
+		$class = "Gadgets";
+
+		switch ($this->action) {
 			case 'get':
-				$GA = new Gadgets();
-				return $GA->getGadgets();
+				switch ($this->type) {
+					case 'available':
+						$type = 'getAvailableGadgets';
+						break;
+					default:
+						$type = 'getGadgets';
+						break;
+				}
+
+				$method = new ReflectionMethod($class, $type);
+				$method->setAccessible(true);
+				$this->output = $method->invoke(new $class, $this->arguments);
 				break;
-			case 'set':
-				break;
-			case 'delete':
-				break;
-			case 'update':
-				break;
+		}
+	}
+
+	protected function loadModule () {
+		if (Module::checkModuleRights($this->module)) {
+			ob_start();
+			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', compact($this->arguments) + array("OutputStyle" => "default-html", "OutputType" => "HTML"), false);
+			$output = ob_get_contents(); ob_end_clean();
+			$this->output = array("__html" => $output);
 		}
 	}
 }

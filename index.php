@@ -21,7 +21,9 @@ function print_var_name($var) {
 * ================
 */
 
-global $DB, $Template, $M, $Path, $LoggedIn, $Rights, $Node;
+global $DB, $Template, $M, $Path, $LoggedIn, $Rights, $Node, $ForceOutput;
+
+$ForceOutput = true;
 
 /*
 * Config
@@ -106,10 +108,12 @@ if ($DBConnection) {
 	$LoggedIn = $User->getUserSessionStatus();	
 	$Rights = $User->getUserRights();
 
+	ob_start();
 	$Node = new Node ();
 	$Node = $Node->output();
-
 	//echo $M->sanitize($Node, 'html');
+	echo $Node;
+	$Node = ob_get_contents(); ob_end_clean();
 
 	echo $Node;
 

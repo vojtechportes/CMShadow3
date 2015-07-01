@@ -154,25 +154,6 @@ Class Node Extends Minimal {
 		}
 	}
 
-	private function checkModuleRights ($module) {
-		global $Rights;
-		$ModuleRights = array();
-
-		$Res = UserRights::getModuleRights($module);
-
-		foreach ($Res as $MRight) {
-			array_push($ModuleRights, $MRight["Group"]);
-		}
-
-		foreach ($Rights['Group'] as $Right) {
-			if (in_array($Right, $ModuleRights)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private function checkNodeRights () {
 		global $Rights;
 		$NodeRights = array();
@@ -202,7 +183,7 @@ Class Node Extends Minimal {
 				foreach ($slots as $slot => $modules) {
 					$content['slot'][$slot] = '';
 					foreach ($modules as $module) {
-						$Right = $this->checkModuleRights($module['module']);
+						$Right = Module::checkModuleRights($module['module']);
 						$OutputStyle = $this->getTemplatePath();
 						$Encode = false;
 

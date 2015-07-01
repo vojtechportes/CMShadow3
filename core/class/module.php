@@ -25,12 +25,34 @@ Class Module Extends Minimal {
 			$this->templateOutput = $this->module->templateOutput;
 	}
 
+	public static function checkModuleRights ($module) {
+		global $Rights;
+		$ModuleRights = array();
+
+		$Res = UserRights::getModuleRights($module);
+
+		//var_dump($module);
+
+		foreach ($Res as $MRight) {
+			array_push($ModuleRights, $MRight["Group"]);
+		}
+
+		foreach ($Rights['Group'] as $Right) {
+			if (in_array($Right, $ModuleRights)) {
+				return true;
+			}
+		}
+
+		return false;
+	}	
+
 	public function extendOutput($key, $value) {
 		$this->output[$key] = $value;
 	}
 
 	public function output () {
 		global $Content;
+
 		if ($this->template !== false) {
 			if (array_key_exists("OutputStyle", $this->output))
 				$this->templateOutput = $this->output["OutputStyle"];
@@ -39,7 +61,7 @@ Class Module Extends Minimal {
 
 			ob_start();
 			if (file_exists($path.'.tpl')) {
-				parent::load($path, $this->output);
+				parent::load($path, $this->output, true);
 			} else {
 				$Message = new Module();
 				$Message->addModule(new Message(), array("html" => "{_'default_file_missing_error', sprintf($path)}", "class" => "alert-danger"));

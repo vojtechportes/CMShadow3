@@ -7,7 +7,7 @@ Class Gadgets Extends Module {
 	protected $module;
 	protected $output = array();
 
-	public function __construct ($action) {
+	public function __construct ($action = false) {
 		switch ($action) {
 			case 'getGadgets':
 				$this->template = '/admin/gadget/show';

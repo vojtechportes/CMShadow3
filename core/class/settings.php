@@ -92,7 +92,8 @@ Class Settings Extends Module {
 			"settingsNodeRightsAssign",
 			"settingsModuleRightsAssign",
 			"settingsAPIRightsAssign",
-			"gadgets"
+			"gadgets",
+			"loadModule"
 		);
 	}
 

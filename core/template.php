@@ -92,6 +92,12 @@ $Template = array(
 		"OutputStyle" => "default-json",
 		"OutputType" => "JSON",
 		"Stringtables" => array(
+			"stringtable_default",
+			"stringtable_pages",	
+			"stringtable_navigations",		
+			"stringtable_forms",
+			"stringtable_settings",
+			"stringtable_gadgets",			
 			"stringtable_api"
 		),
 		"Slots" => array("main"),
