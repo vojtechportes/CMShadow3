@@ -51,6 +51,17 @@ Class Minimal {
 		return array($__result);
 	}
 
+	public static function getLastID ($Table) {
+		global $DB;
+
+		$Stm = $DB->prepare("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = :Database AND `TABLE_NAME` = :Table");
+		$Stm->execute(array(':Database' => DB_NAME, ':Table' => DB_PREFIX.$Table));
+		$Res = $Stm->fetch(PDO::FETCH_ASSOC);
+		if (is_array($Res))
+			return $Res['AUTO_INCREMENT'];
+		return false;
+	}
+
 }
 
 ?>

@@ -98,6 +98,9 @@ $Database = array(
 	),
 	array(
 		"query" => "CREATE TABLE IF NOT EXISTS `T_Gadgets` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Gadget` TEXT(600)  NOT NULL, `User` INT(11) NOT NULL, `Weight` INT(5) NOT NULL DEFAULT 50) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
+	),	
+	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_Pages` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Parent` INT(11)  NOT NULL, `Owner` INT(11) NOT NULL, `Version` INT(11) NOT NULL, `Locked` INT(1) NOT NULL DEFAULT 0, `Visible` INT(1) NOT NULL DEFAULT 0, `Weight` INT(5) NOT NULL DEFAULT 50) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
 	),					
 );
 
