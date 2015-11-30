@@ -17,7 +17,10 @@ $Stringtable = array(
 	'forms_page_weight' => 'Weight',
 	'forms_page_parent' => 'Parent page',
 	'forms_page_template' => 'Template',
-	'forms_page_template_root' => '--- Root ---'		
+	'forms_page_parent_root' => '--- Root ---',
+	'forms_page_form_help' => 'Page title will be used for search engines. Page name will be used eg for facebook or twitter page name. Description will be used for both in same way.',
+	'forms_page_form_created' => 'Page "%s" was successfully created. <a href="%s">Create another.</a>',
+	'forms_page_form_error' => 'Unexpected error ocured. Page "%s" was not created. Please, <a href="%">try it again later.</a>'		
 )
 
 ?>

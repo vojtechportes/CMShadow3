@@ -25,15 +25,16 @@ Class Stringtable Extends Minimal {
 						switch($args[2]) {
 							case "sprintf":
 									if (substr($args[3], 0, 2) === '[\\') {
+										var_dump($args[3]);
 										$args[3] = str_replace('\\"', '"', $args[3]);
 										$args[3] = str_replace('\\\\"', '\\"', $args[3]);
 									}
 									if (json_validate($args[3])) {
 										$args[3] = json_decode($args[3]);
 										array_unshift($args[3], $array[$args[1]]);
-										return addslashes(call_user_func_array("sprintf", $args[3]));
+										return call_user_func_array("sprintf", $args[3]);
 									} else {
-										return  addslashes(sprintf($array[$args[1]], $args[3]));
+										return  sprintf($array[$args[1]], $args[3]);
 									}					
 								break;
 							case "replace":

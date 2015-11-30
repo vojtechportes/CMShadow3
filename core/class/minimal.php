@@ -62,6 +62,25 @@ Class Minimal {
 		return false;
 	}
 
+	private function checkVariableState ($value) {
+		if ($value === NULL) {
+			return false;
+		} else if ($value === "") {
+			return true;
+		} else {
+			return $value;
+		}
+	}
+
+	public function _GET ($key) {
+		return $this->checkVariableState(filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING));
+
+	}
+
+	public function _POST ($key) {
+		return $this->checkVariableState(filter_input(INPUT_POST, $key, FILTER_SANITIZE_STRING));
+	}
+
 }
 
 ?>

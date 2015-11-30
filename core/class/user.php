@@ -58,6 +58,12 @@ Class User Extends Minimal {
 		}		
 	}
 
+	public static function getUserID () {
+		if (isset($_SESSION["UserID"]))
+			return $_SESSION["UserID"];
+		return false;
+	}
+
 	public function getUserSessionStatus () {
 		global $DB;
 		if (isset($_SESSION["UserID"])) {
