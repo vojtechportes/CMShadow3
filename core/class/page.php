@@ -98,7 +98,7 @@ Class Page Extends Minimal {
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
 		ON (T_Pages.`ID` = T_PageDetails.`Page`) WHERE T_Pages.`Parent` = :Parent");
-		$M->debug($Stm);
+		//$M->debug($Stm);
 		$Stm->execute(array(
 			':Parent' => $parent
 		));

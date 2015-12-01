@@ -193,10 +193,12 @@ Class Node Extends Minimal {
 								$Encode = true;
 
 						ob_start();
+						var_dump($Right);
 						if ($Right) {
 							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
 						} else {
 							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
+							
 						}
 
 						$view = ob_get_contents(); ob_end_clean();
@@ -311,7 +313,7 @@ Class Node Extends Minimal {
 			redirect(ADMIN_PATH, "?source=login");
 		if ($this->nodeName != LOGIN_PATH && !$LoggedIn)
 			redirect(LOGIN_PATH, "?source=".$_SERVER["REQUEST_URI"]);
-
+		var_dump($this->node && $this->checkNodeRights());
 		if ($this->node && $this->checkNodeRights()) {
 			$this->getTemplate();
 			$this->loadTemplate();

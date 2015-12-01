@@ -67,6 +67,7 @@ $Template = array(
 		"Stringtables" => array(
 			"stringtable_default"
 		),
+		"ErrorOverride" => true,	
 		"Content" => array(
 			"main" => array(
 				array("module" => "message/show", "html" => "{_'default_node_right_error'}", "class" => "alert-danger")
@@ -78,6 +79,7 @@ $Template = array(
 		"OutputStyle" => "default-json",
 		"OutputType" => "JSON",
 		"Slots" => array("main"),
+		"ErrorOverride" => true,
 		"Stringtables" => array(
 			"stringtable_default"
 		),
