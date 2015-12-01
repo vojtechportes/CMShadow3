@@ -21,18 +21,21 @@ CMSAPI.prototype = {
 		var $wrapper = $('#APIStatus');
 		$wrapper.html('');
 
+		console.log(data);
 		$.each(data, function(k, el){
-			console.log(el);
+			if (el instanceof Object) {
 			if (!('class' in el))
 				el.class = '';
 
 			if (!('text' in el))
 				return;
 
+
 			var text = $('<div/>').html(el.text).text();
 			var elm = $('<div class="' + el.class + '"></div>');
 			elm.html(text);
 			$wrapper.append(elm);
+			}
 		});
 	},
 	"settingsNodeRightsAssign": function (query, cberror, cbsuccess) {
@@ -95,16 +98,18 @@ CMSAPI.prototype = {
 	},
 	"loadModule": function (query, cberror, cbsuccess) {
 		console.log('loadContent');
-
+		console.log(query);
 		if (!this.validate(query))
 			return;
 
 		$.post(this.path, query)
 			.done(function(data) {
+				console.log(data);
 				if (typeof cbsuccess !== 'undefined')
 					cbsuccess.call(data);
 			})
 			.fail(function(data) {
+				console.log(data);
 				if (typeof cberror !== 'undefined')
 					cberror.call(data.responseJSON);
 			});

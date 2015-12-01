@@ -128,6 +128,7 @@ Class API Extends Minimal {
 			ob_start();
 			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', compact($this->arguments) + array("OutputStyle" => "default-html", "OutputType" => "HTML"), false);
 			$output = ob_get_contents(); ob_end_clean();
+			//$this->output = array("__html" => htmlentities($output));
 			$this->output = array("__html" => $output);
 		}
 	}

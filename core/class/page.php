@@ -13,10 +13,8 @@ Class Page Extends Minimal {
 	public $description;
 	public $keywords;
 	public $template;
-
-	public function getStatus () {
-		return parent::getLastID('Pages');
-	}
+	public $pageTree;
+	private $status;
 
 	private function getPageAttributes () {
 		return "
@@ -29,7 +27,7 @@ Class Page Extends Minimal {
 			T_Pages.`Visible`,
 			T_Pages.`CreatedAt`,
 			T_Pages.`ModifiedAt`,
-			T_PageDetails.`Name`";
+			T_PageDetails.`Title`";
 	}
 
 	private function getPageAttributesDetailed () {
@@ -61,6 +59,7 @@ Class Page Extends Minimal {
 			':Visible' => $this->visible,
 			':Weight' => $this->weight
 		));
+		$this->status = $DB->lastInsertId();
 		return $Stm->rowCount();
 	}
 
@@ -68,7 +67,7 @@ Class Page Extends Minimal {
 		global $DB;
 		$Stm = $DB->prepare("INSERT INTO T_PageDetails (`Page`, `Name`, `Title`, `Description`, `Keywords`, `Template`) VALUES (:Page, :Name, :Title, :Description, :Keywords, :Template)");
 		$Stm->execute(array(
-			':Page' => $this->getStatus(),
+			':Page' => $this->status,
 			':Name' => $this->name,
 			':Title' => $this->title,
 			':Description' => $this->description,
@@ -118,15 +117,35 @@ Class Page Extends Minimal {
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);		
 	}
 
-	public function getPageTree ($detailed = false, $parent = 0) {
-		global $M;
-		$pages = self::getPageList();
-		/*foreach ($pages as $page) {
-			$M->debug($page);
-		}*/
-		return $pages;
+	private function hasChildPages ($parent = 0) {
+		global $DB;
+		$Stm = $DB->prepare("SELECT `ID` FROM T_Pages WHERE `Parent` = :Parent");
+		$Stm->execute(array(
+			':Parent' => $parent
+		));
+		if ($Stm->rowCount() > 0)
+			return true;
+		return false;
 	}
 
+	public function getPageTree ($detailed = false, $parent = 0, $depth = 0) {
+		global $M;
+
+		if ($detailed) {
+			$pages = self::getPageListDetailed($parent);
+		} else {
+			$pages = self::getPageList($parent);
+		}
+
+		foreach ($pages as $page) {	
+			$page['Depth'] = $depth;
+			$this->pageTree[] = $page;		
+			if (self::hasChildPages($page['ID'])) {
+				self::getPageTree($detailed, $page['ID'], $depth + 1);
+			}
+		}
+		$depth = $depth -1;
+	}
 } 
 
 ?>

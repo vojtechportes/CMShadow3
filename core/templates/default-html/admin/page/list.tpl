@@ -1,5 +1,5 @@
 <?php
 global $M;
 
-$M->debug($return);
+//$M->debug($return);
 ?>

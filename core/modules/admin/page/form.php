@@ -18,7 +18,18 @@ if ($M->_GET("success")) {
 	if (!isset($type))
 		$type = 'create';
 
-	$parent = array('0' => "{_'forms_page_parent_root'}") + array();
+	$Pages = new Page();
+	$Pages->getPageTree();
+	$Pages = $Pages->pageTree;
+
+	$_Pages = array();
+	if (!empty($Pages)) {
+		foreach ($Pages as $page) {
+			$_Pages[$page['ID']] = str_repeat('. ', $page['Depth']).$page['Title'];
+		}
+	}
+
+	$parent = array('0' => "{_'forms_page_parent_root'}") + $_Pages;
 
 	$template = array();
 
@@ -56,7 +67,7 @@ if ($M->_GET("success")) {
 		$Page->keywords = filter_input(INPUT_POST, "keywords");	
 		$Page->template = filter_input(INPUT_POST, "template");
 		
-		if ($Page->createPage() && $Page->createPageDetails()) {
+		if ($LastID = $Page->createPage() && $Page->createPageDetails($LastID)) {
 			redirect("{$Path}?success&name={$Page->name}&path={$Path}");
 		} else {
 			redirect("{$Path}?error&name={$Page->name}&path={$Path}");

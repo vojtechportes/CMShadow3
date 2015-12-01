@@ -125,10 +125,6 @@ Class Node Extends Minimal {
 		}
 	}
 
-	private function isVisible () {
-
-	}
-
 	private static function modulesConcat ($node, $template) {
 		$slots = array_merge_recursive((array) $node, (array) $template);
 		$output = array();
@@ -177,6 +173,9 @@ Class Node Extends Minimal {
 		if ($this->node) {
 			global $M;
 
+			if (!$this->checkNodeRights())
+				$this->node['Content'] = array();
+
 			$slots = self::modulesConcat($this->node['Content'], $this->template['Content']);
 			$content = array();
 			if ($slots) {
@@ -193,7 +192,6 @@ Class Node Extends Minimal {
 								$Encode = true;
 
 						ob_start();
-						var_dump($Right);
 						if ($Right) {
 							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
 						} else {
@@ -209,8 +207,6 @@ Class Node Extends Minimal {
 							$view = $Substitute->substitute((array) $this->stringtable, $view, $Encode);
 
 						}
-
-						//var_dump($view);
 
 						if ($OutputType === 'JSON') {
 							if (json_validate($view))
@@ -313,7 +309,7 @@ Class Node Extends Minimal {
 			redirect(ADMIN_PATH, "?source=login");
 		if ($this->nodeName != LOGIN_PATH && !$LoggedIn)
 			redirect(LOGIN_PATH, "?source=".$_SERVER["REQUEST_URI"]);
-		var_dump($this->node && $this->checkNodeRights());
+
 		if ($this->node && $this->checkNodeRights()) {
 			$this->getTemplate();
 			$this->loadTemplate();
