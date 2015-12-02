@@ -18,18 +18,13 @@ Class Stringtable Extends Minimal {
 	}
 
 	public function substitute (array $array, $string, $encode = false) {
-		/*if (mb_detect_encoding($string)) {
-			$string = html_entity_decode($string);
-		}*/
 		return preg_replace_callback($this->placeholder, function($matches) use ($array, $encode) {
-				
+				//var_dump($addslashes);
 				if (array_key_exists($matches[1], $array)) {
 					$args = array_values(array_filter($matches));
-					var_dump($args);
 					if (count($args) > 2) {
 						switch($args[2]) {
 							case "sprintf":
-
 									if (substr($args[3], 0, 2) === '[\\') {
 										$args[3] = str_replace('\\"', '"', $args[3]);
 										$args[3] = str_replace('\\\\"', '\\"', $args[3]);
@@ -38,14 +33,14 @@ Class Stringtable Extends Minimal {
 										if (!empty($args[3])) {
 											$args[3] = json_decode($args[3]);
 											array_unshift($args[3], $array[$args[1]]);
-											return call_user_func_array("sprintf", $args[3]);
+											return addslashes(call_user_func_array("sprintf", $args[3]));
 										}
 									} else {
-										return  sprintf($array[$args[1]], $args[3]);
+										return  addslashes(sprintf($array[$args[1]], $args[3]));
 									}					
 								break;
 							case "replace":
-									return  str_replace($args[3], $args[4], $array[$args[1]]);
+									return  addslashes(str_replace($args[3], $args[4], $array[$args[1]]));
 								break;
 						}
 					}

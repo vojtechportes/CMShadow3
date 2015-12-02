@@ -15,7 +15,17 @@ $Stringtable = array(
 	'page_settings-api-rights_title' => 'API Rights',
 	'pages_settings-config-pages_title' => 'Pages',
 	'pages_settings-admin-home_title' => 'Admin Home',
-	'pages_settings-config-triggers_title' => 'Triggers'	
+	'pages_settings-config-triggers_title' => 'Triggers',
+	'pages_page_list_th_id' => 'ID',	
+	'pages_page_list_th_title' => 'Title',
+	'pages_page_list_th_createdAt' => 'Created At',
+	'pages_page_list_th_modifiedAt' => 'Modified At',
+	'pages_page_list_th_status' => 'Status',
+	'pages_page_list_th_actions' => 'Actions',
+	'pages_page_list_action_edit' => 'Edit',
+	'pages_page_list_action_remove' => 'Remove',
+	'pages_page_list_action_publish' => 'Publish',
+	'pages_page_list_action_rollback' => 'Rollback'										
 )
 
 ?>

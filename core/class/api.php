@@ -126,10 +126,9 @@ Class API Extends Minimal {
 	protected function loadModule () {
 		if (Module::checkModuleRights($this->module)) {
 			ob_start();
-			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', compact($this->arguments) + array("OutputStyle" => "default-html", "OutputType" => "HTML"), false);
+			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', compact($this->arguments) + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true), false);
 			$output = ob_get_contents(); ob_end_clean();
-			//$this->output = array("__html" => htmlentities($output));
-			$this->output = array("__html" => $output);
+			$this->output = array("__html" => $output, "__stripslashes" => false);
 		}
 	}
 }

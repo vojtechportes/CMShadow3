@@ -314,14 +314,18 @@ Class Node Extends Minimal {
 			$this->getTemplate();
 			$this->loadTemplate();
 
-			return $this->view;
+			if ($this->template["OutputType"] === 'JSON') {
+				return $this->view;
+			} else {
+				return stripslashes($this->view);
+			}
 		} else {
 			if ($this->getTemplate($this->node['Template'], true)['OutputType'] === 'JSON') {
 				$Template = $this->getTemplate("error-json");
 			} else {
 				$Template = $this->getTemplate("error");
 			}
-			$this->loadTemplate();
+			$this->loadTemplate();		
 			return $this->view;
 		}
 	}

@@ -50,7 +50,7 @@ Class Module Extends Minimal {
 		$this->output[$key] = $value;
 	}
 
-	public function output () {
+	public function output ($unescape = true) {
 		global $Content;
 
 		if ($this->template !== false) {
@@ -68,7 +68,11 @@ Class Module Extends Minimal {
 				$Message->output();			
 			}
 			$html = ob_get_contents(); ob_end_clean();
-			echo $html;
+			if ($unescape) {
+				echo $html;
+			} else {
+				echo $html;
+			}
 		}
 	}
 
