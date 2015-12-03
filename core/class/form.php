@@ -231,7 +231,7 @@ Class Form Extends Minimal {
 		return array("result" => $result, "data" => $formData);
 	}
 
-	public function output () {
+	public function output ($return) {
 		$view = array();
 		$view['views'] = array();
 		$view['object'] = $this;
@@ -293,7 +293,7 @@ Class Form Extends Minimal {
 			}
 
 			ob_start();
-			parent::load(DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template, $view);
+			parent::load(DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template, $view + array('moduleReturn' => $return));
 			$html = ob_get_contents(); ob_end_clean();
 			echo $html;
 		}
