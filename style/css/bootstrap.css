@@ -6788,6 +6788,15 @@ body.login {
 .page-list td .glyphicon-alt.not-visible {
   color: #DDD;
 }
+.page-controls {
+  margin: 0 0 30px;
+}
+.page-controls .btn:not(.pull-right) {
+  margin: 0 15px 0 0;
+}
+.form-wrapper {
+  overflow: hidden;
+}
 .toolbar {
   position: relative;
   margin-bottom: 20px;
