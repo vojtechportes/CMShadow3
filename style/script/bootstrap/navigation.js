@@ -34,16 +34,16 @@
       settings.parent.left = controls.closed;
       settings.parent.right = -controls.closed;
       
-      $target.animate(settings.nav.start, 600); 
-      $navigation.animate(settings.parent, 600); 
-      $parent.animate(settings.parent, 600);  
+      $target.animate(settings.nav.start, 300); 
+      $navigation.animate(settings.parent, 300); 
+      $parent.animate(settings.parent, 300);  
     } else {
       settings.parent.left = controls.opened;
       settings.parent.right = controls.opened;
 
-      $target.animate(settings.nav, 600);       
-      $navigation.animate(settings.parent, 600); 
-      $parent.animate(settings.parent, 600);  
+      $target.animate(settings.nav, 300);       
+      $navigation.animate(settings.parent, 300); 
+      $parent.animate(settings.parent, 300);  
     }
   }
 
