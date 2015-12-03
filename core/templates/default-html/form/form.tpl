@@ -6,6 +6,7 @@
 			echo $row;
 		}
 		?>
-		
+
+		<div class="clearfix"></div>
 	</form>
 </div>

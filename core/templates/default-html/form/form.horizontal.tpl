@@ -14,4 +14,5 @@
 			<?php echo $return['input']; ?>
 		</div>
 	</div>
+	<div class="clearfix"></div>
 </div>

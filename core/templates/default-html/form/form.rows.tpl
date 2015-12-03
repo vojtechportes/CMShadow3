@@ -12,4 +12,5 @@
 		<?php echo $return['label']; ?>
 		<?php echo $return['input']; ?>
 	</div>
+	<div class="clearfix"></div>
 </div>
