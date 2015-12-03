@@ -5,15 +5,29 @@ function print_slot($slot, $array) {
 		echo $array[$slot];
 }
 
-function print_property($property, $array, $format = false) {
+function print_property($property, $array, $format = false, $return = false) {
 	if (array_key_exists($property, $array)) {
 		if (!$format) {
-			echo $array[$property];
+			if ($return) {
+				return  $array[$property];
+			} else {
+				echo $array[$property];
+			}
 		} else {
-			printf($format, $array[$property]);
+			if ($return) {
+				return sprintf($format, $array[$property]);
+			} else {
+				printf($format, $array[$property]);				
+			}
 		}
 	}
-	echo '';
+}
+
+function concat_property($property, $str, $array) {
+	if (array_key_exists($property, $array)) {
+		$array[$property] = $array[$property].$str;
+	}
+	return $array;
 }
 
 function redirect($path, $query) {
