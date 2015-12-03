@@ -14,7 +14,7 @@ Class Node Extends Minimal {
 	protected $node;
 	protected $nodes = array();
 	protected $nodeName;
-	protected $blacklist = ["Template", "Content", "Config"];
+	protected $blacklist = ["Template", "Content", "Config", "Scripts", "Styles"];
 
 	public function __construct () {
 		global $Path, $M;
@@ -193,7 +193,13 @@ Class Node Extends Minimal {
 
 						ob_start();
 						if ($Right) {
-							parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
+							ExceptionThrower::Start();
+							try {
+								parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
+							} catch (Exception $e) {
+								parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_not_found_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
+							}
+							ExceptionThrower::Stop();
 						} else {
 							parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_right_error', sprintf(".$module['module'].")}", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
 							
@@ -267,13 +273,26 @@ Class Node Extends Minimal {
 		}
 	}
 
+	private function concatAssets () {
+		if (!array_key_exists("Scripts", $this->template))
+			$this->template["Scripts"] = array();
+
+		if (!array_key_exists("Styles", $this->template))
+			$this->template["Styles"] = array();
+
+		if (!array_key_exists("Scripts", $this->node))
+			$this->node["Scripts"] = array();
+
+		if (!array_key_exists("Styles", $this->node))
+			$this->node["Styles"] = array();
+
+		$this->template['Scripts'] = $this->template['Scripts'] + $this->node['Scripts'];
+		$this->template['Styles'] = $this->template['Styles'] + $this->node['Styles'];
+	}
+
 	private function loadTemplate() {
 		if ($this->node) {
-			if (!array_key_exists("Scripts", $this->template))
-				$this->template["Scripts"] = array();
-
-			if (!array_key_exists("Styles", $this->template))
-				$this->template["Styles"] = array();
+			$this->concatAssets();
 
 			if (!array_key_exists("OutputType", $this->template))
 				$this->template["OutputType"] = "HTML";		
