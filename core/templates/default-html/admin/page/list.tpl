@@ -1,31 +1,37 @@
 <?php global $M; ?>
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>{_'pages_page_list_th_id'}</th>
-      <th>{_'pages_page_list_th_title'}</th>
-      <th>{_'pages_page_list_th_createdAt'}</th>
-      <th>{_'pages_page_list_th_modifiedAt'}</th>
-      <th>{_'pages_page_list_th_status'}</th>
-      <th>{_'pages_page_list_th_actions'}</th>
+<div class="page-list full">
+  <div class="clearfix"></div>
+  <hr>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{_'pages_page_list_th_title'}</th>
+        <th>{_'pages_page_list_th_createdAt'}</th>
+        <th>{_'pages_page_list_th_modifiedAt'}</th>
+        <th>{_'pages_page_list_th_status'}</th>
+        <th class="text-right">{_'pages_page_list_th_actions'}</th>
 
-    </tr>
-  </thead>
-  <tbody>
-<?php
-foreach ($return['pages'] as $id => $page) {
-	?>
-	<tr>
-		<td><?php echo $page['ID'] ?></td>
-		<td><?php echo $page['Title'] ?></td>
-		<td><?php echo $page['CreatedAt'] ?></td>
-		<td><?php echo $page['ModifiedAt'] ?></td>
-		<td></td>
-		<td></td>
-	</tr>	
-	<?php
+      </tr>
+    </thead>
+    <tbody>
+  <?php
+  foreach ($return['pages'] as $id => $page) {
+  	?>
+  	<tr>
+  		<td><span style="padding-left: <?php echo $page['Depth'] * 20 ?>px; display: inline-block;"><span title="<?php echo $page['ID']; ?>" class="glyphicon-alt glyphicon-larger <?php if (!$page['hasChildPages']) { echo 'glyphicon-alt-file'; } else { echo 'glyphicon-alt-folder-black'; } ?>"></span> <?php echo $page['Title'] ?></span></td>
+  		<td><?php echo $page['CreatedAt'] ?></td>
+  		<td><?php echo $page['ModifiedAt'] ?></td>
+  		<td>
+        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-eye <?php if ($page['Visible'] === NULL) { echo ' not-visible'; } ?>"></span>
+        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-<?php if ($page['Visible'] === NULL) { echo 'lock'; } else { echo 'unlock'; } ?>"></span>
 
-}
-?>
-  </tbody>
-</table>
+      </td>
+  		<td class="text-right"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-edit-frame"></span><span class="glyphicon-alt glyphicon-larger glyphicon-alt-ok"></span></td>
+  	</tr>	
+  	<?php
+
+  }
+  ?>
+    </tbody>
+  </table>
+</div>

@@ -137,10 +137,15 @@ Class Page Extends Minimal {
 			$pages = self::getPageList($parent);
 		}
 
-		foreach ($pages as $page) {	
+		foreach ($pages as $page) {
+			$isFolder = self::hasChildPages($page['ID']);
 			$page['Depth'] = $depth;
+			$page['hasChildPages'] = false;
+			if ($isFolder) $page['hasChildPages'] = true;
+
 			$this->pageTree[] = $page;		
 			if (self::hasChildPages($page['ID'])) {
+
 				self::getPageTree($detailed, $page['ID'], $depth + 1);
 			}
 		}

@@ -17,8 +17,20 @@
        url('@{icon-font-path}@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg');
 }
 
+@font-face{
+  font-family: 'Batch';
+  src:url('@{icon-font-alt-path}@{icon-font-alt-name}.eot');
+  src:url('@{icon-font-alt-path}@{icon-font-alt-name}?#iefix') format('embedded-opentype'),
+    url('@{icon-font-alt-path}@{icon-font-alt-name}.woff') format('woff'),
+    url('@{icon-font-alt-path}@{icon-font-alt-name}.ttf') format('truetype'),
+    url('@{icon-font-alt-path}@{icon-font-alt-name}.svg#@{icon-font-alt-svg-id}') format('svg');
+  font-weight:normal;
+  font-style:normal;
+}
+
 // Catchall baseclass
-.glyphicon {
+.glyphicon,
+.glyphicon-alt {
   position: relative;
   top: 1px;
   display: inline-block;
@@ -29,6 +41,193 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.glyphicon-alt {
+  font-family: 'Batch';
+}
+
+.glyphicon-larger {
+  font-size: 20px;
+}
+
+// Individual alt icons
+
+.glyphicon-alt-comment-left             { &:before { content: "\f000"; } }
+.glyphicon-alt-comment-center           { &:before { content: "\f001"; } }
+.glyphicon-alt-comment-right           { &:before { content: "\f002"; } }
+
+.glyphicon-alt-comment-full-left          { &:before { content: "\f003"; } }
+.glyphicon-alt-comment-full-center           { &:before { content: "\f004"; } }
+.glyphicon-alt-comment-full-right           { &:before { content: "\f005"; } }
+
+.glyphicon-alt-comment-black-left           { &:before { content: "\f006"; } }
+.glyphicon-alt-comment-black-center           { &:before { content: "\f007"; } }
+.glyphicon-alt-comment-black-right           { &:before { content: "\f008"; } }
+
+.glyphicon-alt-comments-left          { &:before { content: "\f009"; } }
+.glyphicon-alt-comments-right           { &:before { content: "\f00A"; } }
+
+.glyphicon-alt-window          { &:before { content: "\f00B"; } }
+.glyphicon-alt-window-plus           { &:before { content: "\f00C"; } }
+.glyphicon-alt-window-minus           { &:before { content: "\f00D"; } }
+.glyphicon-alt-window-cross           { &:before { content: "\f00E"; } }
+.glyphicon-alt-window-up           { &:before { content: "\f010"; } }
+.glyphicon-alt-window-down           { &:before { content: "\f011"; } }
+.glyphicon-alt-window-cmd           { &:before { content: "\f012"; } }
+.glyphicon-alt-windows          { &:before { content: "\f013"; } }
+
+.glyphicon-alt-window-full         { &:before { content: "\f014"; } }
+.glyphicon-alt-window-full-plus         { &:before { content: "\f015"; } }
+.glyphicon-alt-window-full-minus         { &:before { content: "\f016"; } }
+.glyphicon-alt-window-full-cross         { &:before { content: "\f017"; } }
+.glyphicon-alt-window-full-up         { &:before { content: "\f018"; } }
+.glyphicon-alt-window-full-down         { &:before { content: "\f019"; } }
+.glyphicon-alt-window-full-cmd         { &:before { content: "\f01A"; } }
+.glyphicon-alt-windows-full         { &:before { content: "\f01B"; } }
+.glyphicon-alt-windows-blank         { &:before { content: "\f01C"; } }
+
+.glyphicon-alt-plus         { &:before { content: "\f01D"; } }
+.glyphicon-alt-minus         { &:before { content: "\f01E"; } }
+.glyphicon-alt-selection         { &:before { content: "\f020"; } }
+.glyphicon-alt-selection-plus         { &:before { content: "\f021"; } }
+.glyphicon-alt-selection-minus         { &:before { content: "\f022"; } }
+.glyphicon-alt-selection-up         { &:before { content: "\f023"; } }
+.glyphicon-alt-selection-down         { &:before { content: "\f024"; } }
+
+.glyphicon-alt-text-frame         { &:before { content: "\f025"; } }
+
+.glyphicon-alt-group         { &:before { content: "\f026"; } }
+.glyphicon-alt-group-small         { &:before { content: "\f027"; } }
+.glyphicon-alt-list         { &:before { content: "\f028"; } }
+.glyphicon-alt-list-small         { &:before { content: "\f029"; } }
+
+.glyphicon-alt-in         { &:before { content: "\f02A"; } }
+.glyphicon-alt-out         { &:before { content: "\f02B"; } }
+
+.glyphicon-alt-download         { &:before { content: "\f02C"; } }
+.glyphicon-alt-upload         { &:before { content: "\f02D"; } }
+.glyphicon-alt-share         { &:before { content: "\f02E"; } }
+
+.glyphicon-alt-text-justify         { &:before { content: "\f030"; } }
+.glyphicon-alt-text-left         { &:before { content: "\f031"; } }
+.glyphicon-alt-text-center         { &:before { content: "\f032"; } }
+.glyphicon-alt-text-right         { &:before { content: "\f033"; } }
+
+.glyphicon-alt-text-image         { &:before { content: "\f040"; } }
+
+.glyphicon-alt-user-black         { &:before { content: "\f043"; } }
+.glyphicon-alt-user-white         { &:before { content: "\f044"; } }
+.glyphicon-alt-users              { &:before { content: "\f045"; } }
+
+.glyphicon-alt-user-black-frame         { &:before { content: "\f047"; } }
+.glyphicon-alt-user-white-frame         { &:before { content: "\f048"; } }
+
+.glyphicon-alt-heart-full         { &:before { content: "\f049"; } }
+.glyphicon-alt-heart-half         { &:before { content: "\f04A"; } }
+.glyphicon-alt-heart         { &:before { content: "\f04B"; } }
+
+.glyphicon-alt-cog        { &:before { content: "\f04C"; } }
+.glyphicon-alt-cog-bold         { &:before { content: "\f04D"; } }
+.glyphicon-alt-cogs         { &:before { content: "\f04E"; } }
+
+.glyphicon-alt-trash        { &:before { content: "\f056"; } }
+
+.glyphicon-alt-save        { &:before { content: "\f059"; } }
+.glyphicon-alt-calendar        { &:before { content: "\f05A"; } }
+.glyphicon-alt-calendar-days        { &:before { content: "\f05B"; } }
+.glyphicon-alt-calendar-time        { &:before { content: "\f05C"; } }
+
+.glyphicon-alt-clipboard        { &:before { content: "\f05D"; } }
+.glyphicon-alt-clipboard-full        { &:before { content: "\f05E"; } }
+
+.glyphicon-alt-cmd        { &:before { content: "\f05F"; } }
+
+.glyphicon-alt-logout        { &:before { content: "\f069"; } }
+
+.glyphicon-alt-mix        { &:before { content: "\f06A"; } }
+
+.glyphicon-alt-disc        { &:before { content: "\f06E"; } }
+
+.glyphicon-alt-camera        { &:before { content: "\f078"; } }
+
+.glyphicon-alt-point        { &:before { content: "\f07C"; } }
+
+.glyphicon-alt-clock        { &:before { content: "\f090"; } }
+.glyphicon-alt-jingjang        { &:before { content: "\f091"; } }
+.glyphicon-alt-empty        { &:before { content: "\f092"; } }
+.glyphicon-alt-disable        { &:before { content: "\f093"; } }
+
+.glyphicon-alt-eye        { &:before { content: "\f09A"; } }
+.glyphicon-alt-eye-large        { &:before { content: "\f09B"; } }
+
+.glyphicon-alt-fullscreen        { &:before { content: "\f0AB"; } }
+.glyphicon-alt-original        { &:before { content: "\f0AC"; } }
+.glyphicon-alt-fullscreen-arrows        { &:before { content: "\f0AD"; } }
+.glyphicon-alt-original-arrows        { &:before { content: "\f0AE"; } }
+
+.glyphicon-alt-tag        { &:before { content: "\f0A2"; } }
+.glyphicon-alt-tag-h       { &:before { content: "\f0A3"; } }
+.glyphicon-alt-tag-white        { &:before { content: "\f0A4"; } }
+.glyphicon-alt-tag-black        { &:before { content: "\f0A4"; } }
+
+.glyphicon-alt-refresh        { &:before { content: "\f0B0"; } }
+
+.glyphicon-alt-lock        { &:before { content: "\f0C2"; } }
+.glyphicon-alt-unlock       { &:before { content: "\f0C3"; } }
+
+.glyphicon-alt-circle        { &:before { content: "\f0C6"; } }
+.glyphicon-alt-circle-bold       { &:before { content: "\f0C7"; } }
+
+.glyphicon-alt-contacts        { &:before { content: "\f0CD"; } }
+.glyphicon-alt-contacts-email       { &:before { content: "\f0CE"; } }
+
+.glyphicon-alt-book        { &:before { content: "\f0D0"; } }
+.glyphicon-alt-book-text       { &:before { content: "\f0D1"; } }
+.glyphicon-alt-newspaper        { &:before { content: "\f0D2"; } }
+.glyphicon-alt-newspaper-text       { &:before { content: "\f0D3"; } }
+.glyphicon-alt-bill        { &:before { content: "\f0D4"; } }
+.glyphicon-alt-bill-alt     { &:before { content: "\fDC5"; } }
+
+.glyphicon-alt-database     { &:before { content: "\f0D7"; } }
+
+.glyphicon-alt-help     { &:before { content: "\f0DA"; } }
+
+.glyphicon-alt-user-wifi     { &:before { content: "\f0DD"; } }
+
+.glyphicon-alt-folder     { &:before { content: "\f0E0"; } }
+.glyphicon-alt-folder-plus     { &:before { content: "\f0E1"; } }
+.glyphicon-alt-folder-minus     { &:before { content: "\f0E2"; } }
+.glyphicon-alt-folders     { &:before { content: "\f0E3"; } }
+.glyphicon-alt-folder-black     { &:before { content: "\f0E4"; } }
+.glyphicon-alt-folder-black-plus     { &:before { content: "\f0E5"; } }
+.glyphicon-alt-folder-black-minus     { &:before { content: "\f0E6"; } }
+.glyphicon-alt-folders-black     { &:before { content: "\f0E7"; } }
+
+.glyphicon-alt-cloud     { &:before { content: "\f0E8"; } }
+
+.glyphicon-alt-file     { &:before { content: "\f10A"; } }
+.glyphicon-alt-file-plus     { &:before { content: "\f10B"; } }
+.glyphicon-alt-file-minus     { &:before { content: "\f10C"; } }
+
+.glyphicon-alt-layout-left     { &:before { content: "\f121"; } }
+.glyphicon-alt-layout-center     { &:before { content: "\f122"; } }
+.glyphicon-alt-layout-right     { &:before { content: "\f123"; } }
+
+.glyphicon-alt-note     { &:before { content: "\f129"; } }
+.glyphicon-alt-notes     { &:before { content: "\f12A"; } }
+
+
+.glyphicon-alt-bulb     { &:before { content: "\f12C"; } }
+.glyphicon-alt-bulb-white     { &:before { content: "\f12D"; } }
+
+.glyphicon-alt-alarm     { &:before { content: "\f133"; } }
+.glyphicon-alt-alarm-remove     { &:before { content: "\f135"; } }
+
+.glyphicon-alt-edit     { &:before { content: "\f139"; } }
+.glyphicon-alt-edit-frame     { &:before { content: "\f13D"; } }
+
+.glyphicon-alt-ok     { &:before { content: "\f164"; } }
+.glyphicon-alt-cross    { &:before { content: "\f165"; } }
 
 // Individual icons
 .glyphicon-asterisk               { &:before { content: "\2a"; } }

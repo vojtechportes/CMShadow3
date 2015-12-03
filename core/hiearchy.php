@@ -42,8 +42,8 @@ $Hiearchy = array(
 			),
 			"Content" => array(
 				"main" => array(
-					array("module" => "admin/page/api/list-loader"),
-					array("module" => "admin/page/form")
+					array("module" => "admin/page/form"),
+					array("module" => "admin/page/api/list-loader")
 				)
 			)
 		),
