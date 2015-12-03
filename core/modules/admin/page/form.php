@@ -1,15 +1,23 @@
 <?php
 global $M, $Path;
-
 if ($M->_GET("success")) {
 	$Message = new Module();
-	$Message->addModule(new Message(), array("html" => "{_'forms_page_form_created', sprintf([\"{$M->_GET("name")}\", \"{$M->_GET("path")}\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->addModule(new Message(), array("html" => "{_'forms_page_form_created', sprintf([\"{$M->_GET("name")}\", \"{$M->_GET("path")}?form_open=1\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();
 } else if ($M->_GET("error")) {
 	$Message = new Module();
 	$Message->addModule(new Message(), array("html" => "{_'forms_page_form_error', sprintf([\"{$M->_GET("name")}\", \"{$M->_GET("path")}\"])}", "class" => "alert-error", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();		
 } else {
+	if ($M->_GET('form_open') === '1') {
+		$return = concat_property('class', ' in', $return);
+	}
+
+	$Code = new Module();
+	$Code->template = '/code';
+	$Code->addModule(false, array("html" => '<div class="form-wrapper '.print_property('class', $return, false, true).'"><div class="clearfix"></div>'));
+	$Code->output();
+
 	$Message = new Module();
 	$Message->addModule(new Message(), array("html" => "{_'forms_page_form_help'}", "class" => "alert-info", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();
@@ -49,7 +57,7 @@ if ($M->_GET("success")) {
 	$form->addElement(new FormElement_Checkbox("{_'forms_page_visible'}", "visible", array("required" => false, "value" => "1", "classInput" => " ")));
 	$form->addElement(new FormElement_Submit(false, "submit", array("value" => "{_'forms_page_submit'}", "classInput" => "btn btn-block btn-primary")));
 
-	$Output = $form->output();
+	$Output = $form->output($return);
 
 	if ($Output) {
 		$Page = new Page();
@@ -73,5 +81,10 @@ if ($M->_GET("success")) {
 			redirect("{$Path}?error&name={$Page->name}&path={$Path}");
 		}
 	}
+
+	$Code = new Module();
+	$Code->template = '/code';
+	$Code->addModule(false, array("html" => '<div class="clearfix"></div></div>'));
+	$Code->output();
 }
 ?>

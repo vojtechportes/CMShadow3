@@ -5,5 +5,7 @@
 		echo $row;
 	}
 	?>
-	
+
+	<div class="clearfix"></div>
+	<hr>
 </form>
