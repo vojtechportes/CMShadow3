@@ -47,8 +47,8 @@ Class Minimal {
 			}
 			array_unshift($result, $__result);
 			return $result;
-		}	
-		return array($__result);
+		}			
+		return array($__result);				
 	}
 
 	public static function getLastID ($Table) {
