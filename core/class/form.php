@@ -275,7 +275,7 @@ Class Form Extends Minimal {
 					ob_start();
 					echo $element->getAttribute("html");
 				} else {
-					if ($className == 'FormElement_TextHidden') {
+					if ($className == 'FormElement_TextHidden' || $className == 'FormElement_Hidden') {
 						$output = array('input' => $element->output());
 						$type = "hidden";
 					} else {
