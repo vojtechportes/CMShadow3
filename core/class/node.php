@@ -286,8 +286,8 @@ Class Node Extends Minimal {
 		if (!array_key_exists("Styles", $this->node))
 			$this->node["Styles"] = array();
 
-		$this->template['Scripts'] = $this->template['Scripts'] + $this->node['Scripts'];
-		$this->template['Styles'] = $this->template['Styles'] + $this->node['Styles'];
+		$this->template['Scripts'] = array_merge($this->node['Scripts'], $this->template['Scripts']);
+		$this->template['Styles'] = array_merge($this->node['Styles'], $this->template['Styles']);
 	}
 
 	private function loadTemplate() {
