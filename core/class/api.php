@@ -48,10 +48,7 @@ Class API Extends Minimal {
 	}
 
 	public function proceed () {
-		$result = array('key' => $this->key, 'action' => $this->action);
-
-		//var_dump($this);
-
+		$result = array('key' => $this->key, 'action' => $this->action, 'arguments' => $this->arguments);
 		if ($this->validate()) {
 			$r = $this->{$this->command}();
 
@@ -124,9 +121,16 @@ Class API Extends Minimal {
 	}
 
 	protected function loadModule () {
+
 		if (Module::checkModuleRights($this->module)) {
 			ob_start();
-			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', compact($this->arguments) + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true), false);
+
+			global $M;
+			$M->debug($this);
+
+			/* in parent::load static function, $this->arguments was originally compacted for some reason (compact($this->arguments)) */
+
+			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', $this->arguments + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true), false);
 			$output = ob_get_contents(); ob_end_clean();
 			$this->output = array("__html" => $output, "__stripslashes" => false);
 		}

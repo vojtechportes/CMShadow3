@@ -4,7 +4,7 @@ $action 	= filter_input(INPUT_POST, "action");
 $key 		= filter_input(INPUT_POST, "key");
 $value 		= filter_input(INPUT_POST, "value");
 $type 		= filter_input(INPUT_POST, "type");
-$arguments 		= filter_input(INPUT_POST, "arguments");
+$arguments 		= filter_input(INPUT_POST, "arguments", FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
 $module 		= filter_input(INPUT_POST, "module");
 $message 		= filter_input(INPUT_POST, "message");
 
@@ -12,7 +12,7 @@ if (!isset($key)) $key = false;
 if (!isset($value)) $value = false;
 if (!isset($module)) $module = false;
 if (!isset($action)) $action = false;
-if (!isset($arguments)) $arguments = false;
+if (!isset($arguments) || !is_array($arguments)) $arguments = false;
 if (!isset($message)) { $message = true; } else { if ($message === "false") { $message = false; } else { $message = true; }}
 
 $API = new API();
