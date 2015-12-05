@@ -125,10 +125,10 @@ Class API Extends Minimal {
 		if (Module::checkModuleRights($this->module)) {
 			ob_start();
 
-			global $M;
-			$M->debug($this);
-
 			/* in parent::load static function, $this->arguments was originally compacted for some reason (compact($this->arguments)) */
+
+			if (!$this->arguments)
+				$this->arguments = array();
 
 			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', $this->arguments + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true), false);
 			$output = ob_get_contents(); ob_end_clean();
