@@ -93,11 +93,11 @@ Class Page Extends Minimal {
 	public function getPageList ($parent = 0) {
 		global $DB, $M;
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributes()}
+		{$this->getPageAttributes()},
+		(SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent`) AS numChildPages		
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
 		ON (T_Pages.`ID` = T_PageDetails.`Page`) WHERE T_Pages.`Parent` = :Parent");
-		//$M->debug($Stm);
 		$Stm->execute(array(
 			':Parent' => $parent
 		));
@@ -107,7 +107,8 @@ Class Page Extends Minimal {
 	public function getPageListDetailed ($parent = 0) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributesDetailed()}
+		{$this->getPageAttributesDetailed()},
+		(SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent`) AS numChildPages
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
 		ON T_Pages.`ID` = T_PageDetails.`Page` WHERE T_Pages.`Parent` = :Parent");
@@ -115,17 +116,6 @@ Class Page Extends Minimal {
 			':Parent' => $parent
 		));
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);		
-	}
-
-	private function hasChildPages ($parent = 0) {
-		global $DB;
-		$Stm = $DB->prepare("SELECT `ID` FROM T_Pages WHERE `Parent` = :Parent");
-		$Stm->execute(array(
-			':Parent' => $parent
-		));
-		if ($Stm->rowCount() > 0)
-			return true;
-		return false;
 	}
 
 	public function getPageTree ($detailed = false, $parent = 0, $depth = 0) {
@@ -138,14 +128,9 @@ Class Page Extends Minimal {
 		}
 
 		foreach ($pages as $page) {
-			$isFolder = self::hasChildPages($page['ID']);
 			$page['Depth'] = $depth;
-			$page['hasChildPages'] = false;
-			if ($isFolder) $page['hasChildPages'] = true;
-
 			$this->pageTree[] = $page;		
-			if (self::hasChildPages($page['ID'])) {
-
+			if ($page['numChildPages'] > 0) {
 				self::getPageTree($detailed, $page['ID'], $depth + 1);
 			}
 		}

@@ -23,6 +23,22 @@ Class PageList Extends Module {
 				$this->output['pages'] = $Pages->pageTree;
 				$this->output['detailed'] = true;
 				break;
+			case 'getPageListByParent':
+				$Pages = new Page();
+				$Pages = $Pages->getPageList($id);
+
+				$this->template = '/admin/page/folders';
+				$this->output['pages'] = $Pages;
+				$this->output['detailed'] = false;
+				break;
+			case 'getPageListByParentDetailed':
+				$Pages = new Page();
+				$Pages = $Pages->getPageListDetailed($id);
+
+				$this->template = '/admin/page/folders';
+				$this->output['pages'] = $Pages;
+				$this->output['detailed'] = true;
+				break;
 		}
 	}
 
