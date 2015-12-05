@@ -81,8 +81,6 @@ CMSAPI.prototype = {
 			});
 	},
 	"gadgets": function (query, cberror, cbsuccess) {
-		console.log('loadContent');
-
 		if (!this.validate(query))
 			return;
 
@@ -97,19 +95,17 @@ CMSAPI.prototype = {
 			});
 	},
 	"loadModule": function (query, cberror, cbsuccess) {
-		console.log('loadContent');
-		console.log(query);
 		if (!this.validate(query))
 			return;
 
 		$.post(this.path, query)
 			.done(function(data) {
-				console.log(data);
-				if (typeof cbsuccess !== 'undefined')
-					cbsuccess.call(data);
+				if (typeof cbsuccess !== 'undefined') {
+					console.log('apiReload.' + query.module.replace('/', '-'));
+					$(window).trigger('apiReload.' + query.module);
+				}
 			})
 			.fail(function(data) {
-				console.log(data);
 				if (typeof cberror !== 'undefined')
 					cberror.call(data.responseJSON);
 			});
