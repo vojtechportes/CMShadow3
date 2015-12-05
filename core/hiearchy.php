@@ -41,13 +41,13 @@ $Hiearchy = array(
 				)
 			),
 			"Scripts" => array(
-				"style/script/application-modules/pagelist.js"
+				array("style/script/application-modules/pagelist.js")
 			),
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/page/controls"),
 					array("module" => "admin/page/form", "class" => "collapse page-form-element"),
-					array("module" => "admin/page/api/list.loader")
+					array("module" => "admin/page/api/folders.loader")
 				)
 			)
 		),
