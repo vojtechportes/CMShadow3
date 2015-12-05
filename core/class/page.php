@@ -90,6 +90,20 @@ Class Page Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);			
 	}
 
+	public function getPageByParent ($id) {
+		global $DB;
+		$Stm = $DB->prepare("SELECT
+		{$this->getPageAttributesDetailed()}
+		FROM T_Pages
+		LEFT JOIN T_PageDetails
+		ON T_Pages.`ID` = T_PageDetails.`Page` WHERE T_Pages.`Parent` = :Parent LIMIT 1");			
+		$Stm->execute(array(
+			':Parent' => $id
+		));
+		return $Stm->fetch(PDO::FETCH_ASSOC);			
+	}
+
+
 	public function getPageList ($parent = 0) {
 		global $DB, $M;
 		$Stm = $DB->prepare("SELECT

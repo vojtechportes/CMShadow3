@@ -25,18 +25,28 @@ Class PageList Extends Module {
 				break;
 			case 'getPageListByParent':
 				$Pages = new Page();
-				$Pages = $Pages->getPageList($id);
+				$List = $Pages->getPageList($id);
+
+				if ((int) $id !== 0) {
+					$ParentPage = $Pages->getPageById($id);
+					$this->output['from'] = $ParentPage['Parent'];
+				}
 
 				$this->template = '/admin/page/folders';
-				$this->output['pages'] = $Pages;
+				$this->output['pages'] = $List;
 				$this->output['detailed'] = false;
 				break;
 			case 'getPageListByParentDetailed':
 				$Pages = new Page();
-				$Pages = $Pages->getPageListDetailed($id);
+				$List = $Pages->getPageListDetailed($id);
+
+				if ((int) $id !== 0) {
+					$ParentPage = $Pages->getPageById($id);
+					$this->output['from'] = $ParentPage['Parent'];
+				}
 
 				$this->template = '/admin/page/folders';
-				$this->output['pages'] = $Pages;
+				$this->output['pages'] = $List;
 				$this->output['detailed'] = true;
 				break;
 		}

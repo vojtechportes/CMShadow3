@@ -1,7 +1,3 @@
-<?php
-global $M;
-$M->debug($return);
-?>
 <div class="page-list full">
   <div class="clearfix"></div>
   <table class="table">
@@ -16,8 +12,8 @@ $M->debug($return);
       </tr>
     </thead>
     <tbody>
-   	<tr>
-  		<td colspan="5" <?php if (array_key_exists('id', $return['arguments'])) { ?> data-haschildpages data-arguments='{"parent": "<?php echo $return['arguments']['id']; ?>"}' <?php } ?>>
+   	<tr class="levelup <?php if (array_key_exists('from', $return)) { echo "clickable "; } ?>">
+  		<td colspan="5" <?php if (array_key_exists('from', $return)) { ?> data-haschildpages data-arguments='{"parent": "<?php echo $return['from']; ?>"}' <?php } ?>>
   			<span class="glyphicon-alt glyphicon-alt-back glyphicon-larger"></span><span> {_'pages_page_list_level_up'}</span>
   		</td>
   	</tr>   
@@ -25,8 +21,8 @@ $M->debug($return);
   foreach ($return['pages'] as $id => $page) {
   	?>
 
-  	<tr>
-  		<td <?php if ((int) $page['numChildPages'] > 0) { echo "data-haschildpages data-arguments='{\"parent\": \"{$page['ID']}\", \"id\": \"{$page['Parent']}\"}'"; } ?>><span style="padding-left: <?php echo $page['Depth'] * 20 ?>px; display: inline-block;"><span title="<?php echo $page['ID']; ?>" class="glyphicon-alt glyphicon-larger <?php if ((int) $page['numChildPages'] === 0) { echo 'glyphicon-alt-file'; } else { echo 'glyphicon-alt-folder-black'; } ?>"></span> <?php echo $page['Title'] ?></span></td>
+  	<tr class="item <?php if ($page['numChildPages'] > 0) { echo "clickable "; } ?>">
+  		<td <?php if ((int) $page['numChildPages'] > 0) { echo "data-haschildpages data-arguments='{\"parent\": \"{$page['ID']}\", \"from\": \"{$page['Parent']}\"}'"; } ?>><span style="padding-left: <?php echo $page['Depth'] * 20 ?>px; display: inline-block;"><span title="<?php echo $page['ID']; ?>" class="glyphicon-alt glyphicon-larger <?php if ((int) $page['numChildPages'] === 0) { echo 'glyphicon-alt-file'; } else { echo 'glyphicon-alt-folder-black'; } ?>"></span> <?php echo $page['Title'] ?></span></td>
   		<td><?php echo $page['CreatedAt'] ?></td>
   		<td><?php echo $page['ModifiedAt'] ?></td>
   		<td>
@@ -34,7 +30,9 @@ $M->debug($return);
         <span class="glyphicon-alt glyphicon-larger glyphicon-alt-<?php if ($page['Locked'] === NULL) { echo 'lock'; } else { echo 'unlock'; } ?>"></span>
 
       </td>
-  		<td class="text-right"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-edit-frame"></span><span class="glyphicon-alt glyphicon-larger glyphicon-alt-ok"></span></td>
+  		<td class="text-right">
+        <a href="#" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-edit-frame"></span></a>
+        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-ok"></span></td>
   	</tr>	
   	<?php
 
