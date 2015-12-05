@@ -18,8 +18,7 @@ Class Stringtable Extends Minimal {
 	}
 
 	public function substitute (array $array, $string, $encode = false) {
-		return preg_replace_callback($this->placeholder, function($matches) use ($array, $encode) {
-				//var_dump($addslashes);
+		return preg_replace_callback($this->placeholder, function($matches) use ($array, $encode) {				
 				if (array_key_exists($matches[1], $array)) {
 					$args = array_values(array_filter($matches));
 					if (count($args) > 2) {
