@@ -26,8 +26,9 @@ $Stringtable = array(
 	'pages_page_list_action_remove' => 'Remove',
 	'pages_page_list_action_publish' => 'Publish',
 	'pages_page_list_action_rollback' => 'Rollback',
+	'pages_page_list_level_up' => 'Level up',
 	'pages_page_controls_create_page' => 'Create page',
-	'pages_page_controls_create_project' => 'Create project'										
+	'pages_page_controls_create_project' => 'Create project'											
 )
 
 ?>
