@@ -5769,6 +5769,26 @@ button.close {
   border: 0;
   -webkit-appearance: none;
 }
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eeeeee;
+  border-left-width: 5px;
+  border-radius: 0;
+  background: #FFF;
+}
+.bs-callout h3 {
+  margin-top: 0;
+}
+.bs-callout.bs-callout-danger {
+  border-left-color: #ce4844;
+}
+.bs-callout.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+.bs-callout.bs-callout-info {
+  border-left-color: #1b809e;
+}
 .modal-open {
   overflow: hidden;
 }
@@ -6771,6 +6791,18 @@ body.login {
 }
 .page-list {
   margin: 30px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.page-list tr.levelup:not(.clickable) {
+  color: #777777;
+}
+.page-list tr.clickable:hover td {
+  background: #eeeeee;
+}
+.page-list tr.clickable td:first-child {
+  cursor: pointer;
 }
 .page-list td {
   padding: 12px 15px !important;
@@ -6778,6 +6810,9 @@ body.login {
 }
 .page-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
+}
+.page-list td .nolink {
+  color: #333333;
 }
 .page-list td .glyphicon-alt {
   margin-right: 10px;
