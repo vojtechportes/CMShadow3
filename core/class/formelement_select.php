@@ -10,7 +10,13 @@ Class FormElement_Select Extends FormElement {
 			$selected = $this->getAttribute("selected");
 		}
 
-		$str = '<select class="'.$this->getAttribute("classInput").'" id="'.$this->getAttribute("id").'" name="'.$this->getAttribute("name").'"';
+		if ($this->getAttribute("multiple")) {
+			$multiple = "multiple";
+		} else {
+			$multiple = "";
+		}
+
+		$str = '<select class="'.$this->getAttribute("classInput").'" '.$multiple.' id="'.$this->getAttribute("id").'" name="'.$this->getAttribute("name").'"';
 		if ((bool) $this->getAttribute("required"))
 			$str .= ' required';
 		$str .= '>';
