@@ -185,7 +185,7 @@ Class Form Extends Minimal {
 		foreach ($this->elements as $element) {
 			$className = $element->getAttribute("className");
 			if ($className != 'FormElement_HTML') {
-				if ($className === 'FormElement_Select') {
+				if ($className === 'FormElement_Select' && $element->getAttribute('multiple')) {
 						$value = filter_input($this->filterInput, str_replace('[]', '', $element->getAttribute("name")), FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
 				} else {
 						$value = filter_input($this->filterInput, $element->getAttribute("name"), FILTER_SANITIZE_SPECIAL_CHARS);
