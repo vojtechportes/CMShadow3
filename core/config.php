@@ -32,4 +32,7 @@ define('TEMPLATE', './core/template.php');
 
 define('ADMIN_PATH', '/admin/');
 define('LOGIN_PATH', '/admin/login/');
+
+define('LIMIT_OFFSET', 0);
+define('LIMIT_CNT', 20);
 ?>
