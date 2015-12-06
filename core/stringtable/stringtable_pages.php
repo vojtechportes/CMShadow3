@@ -32,16 +32,7 @@ $Stringtable = array(
 	'pages_page_list_action_rollback' => 'Rollback',
 	'pages_page_list_level_up' => 'Level up',
 	'pages_page_controls_create_page' => 'Create page',
-	'pages_page_controls_create_project' => 'Create project',
-
-	/* Project List */
-    'pages_project_list_th_id' => 'ID',     
-    'pages_project_list_th_name' => 'Name',
-    'pages_project_list_th_description' => 'Description',
-    'pages_project_list_th_createdAt' => 'Created At',
-    'pages_project_list_th_modifiedAt' => 'Modified At',
-    'pages_project_list_th_status' => 'Status',
-    'pages_project_list_th_actions' => 'Actions'						
+	'pages_page_controls_create_project' => 'Create project'					
 )
 
 ?>
