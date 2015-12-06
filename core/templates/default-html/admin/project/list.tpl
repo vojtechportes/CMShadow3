@@ -3,12 +3,12 @@
   <table class="table">
     <thead>
       <tr>
-        <th>{_'pages_project_list_th_id'}</th>      
-        <th>{_'pages_project_list_th_name'}</th>
-        <th>{_'pages_project_list_th_createdAt'}</th>
-        <th>{_'pages_project_list_th_modifiedAt'}</th>
-        <th>{_'pages_project_list_th_status'}</th>        
-        <th class="text-right">{_'pages_project_list_th_actions'}</th>
+        <th>{_'projects_project_list_th_id'}</th>      
+        <th>{_'projects_project_list_th_name'}</th>
+        <th>{_'projects_project_list_th_createdAt'}</th>
+        <th>{_'projects_project_list_th_modifiedAt'}</th>
+        <th>{_'projects_project_list_th_status'}</th>        
+        <th class="text-right">{_'projects_project_list_th_actions'}</th>
 
       </tr>
     </thead>
