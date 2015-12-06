@@ -1,8 +1,10 @@
 <?php
 
 $Stringtable = array(
+	/* Page Names */
 	'pages_admin_title' => 'Administration',
 	'pages_pages_title' => 'Pages',	
+	'pages_projects_title' => 'Projects',	
 	'pages_templates_title' => 'Templates',
 	'pages_stringtables_title' => 'Stringtables',
 	'pages_catalog_title' => 'Catalog',
@@ -16,6 +18,8 @@ $Stringtable = array(
 	'pages_settings-config-pages_title' => 'Pages',
 	'pages_settings-admin-home_title' => 'Admin Home',
 	'pages_settings-config-triggers_title' => 'Triggers',
+	
+	/* Page List */
 	'pages_page_list_th_id' => 'ID',	
 	'pages_page_list_th_title' => 'Title',
 	'pages_page_list_th_createdAt' => 'Created At',
@@ -28,7 +32,15 @@ $Stringtable = array(
 	'pages_page_list_action_rollback' => 'Rollback',
 	'pages_page_list_level_up' => 'Level up',
 	'pages_page_controls_create_page' => 'Create page',
-	'pages_page_controls_create_project' => 'Create project'											
+	'pages_page_controls_create_project' => 'Create project',
+
+	/* Project List */
+    'pages_project_list_th_id' => 'ID',     
+    'pages_project_list_th_title' => 'Title',
+    'pages_project_list_th_createdAt' => 'Created At',
+    'pages_project_list_th_modifiedAt' => 'Modified At',
+    'pages_project_list_th_status' => 'Status',
+    'pages_project_list_th_actions' => 'Actions'						
 )
 
 ?>
