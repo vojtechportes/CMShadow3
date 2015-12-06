@@ -109,11 +109,14 @@ Class Form Extends Minimal {
 	}
 
 	public function getAttribute ($attribute) {
-		if (isset($this->attributes[$attribute]))
+		if (isset($this->attributes[$attribute])) {
 			return $this->attributes[$attribute];
+		}
 	}
 
 	public function isValid ($arguments) {
+		global $M;
+
 		$isValid["result"] = true;
 		$isValid["equalTo"] = true;
 		$isValid["maxLength"] = true;
@@ -122,9 +125,16 @@ Class Form Extends Minimal {
 		$isValid["required"] = true;
 
 		if ($arguments["required"]) {
-			if (strlen($arguments["value"]) == 0) {
-				$isValid["result"] = false;
-				$isValid["required"] = false;
+			if (is_array($arguments["value"])) {
+				if (!empty($arguments["value"]) == 0) {
+					$isValid["result"] = false;
+					$isValid["required"] = false;
+				}
+			} else {
+				if (strlen($arguments["value"]) == 0) {
+					$isValid["result"] = false;
+					$isValid["required"] = false;
+				}				
 			}
 		}
 
@@ -167,6 +177,7 @@ Class Form Extends Minimal {
 	}
 
 	public function validate () {
+		global $M;
 		$result = true;
 		$errorMessages = array();
 		$postData = array();
@@ -174,8 +185,11 @@ Class Form Extends Minimal {
 		foreach ($this->elements as $element) {
 			$className = $element->getAttribute("className");
 			if ($className != 'FormElement_HTML') {
-				$value = filter_input($this->filterInput, $element->getAttribute("name"), FILTER_SANITIZE_SPECIAL_CHARS);
-
+				if ($className === 'FormElement_Select') {
+						$value = filter_input($this->filterInput, str_replace('[]', '', $element->getAttribute("name")), FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+				} else {
+						$value = filter_input($this->filterInput, $element->getAttribute("name"), FILTER_SANITIZE_SPECIAL_CHARS);
+				}
 				switch ($className) {
 					case 'FormElement_Radio':
 					case 'FormElement_Checkbox':
@@ -188,7 +202,9 @@ Class Form Extends Minimal {
 						$element->setAttribute("selected", $value);
 						break;	
 					case 'FormElement_Text':
+					case 'FormElement_Textarea':
 					case 'FormElement_HiddenText':
+					case 'FormElement_Hidden':
 						$element->setAttribute("value", $value);						
 						break;
 				}

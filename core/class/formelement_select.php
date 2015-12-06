@@ -23,7 +23,7 @@ Class FormElement_Select Extends FormElement {
 
 		foreach ($options as $value => $text) {
 			$str .= '<option value="'.$value.'"';
-			if ($value == $selected && $selected !== false) {
+			if ($value == $selected || in_array($value, $selected) && $selected !== false) {
 				$str .= ' selected';
 			}
 			$str .= '>'.$text.'</option>';
