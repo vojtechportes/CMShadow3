@@ -6,7 +6,7 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 	$Message->output();
 } else if ($M->_GET("error") && $M->_GET("form") === 'project-form') {
 	$Message = new Module();
-	$Message->addModule(new Message(), array("html" => "{_'forms_project_form_error', sprintf([\"{$M->_GET("name")}\", \"{$M->_GET("path")}\"])}", "class" => "alert-error", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->addModule(new Message(), array("html" => "{_'forms_project_form_error', sprintf([\"{$M->_GET("name")}\", \"{$M->_GET("path")}\"])}", "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();		
 } else {
 	if ($M->_GET('form_open') === 'project-form-element') {
@@ -35,21 +35,18 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 		}
 	}
 
-	$FormID = uniqid('form_');
-
-	$form = new Form ();
+	$form = new Form ('form_project');
 	$form->method = 'POST';
 	$form->type = 'rows';
 	$form->template = '/admin/project/form';
 	$form->classInput = 'form-control';
 
-	$form->addElement(new FormElement_Text("{_'forms_project_name'}", $FormID."name", array("required" => true)));
-	$form->addElement(new FormElement_Text("{_'forms_project_release_date'}", $FormID."release_date", array("required" => true)));
-	$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", $FormID."description", array("required" => true)));	
-	$form->addElement(new FormElement_Select("{_'forms_project_owners'}", $FormID."owners", array("required" => true, "multiple" => true, "options" => $_userlist)));
-	$form->addElement(new FormElement_Select("{_'forms_project_editors'}", $FormID."editors", array("required" => true, "multiple" => true, "options" => $_userlist)));
+	$form->addElement(new FormElement_Text("{_'forms_project_name'}", "name", array("required" => true)));
+	$form->addElement(new FormElement_Text("{_'forms_project_release_date'}", "release_date", array("required" => true)));
+	$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", "description", array("required" => true)));	
+	$form->addElement(new FormElement_Select("{_'forms_project_owners'}", "owners[]", array("required" => true, "multiple" => true, "options" => $_userlist)));
+	$form->addElement(new FormElement_Select("{_'forms_project_editors'}", "editors[]", array("required" => false, "multiple" => true, "options" => $_userlist)));
 	$form->addElement(new FormElement_Submit(false, "submit_project", array("value" => "{_'forms_project_submit'}", "classInput" => "btn btn-block btn-primary")));
-	$form->addElement(new FormElement_Hidden(false, "formid", array("value" => $FormID)));
 
 	$Output = $form->output($return);
 
@@ -58,16 +55,15 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 
 		/* Project */
 
-		$FormID = filter_input(INPUT_POST, "formid");
-
-		$Project->name = filter_input(INPUT_POST, $FormID."name");
-		$Project->desription = filter_input(INPUT_POST, $FormID."description");
-		$Project->relese_date = filter_input(INPUT_POST, $FormID."release_date");
+		$Project->name = filter_input(INPUT_POST, "name");
+		$Project->description = filter_input(INPUT_POST, "description");
+		$Project->relese_date = filter_input(INPUT_POST, "release_date");
 
 		/* Project Owners */
-		$Project->owners = filter_input(INPUT_POST, $FormID."owners");	
-		
-		if ($LastID = $Project->createProject() && $Project->setOwners($LastID)) {
+		$Project->owners = filter_input(INPUT_POST, "owners", FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+		$Project->editors = filter_input(INPUT_POST, "editors", FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);		
+
+		if ($Project->createProject() && $Project->setProjectOwners()) {
 			redirect("{$Path}?success&name={$Project->name}&path={$Path}&projectID={$LastID}&form=project-form");
 		} else {
 			redirect("{$Path}?error&name={$Project->name}&path={$Path}&form=project-form");
