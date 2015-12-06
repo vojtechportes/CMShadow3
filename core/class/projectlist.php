@@ -11,10 +11,12 @@ Class ProjectList Extends Module {
 				$Projects = new Project();
 				$ProjectList = $Projects->getProjects($limit);
 				$ProjectCount = $Projects->getProjectCount();
+				$StatusList = $Projects->getProjectStatusList();
 
 				$this->template = '/admin/project/list';
 				$this->output['projects'] = $ProjectList;
 				$this->output['count'] = $ProjectCount['ProjectCount'];
+				$this->output['statusList'] = $StatusList;
 				break;
 		}
 	}

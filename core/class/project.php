@@ -15,8 +15,21 @@ Class Project Extends Minimal {
 		T_Projects.`Name`,
 		T_Projects.`Description`,
 		T_Projects.`ReleaseDate`,
+		T_Projects.`Status`,
 		T_Projects.`CreatedAt`,
 		T_Projects.`ModifiedAt`";		
+	}
+
+	public function getProjectStatusList () {
+		return array(
+			"1" => array("{_'projects_status_type_1'}", "badge-info"),
+			"2" => array("{_'projects_status_type_2'}", "badge-empty"),
+			"3" => array("{_'projects_status_type_3'}", "badge-primary"),
+			"4" => array("{_'projects_status_type_4'}", "badge-warning"),
+			"5" => array("{_'projects_status_type_5'}", "badge-success"),
+			"6" => array("{_'projects_status_type_6'}", "badge-warning"),
+			"7" => array("{_'projects_status_type_7'}", "badge-warning")							
+		);
 	}
 
 	public function createProject () {
@@ -76,12 +89,22 @@ Class Project Extends Minimal {
 
 	public function getProjects ($limit = array(0, 20), $order = 'DESC') {
 		global $DB, $M;
+		$UserID = User::getUserID();
+
 		$Stm = $DB->prepare("SELECT
-			{$this->getProjectAttributes()}
+			{$this->getProjectAttributes()},
+			(SELECT COUNT(`ID`)
+				FROM T_ProjectOwners
+				WHERE T_ProjectOwners.`Project` = T_Projects.`ID`
+				AND T_ProjectOwners.`User` = :UserID
+				LIMIT 1)
+			AS HasRights
 			FROM T_Projects
 			ORDER BY T_Projects.`ID` {$order}
 			LIMIT {$limit[0]}, {$limit[1]}");
-		$Stm->execute();
+		$Stm->execute(array(
+			":UserID" => $UserID
+		));
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);
 	}
 
