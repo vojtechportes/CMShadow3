@@ -4902,8 +4902,9 @@ a.label:focus {
   border-radius: 10px;
 }
 .badge.badge-empty {
-  border: 1px solid #777777;
+  border: 1px solid #555555;
   background: none;
+  color: #555555;
 }
 .badge.badge-primary {
   background: #337ab7;
