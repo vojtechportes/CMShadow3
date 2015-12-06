@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th>{_'pages_project_list_th_id'}</th>      
-        <th>{_'pages_project_list_th_title'}</th>
+        <th>{_'pages_project_list_th_name'}</th>
         <th>{_'pages_project_list_th_createdAt'}</th>
         <th>{_'pages_project_list_th_modifiedAt'}</th>
         <th>{_'pages_project_list_th_status'}</th>        
@@ -17,7 +17,12 @@
   foreach ($return['projects'] as $id => $project) {
   	?>
   	<tr>
-
+  		<td><?php echo $project['ID'] ?></td>
+  		<td><?php echo $project['Name'] ?></td>
+  		<td><?php echo $project['CreatedAt'] ?></td>
+  		<td><?php echo $project['ModifiedAt'] ?></td>
+  		<td></td>
+  		<td></td>
   	</tr>	
   	<?php
 

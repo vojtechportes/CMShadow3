@@ -36,7 +36,8 @@ $Stringtable = array(
 
 	/* Project List */
     'pages_project_list_th_id' => 'ID',     
-    'pages_project_list_th_title' => 'Title',
+    'pages_project_list_th_name' => 'Name',
+    'pages_project_list_th_description' => 'Description',
     'pages_project_list_th_createdAt' => 'Created At',
     'pages_project_list_th_modifiedAt' => 'Modified At',
     'pages_project_list_th_status' => 'Status',
