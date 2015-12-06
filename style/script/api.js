@@ -101,7 +101,7 @@ CMSAPI.prototype = {
 		$.post(this.path, query)
 			.done(function(data) {
 				if (typeof cbsuccess !== 'undefined') {
-					console.log('apiReload.' + query.module.replace('/', '-'));
+					cbsuccess.call(data);
 					$(window).trigger('apiReload.' + query.module);
 				}
 			})
