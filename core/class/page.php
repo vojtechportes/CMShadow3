@@ -54,7 +54,7 @@ Class Page Extends Minimal {
 		$Stm->execute(array(
 			':Parent' => $this->parent,
 			':Owner' => $this->owner,
-			':Version' => 1,
+			':Version' => 0,
 			':Locked' => 0,
 			':Visible' => $this->visible,
 			':Weight' => $this->weight
