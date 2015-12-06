@@ -13,7 +13,8 @@ $Template = array(
 		),
 		"Stringtables" => array(
 			"stringtable_default",
-			"stringtable_pages",	
+			"stringtable_pages",
+			"stringtable_projects",	
 			"stringtable_navigations",		
 			"stringtable_forms",
 			"stringtable_settings",
@@ -96,6 +97,7 @@ $Template = array(
 		"Stringtables" => array(
 			"stringtable_default",
 			"stringtable_pages",	
+			"stringtable_projects",	
 			"stringtable_navigations",		
 			"stringtable_forms",
 			"stringtable_settings",
