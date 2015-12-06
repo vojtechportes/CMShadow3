@@ -6859,12 +6859,10 @@ body.login {
 .project-list td .nolink {
   color: #333333;
 }
-.page-controls,
-.project-controls {
+.controls {
   margin: 0 0 30px;
 }
-.page-controls .btn:not(.pull-right),
-.project-controls .btn:not(.pull-right) {
+.controls .btn:not(.pull-right) {
   margin: 0 15px 0 0;
 }
 .form-wrapper {
