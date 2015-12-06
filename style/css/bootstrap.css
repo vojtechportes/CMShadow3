@@ -4901,6 +4901,22 @@ a.label:focus {
   background-color: #777777;
   border-radius: 10px;
 }
+.badge.badge-empty {
+  border: 1px solid #777777;
+  background: none;
+}
+.badge.badge-primary {
+  background: #337ab7;
+}
+.badge.badge-success {
+  background: #5cb85c;
+}
+.badge.badge-info {
+  background: #5bc0de;
+}
+.badge.badge-warning {
+  background: #f0ad4e;
+}
 .badge:empty {
   display: none;
 }
@@ -6826,10 +6842,28 @@ body.login {
 .page-list td .glyphicon-alt.not-visible {
   color: #DDD;
 }
-.page-controls {
+.project-list {
+  margin: 30px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.project-list td {
+  padding: 12px 15px !important;
+  background: #fafafa;
+}
+.project-list td:last-child .glyphicon-alt:last-child {
+  margin-right: 0;
+}
+.project-list td .nolink {
+  color: #333333;
+}
+.page-controls,
+.project-controls {
   margin: 0 0 30px;
 }
-.page-controls .btn:not(.pull-right) {
+.page-controls .btn:not(.pull-right),
+.project-controls .btn:not(.pull-right) {
   margin: 0 15px 0 0;
 }
 .form-wrapper {

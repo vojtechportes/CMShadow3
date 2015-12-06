@@ -18,6 +18,27 @@
   background-color: @badge-bg;
   border-radius: @badge-border-radius;
 
+  &.badge-empty {
+    border: 1px solid @badge-bg;
+    background: none;
+  }
+
+  &.badge-primary {
+    background: @brand-primary;
+  }
+
+  &.badge-success {
+    background: @brand-success;
+  }  
+
+  &.badge-info {
+    background: @brand-info;
+  }    
+
+  &.badge-warning {
+    background: @brand-warning;
+  }  
+
   // Empty badges collapse automatically (not available in IE8)
   &:empty {
     display: none;
