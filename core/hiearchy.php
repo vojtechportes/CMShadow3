@@ -53,6 +53,26 @@ $Hiearchy = array(
 			)
 		),
 
+		"/admin/projects/" => array(
+			"Config" => array(
+				"Title" => "{_'pages_projects_title'}",
+				"NavigationShow" => array(
+					"RightNavigation" => array(
+						"Visible" => true,
+						"Weight" => 25
+					)
+				)
+			),
+			"Scripts" => array(
+				array("style/script/application-modules/projectlist.js")
+			),
+			"Content" => array(
+				"main" => array(
+					array("module" => "admin/project/api/list.loader")
+				)
+			)
+		),
+
 		"/admin/templates/" => array(
 			"Config" => array(
 				"Title" => "{_'pages_templates_title'}",
