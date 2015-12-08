@@ -15,6 +15,7 @@ Class Node Extends Minimal {
 	protected $nodes = array();
 	protected $nodeName;
 	protected $blacklist = ["Template", "Content", "Config", "Scripts", "Styles"];
+	protected $symlinks = array();
 
 	public function __construct () {
 		global $Path, $M;
@@ -40,17 +41,43 @@ Class Node Extends Minimal {
 		return DEFAULT_OUTPUT;
 	}
 
-	private function getNode (array $array, $depth) {
+	private function getPathLength ($path) {
+		return count(explode('/', $path));
+	}
+
+	private function getSymlinks (array $array, $depth) {
+		global $Path; $k = 0;
+		foreach($array as $path => $node) {
+			if ($path !== $Path && strstr($path, '/') && strstr($path, '*')) {
+				if ($this->getPathLength($path) === $this->getPathLength($Path)) {
+					$k++;
+					$this->symlinks[similar_text($path, $Path).'_'.$k] = $path;	
+				}
+			}
+			if ($path !== $Path && self::countSubpages($node) > 0) {
+				self::getSymlinks($node, ($depth + 1));
+			}
+
+		}
+	}
+
+	private function getNode (array $array, $depth, $pathOverride = false) {
 		global $Path, $Template, $M;
+
+		if (!$pathOverride) {
+			$_Path = $Path;
+		} else {
+			$_Path = $pathOverride;
+		}
 
 		foreach($array as $path => $node) {
 			if (is_array($node))
 				if (array_key_exists("Template", $node))
 					$this->_tpl[$depth] = $node["Template"];
 
-			if ($path !== $Path && self::countSubpages($node) > 0) {				
-				self::getNode($node, ($depth + 1));
-			} else if ($path === $Path) {
+			if ($path !== $_Path && self::countSubpages($node) > 0) {
+				self::getNode($node, ($depth + 1), $pathOverride);
+			} else if ($path === $_Path) {
 				$selected = false;
 
 				if (!array_key_exists("Content", $node))
@@ -176,6 +203,8 @@ Class Node Extends Minimal {
 			if (!$this->checkNodeRights())
 				$this->node['Content'] = array();
 
+			$OutputType = $this->template['OutputType'];
+
 			$slots = self::modulesConcat($this->node['Content'], $this->template['Content']);
 			$content = array();
 			if ($slots) {
@@ -185,8 +214,6 @@ Class Node Extends Minimal {
 						$Right = Module::checkModuleRights($module['module']);
 						$OutputStyle = $this->getTemplatePath();
 						$Encode = false;
-
-						$OutputType = $this->template['OutputType'];
 
 						if ($this->template['OutputType'] === 'JSON')
 								$Encode = true;
@@ -328,6 +355,16 @@ Class Node Extends Minimal {
 			redirect(ADMIN_PATH, "?source=login");
 		if ($this->nodeName != LOGIN_PATH && !$LoggedIn)
 			redirect(LOGIN_PATH, "?source=".$_SERVER["REQUEST_URI"]);
+
+		/* Wildcard locator */
+		if (!$this->node && $this->hiearchy) {
+			$this->getSymlinks($this->hiearchy, 0);
+			if (!empty($this->symlinks)) {
+				$array = $this->symlinks;
+				ksort($array);
+				$this->getNode($this->hiearchy, 0, end($array));
+			}
+		}
 
 		if ($this->node && $this->checkNodeRights()) {
 			$this->getTemplate();
