@@ -72,6 +72,14 @@ $Hiearchy = array(
 					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
 					array("module" => "admin/project/api/list.loader")
 				)
+			),
+
+			"/admin/projects/edit/*/" => array(
+				"Content" => array(
+					"main" => array(
+
+					)
+				)
 			)
 		),
 
