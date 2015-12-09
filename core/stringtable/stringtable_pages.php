@@ -5,6 +5,7 @@ $Stringtable = array(
 	'pages_404_title' => '404 - Page doesn\'t exist',	
 	'pages_admin_title' => 'Administration',
 	'pages_pages_title' => 'Pages',	
+	'pages_api_test_title' => '(DEV) API Test',	
 	'pages_projects_title' => 'Projects',	
 	'pages_templates_title' => 'Templates',
 	'pages_stringtables_title' => 'Stringtables',
