@@ -1,0 +1,1 @@
+<div class="pageControls" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/controls", "attributes": {"path": "<?php echo $return["path"]; ?>"}}'></div>
