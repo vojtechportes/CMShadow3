@@ -30,7 +30,11 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 class="page-header"><?php  echo print_property("Title", $return["NodeConfig"]); ?></h1>
+						<div class="page-header">
+						<h1 class="pull-left"><?php  echo print_property("Title", $return["NodeConfig"]); ?></h1>
+						<div class="pull-right"><?php print_slot("breadcrumbs", $return["Content"]); ?></div>
+						<div class="clearfix"></div>
+						</div>
 						<?php print_slot("main", $return["Content"]); ?>
 					</div>
 				</div>
