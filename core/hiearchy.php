@@ -53,6 +53,29 @@ $Hiearchy = array(
 			)
 		),
 
+		"/admin/api-test/" => array(
+			"Config" => array(
+				"Title" => "{_'pages_api_test_title'}",
+				"NavigationShow" => array(
+					"RightNavigation" => array(
+						"Visible" => true,
+						"Weight" => 23
+					)
+				)
+			),
+			"Scripts" => array(
+				array("style/script/application-modules/pagelist.js")
+			),
+			"Content" => array(
+				"main" => array(
+					array("module" => "admin/page/controls"),
+					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "arguments" => array("api" => true)),
+					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
+					array("module" => "admin/page/api/folders.loader")
+				)
+			)
+		),
+
 		"/admin/projects/" => array(
 			"Config" => array(
 				"Title" => "{_'pages_projects_title'}",
