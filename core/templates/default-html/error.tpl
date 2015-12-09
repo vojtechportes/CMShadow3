@@ -9,9 +9,6 @@
 		<?php foreach ($return["Styles"] as $style) { ?>
 			<link rel="stylesheet" type="text/css" href="<?php echo BASE_PATH.$style; ?>">
 		<?php } ?>
-		<?php foreach ($return["Scripts"] as $script) { ?>
-			<script src="<?php echo BASE_PATH.$script; ?>"></script>
-		<?php } ?>
 	</head>
 	<body class="<?php echo str_replace('/', '--', substr(strtolower($Path), 1)); ?>">
 		<div id="body-inner">
@@ -23,5 +20,7 @@
 				</div>
 			</div>
 		</div>
-	</body>
+		<?php foreach ($return["Scripts"] as $script) { ?>
+			<script src="<?php echo BASE_PATH.$script; ?>"></script>
+		<?php } ?>	</body>
 </html>

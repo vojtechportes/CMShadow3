@@ -17,12 +17,6 @@
 		<?php foreach ($return["Styles"] as $style) { ?>
 			<link rel="stylesheet" type="text/css" href="<?php echo BASE_PATH.$style; ?>">
 		<?php } ?>
-		<?php foreach ($return["Scripts"] as $key => $script) { ?>
-			<?php if (!is_array($script)) { ?>
-				<script src="<?php echo BASE_PATH.$script; ?>"></script>
-				<?php unset($return["Scripts"][$key]); ?>
-			<?php } ?>
-		<?php } ?>
 	</head>
 	<body class="<?php echo str_replace('/', '--', substr(strtolower($Path), 1)); ?>">
 		<div id="body-inner">
@@ -42,6 +36,12 @@
 		</div>
 		<?php if (!empty($return["Scripts"])) { ?>
 			<div id="__customScripts" data-scripts='<?php echo json_encode($return["Scripts"]); ?>'></div>
+		<?php } ?>
+		<?php foreach ($return["Scripts"] as $key => $script) { ?>
+			<?php if (!is_array($script)) { ?>
+				<script src="<?php echo BASE_PATH.$script; ?>"></script>
+				<?php unset($return["Scripts"][$key]); ?>
+			<?php } ?>
 		<?php } ?>
 	</body>
 </html>
