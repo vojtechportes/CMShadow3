@@ -23,7 +23,7 @@
   		<td><?php echo $project['CreatedAt'] ?></td>
   		<td><?php echo $project['ModifiedAt'] ?></td>
   		<td><span class="badge <?php echo $status[1] ?>"><?php echo $status[0] ?></span></td>
-  		<td class="text-right"><?php if ((int) $project['HasRights'] > 0) { ?><a href="#" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a><?php } ?></td>
+  		<td class="text-right"><?php if ((int) $project['HasRights'] > 0) { ?><a href="<?php echo ADMIN_PATH ?>projects/edit/<?php echo $project['ID'] ?>" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a><?php } ?></td>
   	</tr>	
   	<?php
   }
