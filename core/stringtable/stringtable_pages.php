@@ -2,6 +2,7 @@
 
 $Stringtable = array(
 	/* Page Names */
+	'pages_404_title' => '404 - Page doesn\'t exist',	
 	'pages_admin_title' => 'Administration',
 	'pages_pages_title' => 'Pages',	
 	'pages_projects_title' => 'Projects',	
@@ -12,6 +13,9 @@ $Stringtable = array(
 	'pages_settings_title' => 'Settings',
 	'pages_users_title' => 'Users',
 	'pages_login_title' => 'Login',
+	'pages_projects_edit_title' => 'Edit Project',
+
+	/* Settings tiles */
 	'pages_settings-module-rights_title' => 'Module Rights',
 	'pages_settings-node-rights_title' => 'Node Rights',
 	'page_settings-api-rights_title' => 'API Rights',

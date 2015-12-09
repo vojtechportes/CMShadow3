@@ -27,6 +27,7 @@ $Stringtable = array(
 
 	/* Project Form */
 	'forms_project_submit' => 'Create',
+	'forms_project_submit_edit' => 'Edit',
 	'forms_project_name' => 'Name',
 	'forms_project_release_date' => 'Release date',
 	'forms_project_description' => 'Description',
@@ -35,6 +36,8 @@ $Stringtable = array(
 	'forms_project_form_help' => 'To edit page you will need to create project or to add page to existing one. Page will be versioned in project. You can also set roles in project.',
 	'forms_project_form_created' => 'Project "%s" was succesfully created. To add more pages to project, <a href="%s">open project</a> or go to <a href="%s">page tree.</a>',
 	'forms_project_form_error' => 'Unexpected error ocured. Project "%s" was not created. Please <a href="%s">try it again later.</a>',
+	'forms_project_form_cant_modify' => 'Sorry, you can\'t modify this project. You don\'t have enough rights.',
+	'forms_project_form_doesnt_exist' => 'Sorry, you can\'t modify this project. This project doesn\'t exist. You might have wrong project ID or project was deleted.'	
 )
 
 ?>
