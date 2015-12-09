@@ -55,6 +55,39 @@ $Template = array(
 			)
 		)
 	),
+	"error-404" => array(
+		"Output" => "default-html/default",
+		"Slots" => array("main"),
+		"Scripts" => array(
+			"style/script/require.js",
+			"style/script/main.js"
+		),
+		"Styles" => array(
+			"style/css/bootstrap.css"
+		),
+		"Stringtables" => array(
+			"stringtable_default",
+			"stringtable_pages",
+			"stringtable_navigations"
+		),
+		"Content" => array(
+			"header" => array(
+				array(
+					"module" => "admin/navigation/show",
+					"name" => "RightNavigation",
+					"search" => true,
+					"brand" => array(
+						"image" => false,
+						"text" => "{_'default_cms_name'}",
+						"href" => "/admin/"
+					)
+				)
+			),
+			"main" => array(
+				array("module" => "message/show", "html" => "{_'default_node_404_error'}", "class" => "alert-danger")
+			)
+		)
+	),
 	"error" => array(
 		"Output" => "default-html/error",
 		"Slots" => array("main"),
