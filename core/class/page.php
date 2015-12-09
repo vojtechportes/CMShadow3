@@ -150,6 +150,21 @@ Class Page Extends Minimal {
 		}
 		$depth = $depth -1;
 	}
+
+	public function clonePage ($id, $newID = false) {
+		/* By setting newID to -1, initial backup will be created from 0 version of page,  */
+		if (isset($id)) {
+			$Page = $this->getPageByID($id);
+			$Clone = new Page();
+			$Clone->parent = $Page['Parent'];
+			$Clone->owner = User::getUserID();
+			$Clone->version = $newID;
+			$Clone->locked = 1;
+			$Clone->visible = $Page['Visible'];
+			$Clone->weight = $Page['Weight'];
+			
+		}
+	}
 } 
 
 ?>
