@@ -34,7 +34,7 @@ $Template = array(
 				)
 			),
 			"breadcrumbs" => array(
-				array("module" => "admin/page/breadcrumbs", "weight" => 1)
+				array("module" => "admin/page/api/breadcrumbs.loader", "weight" => 1)
 			)
 		)
 	),
@@ -87,7 +87,7 @@ $Template = array(
 				)
 			),
 			"breadcrumbs" => array(
-				array("module" => "admin/page/breadcrumbs", "weight" => 1)
+				array("module" => "admin/page/api/breadcrumbs.loader", "weight" => 1)
 			),			
 			"main" => array(
 				array("module" => "message/show", "html" => "{_'default_node_404_error'}", "class" => "alert-danger")
