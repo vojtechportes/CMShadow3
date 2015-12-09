@@ -11,7 +11,15 @@ function print_property($property, $array, $format = false, $return = false) {
 			if ($return) {
 				return  $array[$property];
 			} else {
-				echo $array[$property];
+				$val =  $array[$property];
+
+				if ($val === true) {
+					$val = 'true';
+				} else if ($val === false) {
+					$val = 'false';
+				}
+
+				echo $val;
 			}
 		} else {
 			if ($return) {
