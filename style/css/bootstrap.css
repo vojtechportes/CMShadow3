@@ -4673,10 +4673,13 @@ fieldset[disabled] .navigation-inverse .btn-link:focus {
 }
 .breadcrumb {
   padding: 8px 15px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   list-style: none;
   background-color: #f5f5f5;
   border-radius: 0;
+}
+.page-header .breadcrumb {
+  margin-top: 16px;
 }
 .breadcrumb > li {
   display: inline-block;
