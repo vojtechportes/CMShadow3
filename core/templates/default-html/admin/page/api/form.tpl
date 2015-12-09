@@ -1,0 +1,1 @@
+<div class="pageForm" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/form", "arguments": {"class": "<?php print_property("class", $return) ?>", "api": <?php print_property("api", $return['arguments']) ?>}}'></div>
