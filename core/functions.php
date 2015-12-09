@@ -49,6 +49,12 @@ function redirect($path, $query) {
 	}
 }
 
+function flatten_array (array $array) {
+    $return = array();
+    array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+    return $return;
+}
+
 function array_search_multi ($array, $key, $depth = 0) {
 	preg_match_all("/\[[\"\']([^\[\]]+)[\"\']\]/", $key, $keys);
 	if ($depth <= count($keys[1]) - 1) {
