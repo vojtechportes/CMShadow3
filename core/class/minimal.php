@@ -1,6 +1,7 @@
 <?php
 
 Class Minimal {
+	private $idPrefixes = array('edit', 'delete', 'update', 'clone');
 
 	public function debug ($data = false, $identifier = "default") {
 		echo "<pre style=\"padding: 20px; margin: 20px; border: 1px solid #EEE;\"><strong>Debug: (".$identifier.")</strong><p style=\"margin: 25px 0; padding: 25px 0; border-top: 1px solid #EEE; border-bottom: 1px solid #EEE;\">", var_dump((!$data) ? $this : $data), "</p><strong>Backtrace:</strong><p style=\"color: #777;\">", debug_print_backtrace(), "</p></pre>";
@@ -9,6 +10,28 @@ Class Minimal {
 	public function filter ($str) {
 		return htmlspecialchars($str);
 	}	
+
+	public static function getPathParts ($path) {
+		return array_values(array_filter(explode('/', $path)));
+	}
+
+	public static function getBasePath ($path) {
+		$path = self::getPathParts($path);
+		if (!empty($path))
+			return "/{$path[0]}/";
+		return "/";
+	}
+
+	public function extractID ($path) {
+		$path = self::getPathParts($path); $prefix = '';
+		
+		foreach ($this->idPrefixes as $_prefix) {
+			if ($key = array_search($_prefix, $path))
+				$prefix = $key; 
+		}
+
+		return $path[$prefix + 1];
+	}
 
 	public function sanitize ($string, $type = 'HTML') {
 		switch ($type) {
