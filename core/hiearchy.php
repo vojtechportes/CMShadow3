@@ -75,9 +75,12 @@ $Hiearchy = array(
 			),
 
 			"/admin/projects/edit/*/" => array(
+				"Config" => array(
+					"Title" => "{_'pages_projects_edit_title'}"
+				),
 				"Content" => array(
 					"main" => array(
-
+						array("module" => "admin/project/form", "class" => "project-form-element", "type" => "edit", "message" => false)
 					)
 				)
 			)
@@ -233,6 +236,17 @@ $Hiearchy = array(
 			"Template" => "login",
 			"Config" => array(
 				"Title" => "{_'pages_login_title'}"
+			),
+			"Content" => array(
+				"main" => array(
+
+				)
+			)
+		),
+
+		"/admin/404/" => array(
+			"Config" => array(
+				"Title" => "{_'pages_404_title'}"
 			),
 			"Content" => array(
 				"main" => array(
