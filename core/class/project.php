@@ -118,7 +118,42 @@ Class Project Extends Minimal {
 	}
 
 	public function getProjectByID  ($id) {
+		global $DB, $M;
+		$UserID = User::getUserID();
 
+		$Stm = $DB->prepare("SELECT
+			{$this->getProjectAttributes()},
+			(SELECT COUNT(`ID`)
+				FROM T_ProjectOwners
+				WHERE T_ProjectOwners.`Project` = T_Projects.`ID`
+				AND T_ProjectOwners.`User` = :UserID
+				LIMIT 1)
+			AS HasRights
+			FROM T_Projects
+			WHERE T_Projects.`ID` = :ID
+			LIMIT 1");
+		$Stm->execute(array(
+			":UserID" => $UserID,
+			":ID" => $id
+		));
+		return $Stm->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public function getProjectOwners ($id, $role = false) {
+		global $DB;
+		if ($role) {
+			$Stm = $DB->prepare("SELECT
+				T_ProjectOwners.`User`
+				FROM T_ProjectOwners
+				WHERE T_ProjectOwners.`Project` = :ID AND T_ProjectOwners.`Role` = :Role");
+			$Stm->execute(array(
+				":ID" => $id,
+				":Role" => $role
+			));
+			return $Stm->fetchAll(PDO::FETCH_ASSOC);		
+		} else {
+			return false;
+		}		
 	}
 
 	public function getProjectByUser ($id) {
