@@ -45,13 +45,40 @@ Class Node Extends Minimal {
 		return count(explode('/', $path));
 	}
 
+	private function checkAsteriskPosition ($a, $b) {
+		$Res = array();
+		$A = parent::getPathParts($a);
+		$B = parent::getPathParts($b);
+		$Position = array_keys($A, '*');
+
+		foreach ($A as $key => $part) {
+			if (in_array($key, $Position)) {
+				if ($B[$key] !== $part) {
+					$Res[] = true;
+				} else {
+					$Res[] = false;
+				}
+			} else {
+				if ($B[$key] === $part) {
+					$Res[] = true;
+				} else {
+					$Res[] = false;
+				}
+			} 
+		}
+
+		if (in_array(false, $Res) === true)
+			return false;
+		return true;
+	}
+
 	private function getSymlinks (array $array, $depth) {
 		global $Path; $k = 0;
 		foreach($array as $path => $node) {
 			if ($path !== $Path && strstr($path, '/') && strstr($path, '*')) {
-				if ($this->getPathLength($path) === $this->getPathLength($Path)) {
+				if ($this->getPathLength($path) === $this->getPathLength($Path) && $this->checkAsteriskPosition($path, $Path)) {
 					$k++;
-					$this->symlinks[similar_text($path, $Path).'_'.$k] = $path;	
+					$this->symlinks[similar_text($path, $Path).'_'.$k] = $path;
 				}
 			}
 			if ($path !== $Path && self::countSubpages($node) > 0) {
@@ -356,33 +383,41 @@ Class Node Extends Minimal {
 		if ($this->nodeName != LOGIN_PATH && !$LoggedIn)
 			redirect(LOGIN_PATH, "?source=".$_SERVER["REQUEST_URI"]);
 
-		/* Wildcard locator */
-		if (!$this->node && $this->hiearchy) {
-			$this->getSymlinks($this->hiearchy, 0);
-			if (!empty($this->symlinks)) {
-				$array = $this->symlinks;
-				ksort($array);
-				$this->getNode($this->hiearchy, 0, end($array));
+		if (parent::getBasePath($Path) == ADMIN_PATH) {
+			/* Wildcard locator */
+			if (!$this->node && $this->hiearchy) {
+				$this->getSymlinks($this->hiearchy, 0);
+				if (!empty($this->symlinks)) {
+					$array = $this->symlinks;
+					ksort($array);
+					$this->getNode($this->hiearchy, 0, end($array));
+				}
 			}
-		}
 
-		if ($this->node && $this->checkNodeRights()) {
-			$this->getTemplate();
-			$this->loadTemplate();
+			if ($this->node && $this->checkNodeRights()) {
+				$this->getTemplate();
+				$this->loadTemplate();
 
-			if ($this->template["OutputType"] === 'JSON') {
+				if ($this->template["OutputType"] === 'JSON') {
+					return $this->view;
+				} else {
+					return stripslashes($this->view);
+				}
+			} else if (!$this->node) {
+				$this->getNode($this->hiearchy, 0, '/admin/404/');
+				$Template = $this->getTemplate("error-404");
+				$this->loadTemplate();		
+				return $this->view;				
+			} else {
+				if ($this->getTemplate($this->node['Template'], true)['OutputType'] === 'JSON') {
+					$Template = $this->getTemplate("error-json");
+				} else {
+					$this->getNode($this->hiearchy, 0, '/admin/404/');
+					$Template = $this->getTemplate("error");
+				}
+				$this->loadTemplate();		
 				return $this->view;
-			} else {
-				return stripslashes($this->view);
 			}
-		} else {
-			if ($this->getTemplate($this->node['Template'], true)['OutputType'] === 'JSON') {
-				$Template = $this->getTemplate("error-json");
-			} else {
-				$Template = $this->getTemplate("error");
-			}
-			$this->loadTemplate();		
-			return $this->view;
 		}
 	}
 }
