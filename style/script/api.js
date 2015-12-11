@@ -98,11 +98,18 @@ CMSAPI.prototype = {
 		if (!this.validate(query))
 			return;
 
+		var modulePath = query.module.split('/'),
+			modulePathLength = modulePath.length;
+
 		$.post(this.path, query)
 			.done(function(data) {
 				if (typeof cbsuccess !== 'undefined') {
 					cbsuccess.call(data);
-					$(window).trigger('apiReload.' + query.module);
+					if (modulePath[modulePathLength -1] === 'form') {
+						$(window).trigger('apiReload.' + 'admin/*/*/form');
+					} else {
+						$(window).trigger('apiReload.' + query.module);
+					}
 				}
 			})
 			.fail(function(data) {
