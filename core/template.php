@@ -6,7 +6,8 @@ $Template = array(
 		"Slots" => array("main"),
 		"Scripts" => array(
 			"style/script/require.js",
-			"style/script/main.js"
+			"style/script/main.js",
+			array("style/script/application-modules/form.js")
 		),
 		"Styles" => array(
 			"style/css/bootstrap.css"
