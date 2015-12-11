@@ -21,7 +21,7 @@ var customScriptLoader = {
     'getScripts': function(){
         var $scripts = $('#__customScripts'), scripts = [];
         if ($scripts.length === 1) {
-            $.each($scripts.data('scripts')[0], function(k, el){
+            $.each($scripts.data('scripts'), function(k, el){
                 scripts[k] = el.replace(baseUrl.substring(1,baseUrl.length), '').replace('.js', '');
             });
 
@@ -32,7 +32,7 @@ var customScriptLoader = {
 }
 
 require(['jquery'], function($) {
-	require(['api'], function(){
+	require(['api', 'jquery.form'], function(){
 		require(['application'], function(){
             $(document).ajaxStop(function(){
                 customScriptLoader.require(function(){
