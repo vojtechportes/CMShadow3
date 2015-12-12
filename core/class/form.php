@@ -66,7 +66,8 @@ Class Form Extends Minimal {
 	protected $name;
 	protected $filterInput;
 
-	public function __construct ($name = 'form') {
+	public function __construct ($name = 'form', $api = false) {
+		global $M;
 		$this->id = preg_replace("/\W/", "-", $name);
 
 		if ($this->method == "POST") {		
@@ -75,7 +76,7 @@ Class Form Extends Minimal {
 			$this->filterInput = INPUT_GET;			
 		}
 
-		$submitted = filter_input($this->filterInput, $this->id.'-form_submitted_element');	
+		$submitted = filter_input($this->filterInput, $this->id.'-form_submitted_element');
 
 		$this->name = $name;
 
