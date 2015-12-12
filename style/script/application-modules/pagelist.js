@@ -20,11 +20,24 @@
 		}		
 	}
 
+	var pageListReload = function () {
+		var parent = '.folderList[data-api-load]';
+		$.each($(parent), function(k, el){
+			console.log(el);
+			var parentData = $('.folderList' + parent).data('api-load');
+			APICommands.call($(el), parentData, true);
+		});		
+	}
+
 	$(document).ready(function(){
 		pageList();
 	});
 
 	$(window).on('apiReload.admin/page/folders', function(){
 		pageList();
+	});
+
+	$(window).on('apiReloadForce.admin/page/folders', function(){
+		pageListReload();
 	});
 })();
