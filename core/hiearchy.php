@@ -69,7 +69,7 @@ $Hiearchy = array(
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/page/controls"),
-					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "arguments" => array("api" => true)),
+					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "dependencies" => "[\"admin/page/folders\"]"),
 					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
 					array("module" => "admin/page/api/folders.loader")
 				)
