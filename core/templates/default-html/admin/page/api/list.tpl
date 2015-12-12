@@ -1,1 +1,1 @@
-<div class="pagelist" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/list"}'></div>
+<div class="pageList" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/list"}'></div>
