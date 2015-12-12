@@ -130,7 +130,7 @@ Class API Extends Minimal {
 			if (!$this->arguments)
 				$this->arguments = array();
 
-			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', $this->arguments + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true), false);
+			parent::load(DEFAULT_MODULE_PATH.$this->module.'.php', $this->arguments + array("OutputStyle" => "default-html", "OutputType" => "HTML", "StripSlashes" => true, "Dependencies" => array()), false);
 			$output = ob_get_contents(); ob_end_clean();
 			$this->output = array("__html" => $output, "__stripslashes" => false);
 		}
