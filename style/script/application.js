@@ -80,14 +80,12 @@ function APICommands (data, load, html) {
 		case 'loadModule':
 			CMSAPI.loadModule(data,
 				function(){
-					console.log(this);
 					CMSAPI.setStatus(this);				
 				},
 				function(){
 					if (!load) {
 						CMSAPI.setStatus(this);
 					} else {
-						console.log(this);
 						$.each(this, function(k, module){
 							$el.html(module['__html']);
 						});	
