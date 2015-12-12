@@ -1,3 +1,5 @@
+console.info('---------------- page has reloaded ------------------');
+
 var uid = 'cmshadow3';
 var iid = 0;
 var baseUrl = '/style/script/';
@@ -34,11 +36,11 @@ var customScriptLoader = {
 require(['jquery'], function($) {
 	require(['api', 'jquery.form'], function(){
 		require(['application'], function(){
-            $(document).ajaxStop(function(){
+            //$(document).ajaxStop(function(){
                 customScriptLoader.require(function(){
                     console.log('Custom Scripts loaded');
                 });
-            });
+            //});
         });
 	});
     require(['bootstrap/dropdown', 'bootstrap/modal', 'bootstrap/navigation', 'boostrap/affix', 'bootstrap/dimension', 'bootstrap/transition', 'bootstrap/collapse'], function($) {
