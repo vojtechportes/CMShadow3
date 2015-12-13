@@ -32,9 +32,15 @@ Class Project Extends Minimal {
 		);
 	}
 
+	public function getCurrentProjectID () {
+		return $this->status;
+	}
+
 	public function createProject () {
 		global $DB;
-		$Stm = $DB->prepare("INSERT INTO T_Projects (`Name`, `Description`, `ReleaseDate`) VALUES (:Name, :Description, :ReleaseDate)");
+		$Stm = $DB->prepare("INSERT INTO T_Projects
+			(`Name`, `Description`, `ReleaseDate`)
+			VALUES (:Name, :Description, :ReleaseDate)");
 		$Stm->execute(array(
 			':Name' => $this->name,
 			':Description' => $this->description,
@@ -45,17 +51,32 @@ Class Project Extends Minimal {
 	}
 
 	public function updateProject ($owners = false) {
+		global $DB;
 
+		$Stm = $DB->prepare("UPDATE T_Projects SET
+			`Name` = :Name,
+			`Description` = :Description,
+			`ReleaseDate` = :ReleaseDate
+			WHERE `ID` = :ID");
+		$Stm->execute(array(
+			':Name' => $this->name,
+			':Description' => $this->description,
+			':ReleaseDate' => $this->releasedate,
+			':ID' => $this->id
+		));
+
+		$this->status = $this->id;
+		return $Stm->rowCount();
 	}
 
 	private function concatProjectOwners () {
 		$result = array();
-		foreach ($this->owners as $owner) {
+		foreach ($this->owners as $k => $owner) {
 			$result[] = array($owner, 1);
 		}
 
 		if (is_array($this->editors)) {
-			foreach ($this->editors as $editor) {
+			foreach ($this->editors as $k => $editor) {
 				$result[] = array($editor, 2);
 			}
 		}
@@ -63,8 +84,12 @@ Class Project Extends Minimal {
 		return $result;
 	}
 
-	public function setProjectOwners () {
+	public function setProjectOwners ($remove = false) {
 		global $DB;		
+
+		if ($remove)
+			$this->removeProjectOwners();
+
 		$owners = $this->concatProjectOwners();
 		$Stm = $DB->prepare("INSERT INTO T_ProjectOwners (`Project`, `User`, `Role`) VALUES (:Project, :User, :Role)");
 		
@@ -79,12 +104,15 @@ Class Project Extends Minimal {
 		return $Stm->rowCount();
 	}
 
-	public function addProjectOwners () {
+	private function removeProjectOwners () {
+		global $DB;
 
-	}
+		$Stm = $DB->prepare("DELETE FROM T_ProjectOwners WHERE `Project` = :Project");
+		$Stm->execute(array(
+			':Project' => $this->status
+		));
 
-	public function removeProjectOwners () {
-
+		return $Stm->rowCount();
 	}
 
 	public function getProjects ($limit = array(0, 20), $order = 'DESC') {
