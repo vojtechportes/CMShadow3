@@ -2,7 +2,7 @@
 
 $Stringtable = array(
 	/* Project status list */
-	'projects_status_type_1' => 'Opened',
+	'projects_status_type_1' => 'Open',
 	/**/
 	'projects_status_type_2' => 'On hold',		
 	'projects_status_type_3' => 'Ready for release',
