@@ -1031,7 +1031,13 @@ $.fn.formatForAPI = function () {
     var data = {},
         _data = this.formToArray();
     $.each(_data, function(){
-        data[this.name] = this.value;
+        if (this.name.indexOf('[]') > 0) {
+            if (typeof data[this.name] === 'undefined')
+                data[this.name] = [];
+            data[this.name].push(this.value);
+        } else {
+            data[this.name] = this.value;
+        }
     });
 
     return data;
