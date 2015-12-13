@@ -46,8 +46,8 @@ $Hiearchy = array(
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/page/controls"),
-					array("module" => "admin/page/form", "class" => "collapse page-form-element"),
-					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
+					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "dependencies" => array("admin/page/folders")),					
+					array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element"),
 					array("module" => "admin/page/api/folders.loader")
 				)
 			)
@@ -69,7 +69,7 @@ $Hiearchy = array(
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/page/controls"),
-					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "dependencies" => "[\"admin/page/folders\"]"),
+					array("module" => "admin/page/api/form.loader", "class" => "collapse page-form-element", "dependencies" => array("admin/page/folders")),
 					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
 					array("module" => "admin/page/api/folders.loader")
 				)
@@ -92,7 +92,7 @@ $Hiearchy = array(
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/project/controls"),
-					array("module" => "admin/project/form", "class" => "collapse project-form-element"),
+					array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element", "dependencies" => array("admin/project/list")),
 					array("module" => "admin/project/api/list.loader")
 				)
 			),
@@ -103,7 +103,7 @@ $Hiearchy = array(
 				),
 				"Content" => array(
 					"main" => array(
-						array("module" => "admin/project/form", "class" => "project-form-element", "type" => "edit", "message" => false)
+						array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element", "type" => "edit", "message" => 0),
 					)
 				)
 			)
