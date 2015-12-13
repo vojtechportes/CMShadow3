@@ -34,10 +34,13 @@ $Stringtable = array(
 	'forms_project_owners' => 'Owners',
 	'forms_project_editors' => 'Editors',
 	'forms_project_form_help' => 'To edit page you will need to create project or to add page to existing one. Page will be versioned in project. You can also set roles in project.',
-	'forms_project_form_created' => 'Project "%s" was succesfully created. To add more pages to project, <a href="%s">open project</a> or go to <a href="%s">page tree.</a>',
-	'forms_project_form_error' => 'Unexpected error ocured. Project "%s" was not created. Please <a href="%s">try it again later.</a>',
+	'forms_project_form_created' => 'Project "%s" was succesfully created. To add more pages to project, <a href="%s">open project</a>. You can also <a data-api-reload href="%s">create another project.</a>',
+	'forms_project_form_error' => 'Unexpected error ocured. Project "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_project_form_cant_modify' => 'Sorry, you can\'t modify this project. You don\'t have enough rights.',
-	'forms_project_form_doesnt_exist' => 'Sorry, you can\'t modify this project. This project doesn\'t exist. You might have wrong project ID or project was deleted.'	
+	'forms_project_form_doesnt_exist' => 'Sorry, you can\'t modify this project. This project doesn\'t exist. You might have wrong project ID or project was deleted.',	
+	'forms_project_form_updated' => 'Project "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>',
+	'forms_project_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>'
+
 )
 
 ?>
