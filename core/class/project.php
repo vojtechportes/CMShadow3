@@ -32,6 +32,18 @@ Class Project Extends Minimal {
 		);
 	}
 
+	public function getProjectWorkflow () {
+		return array(
+			"1" => array(2 => "{_'projects_status_type_2_action'}",3 => "{_'projects_status_type_3_action'}",4 => "{_'projects_status_type_4_action'}"),
+			"2" => array(1 => "{_'projects_status_type_1_action'}"),
+			"3" => array(5 => "{_'projects_status_type_5_action'}"),
+			"4" => array(6 => "{_'projects_status_type_6_action'}"),
+			"5" => array(7 => "{_'projects_status_type_7_action'}"),
+			"6" => array(),
+			"7" => array()
+		);
+	}
+
 	public function getCurrentProjectID () {
 		return $this->status;
 	}
