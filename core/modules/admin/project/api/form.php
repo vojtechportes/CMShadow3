@@ -132,8 +132,8 @@ if ($canDisplay) {
 	$Code->addModule(false, array("html" => '<div class="clearfix"></div></div>'));
 	$Code->output();
 } else {
-	$Message = new Module();
 	if ($projectExist) { $msg = "{_'forms_project_form_cant_modify'}"; } else { $msg = "{_'forms_project_form_doesnt_exist'}"; }
+	$Message = new Module();
 	$Message->addModule(new Message(), array("html" => $msg, "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();			
 }
