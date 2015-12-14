@@ -22,6 +22,8 @@ $Stringtable = array(
 	'projects_status_type_6_action' => 'Cancel',
 	'projects_status_type_7' => 'Rollbacked',
 	'projects_status_type_7_action' => 'Rollback',
+	'projects_status_type_8' => 'Re-Open',
+	'projects_status_type_8_action' => 'Re-Open',	
 
 	'projects_status_display_workflow' => 'Display workflow',
 
