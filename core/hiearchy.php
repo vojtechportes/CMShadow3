@@ -101,6 +101,9 @@ $Hiearchy = array(
 				"Config" => array(
 					"Title" => "{_'pages_projects_edit_title'}"
 				),
+				"Scripts" => array(
+					array("style/script/application-modules/workflow.js")
+				),
 				"Content" => array(
 					"main" => array(
 						array("module" => "admin/project/api/workflow.loader"),
