@@ -103,7 +103,8 @@ $Hiearchy = array(
 				),
 				"Content" => array(
 					"main" => array(
-						array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element", "type" => "edit", "message" => 0),
+						array("module" => "admin/project/api/workflow.loader"),
+						array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element", "type" => "edit", "message" => 0)
 					)
 				)
 			)
