@@ -52,12 +52,15 @@
 							<span class="badge badge-canceled <?php if ($return['status'] === 6) { echo 'badge-active'; } ?>">{_'projects_status_type_6'}</span>
 						</div>
 						<div class="clearfix"></div>
-						<canvas class="workflow_canvas col-xs-12" id="c1" data-directions='{"0": ["center", "center"]}'></canvas>
+						<canvas class="workflow_canvas col-xs-12" id="c1" data-directions='{"0": ["center", "left"], "1": ["center", "center"]}'></canvas>
 						<div class="clearfix"></div>
 					</div>
 					<div class="row level">
-						<div class="col-xs-4 col-xs-offset-4 <?php if ($return['status'] === 7) { echo 'badge-active'; } ?>">
-							<span class="badge badge-warning">{_'projects_status_type_7'}</span>
+						<div class="col-xs-4">
+							<span class="badge badge-warning<?php if ($return['status'] === 7) { echo 'badge-active'; } ?>">{_'projects_status_type_7'}</span>
+						</div>
+						<div class="col-xs-4">
+							<span class="badge badge-info<?php if ($return['status'] === 8) { echo 'badge-active'; } ?>">{_'projects_status_type_8'}</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
