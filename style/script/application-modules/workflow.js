@@ -45,6 +45,10 @@
 		}
 	}
 
+	$(document).ready(function(){
+		workflowPreview();
+	});
+
 	$(window).on('apiReload.admin/project/workflow', function(){
 		workflowPreview();
 	});
