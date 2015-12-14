@@ -33,7 +33,8 @@ function print_property($property, $array, $format = false, $return = false) {
 
 function concat_property($property, $str, $array) {
 	if (array_key_exists($property, $array)) {
-		$array[$property] = $array[$property].$str;
+		if ($array[$property].$str !== $array[$property])
+			$array[$property] = $array[$property].$str;
 	}
 	return $array;
 }
