@@ -28,7 +28,8 @@ Class Project Extends Minimal {
 			"4" => array("{_'projects_status_type_4'}", "badge-warning"),
 			"5" => array("{_'projects_status_type_5'}", "badge-success"),
 			"6" => array("{_'projects_status_type_6'}", "badge-warning"),
-			"7" => array("{_'projects_status_type_7'}", "badge-warning")							
+			"7" => array("{_'projects_status_type_7'}", "badge-warning"),
+			"8" => array("{_'projects_status_type_8'}", "badge-info")					
 		);
 	}
 
@@ -38,9 +39,10 @@ Class Project Extends Minimal {
 			"2" => array(1 => "{_'projects_status_type_1_action'}"),
 			"3" => array(5 => "{_'projects_status_type_5_action'}"),
 			"4" => array(6 => "{_'projects_status_type_6_action'}"),
-			"5" => array(7 => "{_'projects_status_type_7_action'}"),
+			"5" => array(7 => "{_'projects_status_type_7_action'}", 8 => "{_'projects_status_type_8_action'}"),
 			"6" => array(),
-			"7" => array()
+			"7" => array(),
+			"8" => array()
 		);
 	}
 
