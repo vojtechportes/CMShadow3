@@ -34,7 +34,7 @@ var customScriptLoader = {
 }
 
 require(['jquery'], function($) {
-	require(['api', 'jquery.form', 'jquery.sort'], function(){
+	require(['api', 'jquery.form', 'jquery.sort', 'canvas'], function(){
 		require(['application'], function(){
             //$(document).ajaxStop(function(){
                 customScriptLoader.require(function(){
