@@ -13,6 +13,7 @@ if (empty($Project) || (int) $Project['HasRights'] === 0) {
 	$Message->output();				
 } else {
 	$return['workflow'] = $_Project->getProjectWorkflow()[$Project['Status']];
+	$return['status'] = (int) $Project['Status'];
 	
 	$Module = new Module();
 	$Module->template = '/admin/project/workflow';
