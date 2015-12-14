@@ -13,14 +13,11 @@ if (empty($Project) || (int) $Project['HasRights'] === 0) {
 	$Message->output();				
 } else {
 	$return['workflow'] = $_Project->getProjectWorkflow()[$Project['Status']];
+	
 	$Module = new Module();
+	$Module->template = '/admin/project/workflow';
 	$Module->addModule(false, $return);
-	$Module->output();	
+	$Module->output();
 }
-
-$Module = new Module();
-$Module->template = '/admin/project/workflow';
-$Module->addModule(false, $return);
-$Module->output();
 
 ?>
