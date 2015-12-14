@@ -3,14 +3,23 @@
 $Stringtable = array(
 	/* Project status list */
 	'projects_status_type_1' => 'Open',
+	'projects_status_type_1_action' => 'Back to Open',
 	/**/
 	'projects_status_type_2' => 'On hold',		
+	'projects_status_type_2_action' => 'On hold',		
 	'projects_status_type_3' => 'Ready for release',
+	'projects_status_type_3_action' => 'Ready for release',		
 	'projects_status_type_4' => 'Can be canceled',
+	'projects_status_type_4_action' => 'Can be canceled',	
 	/**/
 	'projects_status_type_5' => 'Released',
+	'projects_status_type_5_action' => 'Release',
 	'projects_status_type_6' => 'Canceled',
+	'projects_status_type_6_action' => 'Cancel',
 	'projects_status_type_7' => 'Rollbacked',
+	'projects_status_type_7_action' => 'Rollback',
+
+	'projects_status_display_workflow' => 'Display workflow',
 
 	/* Project controls */
 
