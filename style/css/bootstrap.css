@@ -6871,6 +6871,18 @@ body.login {
 .form-wrapper {
   overflow: hidden;
 }
+.workflow-preview {
+  text-align: center;
+}
+.workflow-preview .level:nth-of-type(3) {
+  text-align: right;
+}
+.workflow-preview .level .badge {
+  padding: 20px;
+  font-size: 16px;
+  margin: 10%;
+  width: 20%;
+}
 .toolbar {
   position: relative;
   margin-bottom: 20px;

@@ -1,9 +1,12 @@
 <?php
 
 $Stringtable = array(
+	'project_status_workflow_title' => 'Workflow preview',
+
 	/* Project status list */
 	'projects_status_type_1' => 'Open',
 	'projects_status_type_1_action' => 'Back to Open',
+	
 	/**/
 	'projects_status_type_2' => 'On hold',		
 	'projects_status_type_2_action' => 'On hold',		
@@ -11,6 +14,7 @@ $Stringtable = array(
 	'projects_status_type_3_action' => 'Ready for release',		
 	'projects_status_type_4' => 'Can be canceled',
 	'projects_status_type_4_action' => 'Can be canceled',	
+	
 	/**/
 	'projects_status_type_5' => 'Released',
 	'projects_status_type_5_action' => 'Release',
