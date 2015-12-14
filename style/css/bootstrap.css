@@ -4903,6 +4903,7 @@ a.label:focus {
   text-align: center;
   background-color: #777777;
   border-radius: 10px;
+  border: 1px solid transparent;
 }
 .badge.badge-empty {
   border: 1px solid #555555;
@@ -6873,15 +6874,25 @@ body.login {
 }
 .workflow-preview {
   text-align: center;
-}
-.workflow-preview .level:nth-of-type(3) {
-  text-align: right;
+  margin: 30px 0;
 }
 .workflow-preview .level .badge {
-  padding: 20px;
-  font-size: 16px;
-  margin: 10%;
-  width: 20%;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0 auto;
+  width: 80%;
+  display: block;
+  white-space: initial;
+}
+@media screen and (max-width: 991px) {
+  .workflow-preview .level .badge {
+    width: 100%;
+  }
+}
+.workflow-preview .level canvas {
+  margin: 0;
+  height: 100px;
 }
 .toolbar {
   position: relative;
