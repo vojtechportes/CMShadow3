@@ -22,23 +22,43 @@
 			</div>
 			<div class="modal-body">
 				<div class="workflow-preview">
-					<div class="level">
-						<span class="badge badge-info">{_'projects_status_type_1'}</span>
+					<div class="row level">
+						<div class="col-xs-4 col-xs-offset-4">
+							<span class="badge badge-info">{_'projects_status_type_1'}</span>
+						</div>
+						<div class="clearfix"></div>
+						<canvas class="workflow_canvas col-xs-12" id="c1" data-directions='{"0": ["center", "left", true], "1": ["center", "center", true], "2": ["center", "right", true]}'></canvas>
 						<div class="clearfix"></div>
 					</div>
-					<div class="level">
-						<span class="badge badge-empty">{_'projects_status_type_2'}</span>
-						<span class="badge badge-primary">{_'projects_status_type_3'}</span>
-						<span class="badge badge-warning">{_'projects_status_type_4'}</span>
+					<div class="row level">
+						<div class="col-xs-4">
+							<span class="badge badge-empty">{_'projects_status_type_2'}</span>
+						</div>
+						<div class="col-xs-4">
+							<span class="badge badge-primary">{_'projects_status_type_3'}</span>
+						</div>
+						<div class="col-xs-4">
+							<span class="badge badge-warning">{_'projects_status_type_4'}</span>
+						</div>
+						<div class="clearfix"></div>
+						<canvas class="workflow_canvas col-xs-12" id="c1" data-directions='{"0": ["center", "center"], "1": ["right", "right"]}'></canvas>
 						<div class="clearfix"></div>
 					</div>
-					<div class="level">
-						<span class="badge badge-success">{_'projects_status_type_5'}</span>
-						<span class="badge badge-canceled">{_'projects_status_type_6'}</span>
+					<div class="row level">
+						<div class="col-xs-4 col-xs-offset-4">
+							<span class="badge badge-success">{_'projects_status_type_5'}</span>
+						</div>
+						<div class="col-xs-4">
+							<span class="badge badge-canceled">{_'projects_status_type_6'}</span>
+						</div>
+						<div class="clearfix"></div>
+						<canvas class="workflow_canvas col-xs-12" id="c1" data-directions='{"0": ["center", "center"]}'></canvas>
 						<div class="clearfix"></div>
 					</div>
-					<div class="level">
-						<span class="badge badge-warning">{_'projects_status_type_7'}</span>
+					<div class="row level">
+						<div class="col-xs-4 col-xs-offset-4">
+							<span class="badge badge-warning">{_'projects_status_type_7'}</span>
+						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
