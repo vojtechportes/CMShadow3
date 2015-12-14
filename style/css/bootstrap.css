@@ -6885,6 +6885,9 @@ body.login {
   display: block;
   white-space: initial;
 }
+.workflow-preview .level .badge.badge-active {
+  border: 2px dashed #555555;
+}
 @media screen and (max-width: 991px) {
   .workflow-preview .level .badge {
     width: 100%;
