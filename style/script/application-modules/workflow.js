@@ -1,4 +1,25 @@
 (function(){
+	var changeState = function () {
+		var $workflow = $('.workflow[data-api-load]');
+
+		if ($workflow.length > 0) {
+			var $elements = $workflow.find('a[data-state]');
+
+			$elements.off('click.workflow').on('click.workflow', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $this = $(this),
+					state = $this.data('state'),
+					$parent = $this.parents('[data-api-load]'),
+					parentData = $.extend({}, $parent.data('api-load'), {'changeState': state});
+
+				console.log($parent);
+
+				APICommands.call($parent, parentData, true);
+			});
+		}
+	}
 
 	var workflowPreview = function () {	
 		if ($('#workflowpreview').length > 0) {
@@ -47,10 +68,12 @@
 
 	$(document).ready(function(){
 		workflowPreview();
+		changeState();
 	});
 
 	$(window).on('apiReload.admin/project/workflow', function(){
 		workflowPreview();
+		changeState();
 	});
 
 	$(window).on('resize.workflow', function(){
