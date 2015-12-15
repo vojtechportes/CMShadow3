@@ -39,7 +39,9 @@ $Stringtable = array(
 	'forms_project_form_cant_modify' => 'Sorry, you can\'t modify this project. You don\'t have enough rights.',
 	'forms_project_form_doesnt_exist' => 'Sorry, you can\'t modify this project. This project doesn\'t exist. You might have wrong project ID or project was deleted.',	
 	'forms_project_form_updated' => 'Project "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>',
-	'forms_project_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>'
+	'forms_project_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_project_form_state_changed' => 'Project state was successfully changed.',
+	'forms_project_form_state_change_failed' => 'Sorry, you are not allowed to change state of this project.'
 
 )
 
