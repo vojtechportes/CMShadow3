@@ -16,7 +16,21 @@ if ($val = filter_input(INPUT_POST, 'changeState', FILTER_VALIDATE_INT)) {
 	$ProjectWorkflow->state = $val;
 	$ProjectWorkflow->id = $id;
 	$ProjectWorkflow->projectRights = $ProjectRights;
-	$ProjectWorkflow->changeState();
+
+	if ($ProjectWorkflow->changeState()) {
+		$msg = "{_'forms_project_form_state_changed'}";
+		$class = "alert-success";
+		$status = 200;
+	} else {
+		$msg = "{_'forms_project_form_state_change_failed'}";
+		$class = "alert-danger";
+		$status = 401;
+	}
+	
+	$Message = new Module();
+	$Message->addModule(new Message(), array("html" => $msg, "class" => $class, "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => $status));
+	$Message->output();			
+
 	$Project = $_Project->getProjectByID($id);
 }
 
