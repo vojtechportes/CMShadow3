@@ -24,6 +24,7 @@ if (array_key_exists('type', $return)) {
 		if ($id) {
 			$_Project = new Project();
 			$Project = $_Project->getProjectByID($id);
+			
 			if (empty($Project) || (int) $Project['HasRights'] === 0) {
 				if (empty($Project))
 					$projectExist = false;
