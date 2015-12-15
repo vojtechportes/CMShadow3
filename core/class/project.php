@@ -2,11 +2,13 @@
 
 Class Project Extends Minimal {
 
+	public $id;
 	public $name;
 	public $description;
 	public $owners;
 	public $editors;
 	public $releasedate;
+	public $state;
 	private $status;
 
 	private function getProjectAttributes () {
@@ -37,13 +39,50 @@ Class Project Extends Minimal {
 		return array(
 			"1" => array(2 => "{_'projects_status_type_2_action'}",3 => "{_'projects_status_type_3_action'}",4 => "{_'projects_status_type_4_action'}"),
 			"2" => array(1 => "{_'projects_status_type_1_action'}"),
-			"3" => array(5 => "{_'projects_status_type_5_action'}"),
-			"4" => array(6 => "{_'projects_status_type_6_action'}"),
+			"3" => array(5 => "{_'projects_status_type_5_action'}", 1 => "{_'projects_status_type_1_action'}"),
+			"4" => array(6 => "{_'projects_status_type_6_action'}", 1 => "{_'projects_status_type_1_action'}"),
 			"5" => array(7 => "{_'projects_status_type_7_action'}", 8 => "{_'projects_status_type_8_action'}"),
 			"6" => array(),
 			"7" => array(),
 			"8" => array()
 		);
+	}
+
+	protected function getProjectWorkflowRights () {
+		return array(
+			"1" => array(1,2),
+			"2" => array(1,2),
+			"3" => array(1,2),
+			"4" => array(1,2),
+			"5" => array(1),
+			"6" => array(1),
+			"7" => array(1),
+			"8" => array(1)
+		);
+	}
+
+	public function checkProjectWorkflowRights ($workflow, $projectRights) {
+		global $M;
+
+		$Rights = $this->getProjectWorkflowRights();
+	
+		if (!empty($workflow) && !empty($projectRights)) {
+			foreach ($workflow as $key => $item) {
+				$Roles = $Rights[$key];
+				$_roles = array();
+				
+				foreach ($projectRights as $right) {
+					if (in_array($right, $Roles)) {
+						$_roles[] = true;
+					}
+				}
+
+				if (count($_roles) < 1)
+					unset($workflow[$key]);
+			}
+		}	
+
+		return $workflow;
 	}
 
 	public function getCurrentProjectID () {
@@ -76,6 +115,51 @@ Class Project Extends Minimal {
 			':Name' => $this->name,
 			':Description' => $this->description,
 			':ReleaseDate' => $this->releasedate,
+			':ID' => $this->id
+		));
+
+		$this->status = $this->id;
+		return $Stm->rowCount();
+	}
+
+	public function lockProject () {
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_Projects SET
+			`Locked` = :Locked
+			WHERE `ID` = :ID");
+		$Stm->execute(array(
+			':Locked' => 1,
+			':ID' => $this->id
+		));
+
+		$this->status = $this->id;
+		return $Stm->rowCount();
+	}
+
+	public function unlockProject () {
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_Projects SET
+			`Locked` = :Locked
+			WHERE `ID` = :ID");
+		$Stm->execute(array(
+			':Locked' => 0,
+			':ID' => $this->id
+		));
+
+		$this->status = $this->id;
+		return $Stm->rowCount();
+	}
+
+	public function changeProjectState () {
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_Projects SET
+			`Status` = :Status
+			WHERE `ID` = :ID");
+		$Stm->execute(array(
+			':Status' => $this->state,
 			':ID' => $this->id
 		));
 
@@ -170,13 +254,29 @@ Class Project Extends Minimal {
 				WHERE T_ProjectOwners.`Project` = T_Projects.`ID`
 				AND T_ProjectOwners.`User` = :UserID
 				LIMIT 1)
-			AS HasRights
+			AS HasRights,
+			(SELECT COUNT(`ID`)
+				FROM T_ProjectOwners
+				WHERE T_ProjectOwners.`Project` = T_Projects.`ID`
+				AND T_ProjectOwners.`User` = :UserID
+				AND T_ProjectOwners.`Role` = :RoleAdmin
+				LIMIT 1)
+			AS HasAdminRights,
+			(SELECT COUNT(`ID`)
+				FROM T_ProjectOwners
+				WHERE T_ProjectOwners.`Project` = T_Projects.`ID`
+				AND T_ProjectOwners.`User` = :UserID
+				AND T_ProjectOwners.`Role` = :RoleEditor
+				LIMIT 1)
+			AS HasEditorRights						
 			FROM T_Projects
 			WHERE T_Projects.`ID` = :ID
 			LIMIT 1");
 		$Stm->execute(array(
 			":UserID" => $UserID,
-			":ID" => $id
+			":ID" => $id,
+			":RoleAdmin" => 1,
+			":RoleEditor" => 2
 		));
 		return $Stm->fetch(PDO::FETCH_ASSOC);
 	}
