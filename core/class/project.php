@@ -285,8 +285,10 @@ Class Project Extends Minimal {
 		global $DB;
 		if ($role) {
 			$Stm = $DB->prepare("SELECT
-				T_ProjectOwners.`User`
+				T_ProjectOwners.`User`,
+				T_User.`Name`
 				FROM T_ProjectOwners
+				LEFT JOIN T_User ON T_User.`ID` = T_ProjectOwners.`User`
 				WHERE T_ProjectOwners.`Project` = :ID AND T_ProjectOwners.`Role` = :Role");
 			$Stm->execute(array(
 				":ID" => $id,
