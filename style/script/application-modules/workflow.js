@@ -14,9 +14,13 @@
 					$parent = $this.parents('[data-api-load]'),
 					parentData = $.extend({}, $parent.data('api-load'), {'changeState': state});
 
-				console.log($parent);
-
-				APICommands.call($parent, parentData, true);
+				APICommands.call($parent, parentData, true, false, function(){
+					if (typeof parentData['arguments']['dependencies'] !== 'undefined') {
+						$.each(parentData['arguments']['dependencies'], function(k, module){
+							$(window).trigger('apiReloadForce.' + module);
+						});
+					}				
+				});
 			});
 		}
 	}
