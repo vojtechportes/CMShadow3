@@ -10,7 +10,6 @@
 		<a href="#" data-toggle="modal" data-target="#workflowpreview">{_'projects_status_display_workflow'}</a> 
 	</div>
 	<div class="clearfix"></div>
-	<hr>
 </div>
 
 <div class="modal fade" id="workflowpreview" tabindex="-1">
