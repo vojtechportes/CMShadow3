@@ -20,14 +20,18 @@ function APIToggleState(icons, actions) {
 	}
 }
 
-function APICommands (data, load, html) {
+function APICommands (data, load, html, callback) {
 	var $el = this;
+	var callback = callback;
 
 	if (typeof load === 'undefined')
 		load = false;
 
 	if (typeof html === 'undefined')
 		html = false;	
+
+	if (typeof callback === 'undefined')
+		callback = function(){};
 
 	switch (data['command']) {
 		case 'settingsNodeRightsAssign':
@@ -90,6 +94,8 @@ function APICommands (data, load, html) {
 							$el.html(module['__html']);
 						});	
 					}
+
+					callback.call(this);
 				}
 			);
 			break;	
