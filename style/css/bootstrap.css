@@ -6863,6 +6863,30 @@ body.login {
 .project-list td .nolink {
   color: #333333;
 }
+.project-details {
+  margin: 0 0 30px;
+}
+.project-details .project-label {
+  position: relative;
+  top: 30px;
+  padding: 6px 12px 6px 0;
+  background: #FFF;
+}
+.project-details .item strong {
+  display: block;
+  margin: 0 0 10px;
+  float: left;
+  width: 30%;
+}
+.project-details .item.list strong {
+  float: none;
+  width: 100%;
+}
+.project-details .item.list ul {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+}
 .controls {
   margin: 0 0 30px;
 }
