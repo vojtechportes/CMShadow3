@@ -102,11 +102,13 @@ $Hiearchy = array(
 					"Title" => "{_'pages_projects_edit_title'}"
 				),
 				"Scripts" => array(
-					array("style/script/application-modules/workflow.js")
+					array("style/script/application-modules/workflow.js"),
+					array("style/script/application-modules/projectdetails.js")
 				),
 				"Content" => array(
 					"main" => array(
-						array("module" => "admin/project/api/workflow.loader"),
+						array("module" => "admin/project/api/workflow.loader", "dependencies" => array("admin/project/details")),
+						array("module" => "admin/project/api/details.loader", "projectAuth" => true),
 						array("module" => "admin/project/api/form.loader", "class" => "collapse project-form-element", "type" => "edit", "message" => 0)
 					)
 				)
