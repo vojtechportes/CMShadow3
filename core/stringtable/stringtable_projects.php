@@ -39,7 +39,17 @@ $Stringtable = array(
     'projects_project_list_th_createdAt' => 'Created At',
     'projects_project_list_th_modifiedAt' => 'Modified At',
     'projects_project_list_th_status' => 'Status',
-    'projects_project_list_th_actions' => 'Actions'	
+    'projects_project_list_th_actions' => 'Actions',
+
+    /* Project Details */
+    'projects_project_details' => 'Details',
+    'projects_project_details_name' => 'Project name',
+    'projects_project_details_description' => 'Description',
+    'projects_project_details_release_date' => 'Release date:',
+    'projects_project_details_owners' => 'Owners:',
+    'projects_project_details_editors' => 'Editors:',
+    'projects_project_details_state' => 'State:',
+    'projects_project_details_labels' => 'Labels:'
 );
 
 ?>
