@@ -39,7 +39,7 @@
 	<div class="clearfix"></div>
 	<div class="row">
     	<div class="col-md-12">
-    		<p><?php echo nl2br($return['Project']['Description']); ?></p>
+    		<p><?php echo $return['Project']['Description']; ?></p>
     	</div>
     	<div class="clearfix"></div>
 	</div>
