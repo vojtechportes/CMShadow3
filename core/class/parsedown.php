@@ -13,7 +13,7 @@
 #
 #
 
-class Parsedown
+class Parsedown Extends Minimal
 {
     # ~
 
@@ -102,7 +102,7 @@ class Parsedown
         '_' => array('Rule'),
         '`' => array('FencedCode'),
         '|' => array('Table'),
-        '~' => array('FencedCode'),
+        '~' => array('FencedCode')
     );
 
     # ~
@@ -859,6 +859,10 @@ class Parsedown
                 'element' => array(
                     'name' => 'table',
                     'handler' => 'elements',
+                    'attributes' => array(
+                        'class' => 'table table-condensed',
+                        'style' => 'width: 75%'
+                    )
                 ),
             );
 
@@ -967,11 +971,12 @@ class Parsedown
         '`' => array('Code'),
         '~' => array('Strikethrough'),
         '\\' => array('EscapeSequence'),
+        '@' => array('UserMention')
     );
 
     # ~
 
-    protected $inlineMarkerList = '!"*_&[:<>`~\\';
+    protected $inlineMarkerList = '!"*_&[:<>`~\\@';
 
     #
     # ~
@@ -1334,6 +1339,41 @@ class Parsedown
                     ),
                 ),
             );
+
+            return $Inline;
+        }
+    }
+
+    public function inlineUserMention ($Excerpt)
+    {
+        if (preg_match('/@[A-Za-z_\-1-9]*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE))
+        {
+            $User = new User();
+            $User->userName = str_replace('@', '', $matches[0][0]);
+            $User = $User->getUserIDByName();
+
+            if (!empty($User)) {
+                $Inline = array(
+                    'extent' => strlen($matches[0][0]),
+                    'position' => $matches[0][1],
+                    'element' => array(
+                        'name' => 'a',
+                        'text' => $matches[0][0],
+                        'attributes' => array(
+                            'href' => ADMIN_PATH.'users/detail/'.$User['ID']
+                        )
+                    )
+                );
+            } else {
+                $Inline = array(
+                    'extent' => strlen($matches[0][0]),
+                    'position' => $matches[0][1],
+                    'element' => array(
+                        'name' => 'span',
+                        'text' => $matches[0][0]
+                    )
+                );
+            }
 
             return $Inline;
         }
