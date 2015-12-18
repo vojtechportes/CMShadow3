@@ -18,6 +18,9 @@ if (empty($Project) || (int) $Project['HasRights'] === 0) {
 	$Message->addModule(new Message(), array("html" => $msg, "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();		
 } else {
+	$Parsedown = new Parsedown();
+	$Project['Description'] = $Parsedown->text($Project['Description']);
+
 	$Module = new Module();
 	$Module->template = '/admin/project/details';
 	$Module->addModule(false, $return + array('Project' => $Project, 'StatusList' => $StatusList, "Users" => array("Owners" => $Owners, "Editors" => $Editors)));
