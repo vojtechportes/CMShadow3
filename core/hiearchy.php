@@ -1,5 +1,5 @@
 <?php
-global $LoggedIn;
+global $LoggedIn, $Path;
 
 $Hiearchy = array(
 	"/admin/" => array(
