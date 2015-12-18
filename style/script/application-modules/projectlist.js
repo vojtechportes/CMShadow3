@@ -1,5 +1,5 @@
 (function(){
-	var projectListReload = function () {
+	var reload = function () {
 		var parent = '.projectList[data-api-load]';
 		$.each($(parent), function(k, el){
 			var parentData = $('.projectList' + parent).data('api-load');
@@ -8,6 +8,6 @@
 	}
 
 	$(window).on('apiReloadForce.admin/project/list', function(){
-		projectListReload();
+		reload();
 	});
 })();

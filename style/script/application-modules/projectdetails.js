@@ -1,5 +1,5 @@
 (function(){
-	var projectDetailsReload = function () {
+	var reload = function () {
 		var parent = '.projectDetails[data-api-load]';
 		$.each($(parent), function(k, el){
 			var parentData = $('.projectDetails' + parent).data('api-load');
@@ -7,7 +7,27 @@
 		});		
 	}
 
+	var update = function () {
+		var parent = '.projectDetails[data-api-load]';
+		if ($(parent).length > 0) {
+			var $parent = $(parent),
+				$wrapper = $parent.find('.project-details'),
+				title = $wrapper.data('title');
+
+			$('.page-header h1').text(title);
+		}		
+	}
+
+	$(document).ready(function(){
+		update();
+	});
+
 	$(window).on('apiReloadForce.admin/project/details', function(){
-		projectDetailsReload();
+		reload();
+		update();
+	});
+
+	$(window).on('apiReload.admin/project/details', function(){
+		update();
 	});
 })();

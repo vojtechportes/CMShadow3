@@ -1,5 +1,5 @@
 (function(){
-	var changeState = function () {
+	var change = function () {
 		var $workflow = $('.workflow[data-api-load]');
 
 		if ($workflow.length > 0) {
@@ -25,7 +25,7 @@
 		}
 	}
 
-	var workflowPreview = function () {	
+	var preview = function () {	
 		if ($('#workflowpreview').length > 0) {
 			var $workflow = $('#workflowpreview');
 			var $canvas = $workflow.find('.workflow_canvas');
@@ -71,17 +71,17 @@
 	}
 
 	$(document).ready(function(){
-		workflowPreview();
-		changeState();
+		preview();
+		change();
 	});
 
 	$(window).on('apiReload.admin/project/workflow', function(){
-		workflowPreview();
-		changeState();
+		preview();
+		change();
 	});
 
 	$(window).on('resize.workflow', function(){
-		workflowPreview();
+		preview();
 	});
 
 })();

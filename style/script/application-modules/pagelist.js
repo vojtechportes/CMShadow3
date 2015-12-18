@@ -1,5 +1,5 @@
 (function(){
-	var pageList = function () {
+	var update = function () {
 		var folder = '[data-haschildpages]',
 			parent = '[data-api-load]';
 
@@ -20,7 +20,7 @@
 		}		
 	}
 
-	var pageListReload = function () {
+	var reload = function () {
 		var parent = '.folderList[data-api-load]';
 		$.each($(parent), function(k, el){
 			console.log(el);
@@ -30,14 +30,14 @@
 	}
 
 	$(document).ready(function(){
-		pageList();
+		update();
 	});
 
 	$(window).on('apiReload.admin/page/folders', function(){
-		pageList();
+		update();
 	});
 
 	$(window).on('apiReloadForce.admin/page/folders', function(){
-		pageListReload();
+		reload();
 	});
 })();
