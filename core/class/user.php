@@ -105,14 +105,14 @@ Class User Extends Minimal {
 
 	public function getUserByName () {
 		global $DB;
-		$Stm = $DB->prepare("SELECT `ID`, `SSID` FROM T_Users WHERE `Name` = :Name LIMIT 1");
+		$Stm = $DB->prepare("SELECT `ID`, `SSID` FROM T_User WHERE `Name` = :Name LIMIT 1");
 		$Stm->execute(array(':Name' => $this->userName));
 		return $Stm->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function getUserIDByName () {
 		global $DB;
-		$Stm = $DB->prepare("SELECT `ID` FROM T_Users WHERE `Name` = :Name LIMIT 1");
+		$Stm = $DB->prepare("SELECT `ID` FROM T_User WHERE `Name` = :Name LIMIT 1");
 		$Stm->execute(array(':Name' => $this->userName));
 		return $Stm->fetch(PDO::FETCH_ASSOC);
 	}	
