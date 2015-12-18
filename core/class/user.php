@@ -110,6 +110,13 @@ Class User Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);
 	}
 
+	public function getUserIDByName () {
+		global $DB;
+		$Stm = $DB->prepare("SELECT `ID` FROM T_Users WHERE `Name` = :Name LIMIT 1");
+		$Stm->execute(array(':Name' => $this->userName));
+		return $Stm->fetch(PDO::FETCH_ASSOC);
+	}	
+
 	public function setUserAttempts ($attempts) {
 		global $DB;
 		$Stm = $DB->prepare("UPDATE T_UserAttempts LEFT JOIN T_User ON T_User.`ID` = T_UserAttempts.`ID` AND T_User.`Name` = :Name SET T_UserAttempts.`Attempts` = :Attempts");
