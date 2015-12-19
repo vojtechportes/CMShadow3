@@ -10,6 +10,13 @@ Class FormElement_Select Extends FormElement {
 			$selected = $this->getAttribute("selected");
 		}
 
+		if (empty($this->getAttribute("disabled"))) {
+			$disabled = false;
+		} else {
+			$disabled = $this->getAttribute("disabled");
+		}
+
+
 		if ($this->getAttribute("multiple")) {
 			$multiple = "multiple";
 		} else {
@@ -26,6 +33,10 @@ Class FormElement_Select Extends FormElement {
 			if ($value == $selected || in_array($value, $selected) && $selected !== false) {
 				$str .= ' selected';
 			}
+
+			if ($value == $disabled || in_array($value, $disabled) && $disabled !== false) {
+				$str .= ' disabled';
+			}			
 			$str .= '>'.$text.'</option>';
 		}
 
