@@ -67,7 +67,7 @@ if ($Output) {
 	$Page->keywords = filter_input(INPUT_POST, "form_page-keywords");	
 	$Page->template = filter_input(INPUT_POST, "form_page-template");
 	
-	if ($Page->createPage() && $Page->createPageDetails()) {
+	if ($Page->createPage() && $Page->createPageDetails() && $Page->clonePage(false, -1)) {
 		$Message = new Module();
 		$Message->addModule(new Message(), array("html" => "{_'forms_page_form_created', sprintf([\"{$Page->name}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 		$Message->output();
