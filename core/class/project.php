@@ -9,7 +9,7 @@ Class Project Extends Minimal {
 	public $editors;
 	public $releasedate;
 	public $state;
-	private $status;
+	public $status;
 
 	private function getProjectAttributes () {
 		return "
