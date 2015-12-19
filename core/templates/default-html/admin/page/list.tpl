@@ -20,8 +20,8 @@
   		<td><?php echo $page['CreatedAt'] ?></td>
   		<td><?php echo $page['ModifiedAt'] ?></td>
   		<td>
-        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-eye <?php if ($page['Visible'] === NULL) { echo ' not-visible'; } ?>"></span>
-        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-<?php if ($page['Locked'] === NULL) { echo 'lock'; } else { echo 'unlock'; } ?>"></span>
+        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-eye <?php if ((int) $page['Visible'] === 0) { echo ' not-visible'; } ?>"></span>
+        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-<?php if ((int) $page['Locked'] === 1) { echo 'lock'; } else { echo 'unlock'; } ?>"></span>
 
       </td>
   		<td class="text-right"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-edit-frame"></span><span class="glyphicon-alt glyphicon-larger glyphicon-alt-ok"></span></td>
