@@ -63,6 +63,9 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 			}
 		}
 
+		/*$Pages = new Pages();
+		$PageList = $Pages->getPageList();*/
+
 		$form = new Form ('form_project');
 		$form->method = 'POST';
 		$form->type = 'rows';
@@ -75,6 +78,7 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 			$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", "description", array("required" => true)));	
 			$form->addElement(new FormElement_Select("{_'forms_project_owners'}", "owners[]", array("required" => true, "multiple" => true, "options" => $_userlist)));
 			$form->addElement(new FormElement_Select("{_'forms_project_editors'}", "editors[]", array("required" => false, "multiple" => true, "options" => $_userlist)));
+			$form->addElement(new FormElement_Select("{_'forms_project_pages'}", "pages[]", array("required" => false, "multiple" => true, "options" => $_pagelist)));
 			$form->addElement(new FormElement_Submit(false, "submit_project", array("value" => "{_'forms_project_submit'}", "classInput" => "btn btn-block btn-primary")));
 		} else {
 			$form->addElement(new FormElement_Text("{_'forms_project_name'}", "name", array("required" => true, "value" => $Project['Name'])));
@@ -82,6 +86,7 @@ if ($M->_GET("success") && $M->_GET("form") === 'project-form') {
 			$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", "description", array("required" => true, "value" => $Project['Description'])));	
 			$form->addElement(new FormElement_Select("{_'forms_project_owners'}", "owners[]", array("required" => true, "multiple" => true, "options" => $_userlist, "selected" => $OwnerValues)));
 			$form->addElement(new FormElement_Select("{_'forms_project_editors'}", "editors[]", array("required" => false, "multiple" => true, "options" => $_userlist, "selected" => $EditorValues)));
+			$form->addElement(new FormElement_Select("{_'forms_project_pages'}", "pages[]", array("required" => false, "multiple" => true, "options" => $_pages, "selected" => $PageValues)));
 			$form->addElement(new FormElement_Submit(false, "submit_project", array("value" => "{_'forms_project_submit_edit'}", "classInput" => "btn btn-block btn-primary")));			
 		}
 
