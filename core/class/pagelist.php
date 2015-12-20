@@ -15,13 +15,31 @@ Class PageList Extends Module {
 				$this->output['pages'] = $Pages->pageTree;
 				$this->output['detailed'] = false;
 				break;
-			case 'getPageTreeDetailes':
+			case 'getPageTreeDetailed':
 				$Pages = new Page();
 				$Pages->getPageTree(true, $id);
 
 				$this->template = '/admin/page/list';
 				$this->output['pages'] = $Pages->pageTree;
 				$this->output['detailed'] = true;
+				break;
+			case 'getPageList':
+				$Pages = new Page();
+				$Pages->version = $id;
+				$PageList = $Pages->getPageList(false);
+
+				$this->template = '/admin/page/pages';
+				$this->output['pages'] = $PageList;
+				$this->output['detailed'] = false;
+				break;
+			case 'getPageList':
+				$Pages = new Page();
+				$Pages->version = $id;
+				$PageList = $Pages->getPageListDetailed(false);
+
+				$this->template = '/admin/page/pages';
+				$this->output['pages'] = $PageList;
+				$this->output['detailed'] = false;
 				break;
 			case 'getPageListByParent':
 				$Pages = new Page();
