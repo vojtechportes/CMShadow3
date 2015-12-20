@@ -57,7 +57,7 @@ if ($Output) {
 	/* Page */
 	$Page->parent = filter_input(INPUT_POST, "form_page-parent");
 	$Page->owner = User::getUserID();
-	$Page->visible = filter_input(INPUT_POST, "form_page-visible");
+	$Page->visible = filter_input(INPUT_POST, "form_page-visible"); if (is_null($Page->visible)) { $Page->visible = 0; }
 	$Page->weight = filter_input(INPUT_POST, "form_page-weight");
 
 	/* PageDetails */
