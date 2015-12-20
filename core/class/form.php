@@ -55,6 +55,7 @@ Class Form Extends Minimal {
 	public $action = '/';
 	public $classInput = '';
 	public $classLabel = '';
+	public $styleInput = '';
 	public $type = 'linear';
 	public $templateOutput = DEFAULT_OUTPUT;
 	public $errorMessages = array("required" => DEFAULT_ERROR_FORM_VALIDATION_REQUIRED, "minLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "maxLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "pattern" => DEFAULT_ERROR_FORM_VALIDATION_PATTERN, "equalTo" => DEFAULT_ERROR_FORM_VALIDATION_EQUALTO);
