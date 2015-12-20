@@ -23,8 +23,7 @@
 	var reload = function () {
 		var parent = '.folderList[data-api-load]';
 		$.each($(parent), function(k, el){
-			console.log(el);
-			var parentData = $('.folderList' + parent).data('api-load');
+			var parentData = $(el).data('api-load');
 			APICommands.call($(el), parentData, true);
 		});		
 	}
