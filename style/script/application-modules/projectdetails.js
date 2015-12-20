@@ -2,7 +2,7 @@
 	var reload = function () {
 		var parent = '.projectDetails[data-api-load]';
 		$.each($(parent), function(k, el){
-			var parentData = $('.projectDetails' + parent).data('api-load');
+			var parentData = $(el).data('api-load');
 			APICommands.call($(el), parentData, true);
 		});		
 	}
