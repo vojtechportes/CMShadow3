@@ -5,9 +5,12 @@ Class Page Extends Minimal {
 	public $parent;
 	public $owner;
 	public $version = 0;
-	public $locked;
-	public $visible;
+	public $locked = 0;
+	public $visible = 0;
 	public $weight;
+	public $createdAt;
+	public $modifiedAt;
+	public $url = '/';
 	public $name;
 	public $title;
 	public $description;
@@ -29,6 +32,7 @@ Class Page Extends Minimal {
 			T_Pages.`CreatedAt`,
 			T_Pages.`ModifiedAt`,
 			T_Pages.`PageRefference`,
+			T_Pages.`URL`,
 			T_PageDetails.`Title`";
 	}
 
@@ -44,6 +48,7 @@ Class Page Extends Minimal {
 			T_Pages.`CreatedAt`,
 			T_Pages.`ModifiedAt`,
 			T_Pages.`PageRefference`,
+			T_Pages.`URL`,
 			T_PageDetails.`Name`,
 			T_PageDetails.`Title`,
 			T_PageDetails.`Description`,
@@ -51,25 +56,40 @@ Class Page Extends Minimal {
 			T_PageDetails.`Template`";
 	}
 
-	public function createPage () {
+	public function createPage ($clone = false) {
 		global $DB;
-		$Stm = $DB->prepare("INSERT INTO T_Pages (`Parent`, `Owner`, `Version`, `Locked`, `Visible`, `Weight`, `PageRefference`) VALUES (:Parent, :Owner, :Version, :Locked, :Visible, :Weight, :PageRefference)");
-		$Stm->execute(array(
+
+		$arguments = array(
 			':Parent' => $this->parent,
 			':Owner' => $this->owner,
 			':Version' => $this->version,
 			':Locked' => 0,
 			':Visible' => $this->visible,
 			':Weight' => $this->weight,
-			':PageRefference' => $this->pageRefference
-		));
+			':PageRefference' => $this->pageRefference,
+			':URL' => $this->url
+		);
+
+		if ($clone) {
+			$Cols = ", `CreatedAt`, `ModifiedAt`";
+			$Values = ", :CreatedAt, :ModifiedAt";
+			$arguments[':CreatedAt'] = $this->createdAt;
+			$arguments[':ModifiedAt'] = $this->modifiedAt;
+		}
+
+		$Stm = $DB->prepare("INSERT INTO T_Pages
+			(`Parent`, `Owner`, `Version`, `Locked`, `Visible`, `Weight`, `PageRefference`, `URL` {$Cols})
+			VALUES (:Parent, :Owner, :Version, :Locked, :Visible, :Weight, :PageRefference, :URL {$Values})");
+		$Stm->execute($arguments);
 		$this->status = $DB->lastInsertId();
 		return $Stm->rowCount();
 	}
 
-	public function createPageDetails () {
+	public function createPageDetails ($clone = false) {
 		global $DB;
-		$Stm = $DB->prepare("INSERT INTO T_PageDetails (`Page`, `Name`, `Title`, `Description`, `Keywords`, `Template`, `PageRefference`, `Version`) VALUES (:Page, :Name, :Title, :Description, :Keywords, :Template, :PageRefference, :Version)");
+		$Stm = $DB->prepare("INSERT INTO T_PageDetails 
+			(`Page`, `Name`, `Title`, `Description`, `Keywords`, `Template`, `PageRefference`, `Version`)
+			VALUES (:Page, :Name, :Title, :Description, :Keywords, :Template, :PageRefference, :Version)");
 		$Stm->execute(array(
 			':Page' => $this->status,
 			':Name' => $this->name,
@@ -103,7 +123,9 @@ Class Page Extends Minimal {
 			$Clone->owner = User::getUserID();
 			$Clone->visible = $Page['Visible'];
 			$Clone->weight = $Page['Weight'];
-
+			$Clone->createdAt = $Page['CreatedAt'];
+			$Clone->modifiedAt = $Page['ModifiedAt'];
+			$Clone->url = $Page['URL'];
 			
 			/* Page Details */
 			$Clone->name = $Page['Name'];
@@ -112,7 +134,7 @@ Class Page Extends Minimal {
 			$Clone->keywords = $Page['Keywords'];
 			$Clone->template = $Page['Template'];
 
-			$Clone->createPage();
+			$Clone->createPage(true);
 
 			/* Update status if neccessary */
 			if ($newID > 0) {	
