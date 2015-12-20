@@ -29,6 +29,7 @@ function APITest (data, load, html, e) {
 
 								if (typeof parentData['arguments']['dependencies'] !== 'undefined') {
 									$.each(parentData['arguments']['dependencies'], function(k, module){
+										console.log(module);
 										$(window).trigger('apiReloadForce.' + module);
 									});
 								}
