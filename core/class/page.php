@@ -197,31 +197,48 @@ Class Page Extends Minimal {
 
 	public function getPageList ($parent = 0) {
 		global $DB, $M;
+
+		$arguments = array(
+			':Version' => $this->version
+		);
+
+		if ($parent !== false) {
+			$Parent = "T_Pages.`Parent` = :Parent AND";
+			$SubQuery = ", (SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent` AND T_Pages.`Version` = T_PagesB.`Version`) AS numChildPages";			
+			$arguments[':Parent'] = $parent;
+		}
+
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributes()},
-		(SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent` AND T_Pages.`Version` = T_PagesB.`Version`) AS numChildPages		
+		{$this->getPageAttributes()}
+		{$SubQuery}	
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
-		ON (T_Pages.`ID` = T_PageDetails.`Page` AND T_Pages.`Version` = T_PageDetails.`Version`) WHERE T_Pages.`Parent` = :Parent AND T_Pages.`Version` = :Version");
-		$Stm->execute(array(
-			':Parent' => $parent,
-			':Version' => $this->version
-		));
+		ON (T_Pages.`ID` = T_PageDetails.`Page` AND T_Pages.`Version` = T_PageDetails.`Version`) WHERE {$Parent} T_Pages.`Version` = :Version");
+		$Stm->execute($arguments);
+
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function getPageListDetailed ($parent = 0) {
 		global $DB;
+
+		$arguments = array(
+			':Version' => $this->version
+		);
+
+		if ($parent !== false) {
+			$Parent = "T_Pages.`Parent` = :Parent AND";		
+			$SubQuery = ", (SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent` AND T_Pages.`Version` = T_PagesB.`Version`) AS numChildPages";	
+			$arguments[':Parent'] = $parent;
+		}
+
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributesDetailed()},
-		(SELECT COUNT(T_PagesB.`ID`) FROM T_Pages T_PagesB WHERE T_Pages.`ID` = T_PagesB.`Parent` AND T_Pages.`Version` = T_PagesB.`Version`) AS numChildPages
+		{$this->getPageAttributesDetailed()}
+		{$SubQuery}	
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
-		ON T_Pages.`ID` = T_PageDetails.`Page` WHERE T_Pages.`Parent` = :Parent AND T_Pages.`Version` = :Version");
-		$Stm->execute(array(
-			':Parent' => $parent,
-			':Version' => $this->version
-		));
+		ON T_Pages.`ID` = T_PageDetails.`Page` WHERE {$Parent} T_Pages.`Version` = :Version");
+		$Stm->execute($arguments);
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);		
 	}
 
