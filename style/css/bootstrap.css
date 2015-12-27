@@ -664,6 +664,9 @@ th {
 .glyphicon-alt-edit-frame:before {
   content: "\f13D";
 }
+.glyphicon-alt-dots:before {
+  content: "\f141";
+}
 .glyphicon-alt-back:before {
   content: "\f156";
 }
