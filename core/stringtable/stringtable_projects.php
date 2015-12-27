@@ -49,7 +49,10 @@ $Stringtable = array(
     'projects_project_details_owners' => 'Owners:',
     'projects_project_details_editors' => 'Editors:',
     'projects_project_details_state' => 'State:',
-    'projects_project_details_labels' => 'Labels:'
+    'projects_project_details_labels' => 'Labels:',
+
+    /* Project quick edit */
+    'projects_project_quick_edit' => 'Quick edit: ' 
 );
 
 ?>

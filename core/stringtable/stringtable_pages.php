@@ -37,7 +37,12 @@ $Stringtable = array(
 	'pages_page_list_action_rollback' => 'Rollback',
 	'pages_page_list_level_up' => 'Level up',
 	'pages_page_controls_create_page' => 'Create page',
-	'pages_page_controls_create_project' => 'Create project'					
+	'pages_page_controls_create_project' => 'Create project',
+
+	/* Page List actions */
+	'pages_page_list_add_to_project' => 'Add to project via Quick edit',		
+	'pages_page_list_delete_page' => 'Delete page',
+	'pages_page_list_show_more_info' => 'Show more informations'	
 )
 
 ?>
