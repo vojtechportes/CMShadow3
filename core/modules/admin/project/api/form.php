@@ -95,7 +95,7 @@ if ($canDisplay) {
 	if ($type === 'create') {
 		$form->addElement(new FormElement_Text("{_'forms_project_name'}", "name", array("required" => true)));
 		$form->addElement(new FormElement_Text("{_'forms_project_release_date'}", "release_date", array("required" => true)));
-		$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", "description", array("required" => true, "styleInput" => "height: 395px;")));	
+		$form->addElement(new FormElement_Textarea("{_'forms_project_description'}", "description", array("required" => false, "styleInput" => "height: 395px;")));	
 		$form->addElement(new FormElement_Select("{_'forms_project_owners'}", "owners[]", array("required" => true, "multiple" => true, "options" => $_userlist)));
 		$form->addElement(new FormElement_Select("{_'forms_project_editors'}", "editors[]", array("required" => false, "multiple" => true, "options" => $_userlist)));
 		$form->addElement(new FormElement_Select("{_'forms_project_pages'}", "pages[]", array("required" => false, "multiple" => true, "options" => $_pagelist, "disabled" => $PageDisabledValues)));			
