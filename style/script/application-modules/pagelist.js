@@ -1,7 +1,8 @@
 (function(){
 	var update = function () {
 		var folder = '[data-haschildpages]',
-			parent = '[data-api-load]';
+			parent = '[data-api-load]',
+			actions = {'edit': '[data-edit]', 'delete': '[data-delete]'};
 
 		if ($(folder).length > 0) {
 			var $folder = $(folder),
@@ -18,6 +19,25 @@
 					APICommands.call($parent, parentData, true);
 				});
 		}		
+
+		if ($(actions.edit).length > 0) {
+			var $action = $(actions.edit);
+			
+			$action.off('click.quickedit').on('click.quickedit', function(e){
+				e.preventDefault();
+
+				var $this = $(this),
+					arguments = $this.data('arguments');
+					$parent = $($this.data('target')).find('[data-api-load]');
+				
+				if ($parent.length > 0) {
+					var parentData = $.extend({}, $parent.data('api-load'));
+						parentData['arguments'] = $.extend({}, parentData['arguments'], arguments);
+					console.log(parentData);
+					APICommands.call($parent, parentData, true);
+				}
+			});
+		}
 	}
 
 	var reload = function () {
