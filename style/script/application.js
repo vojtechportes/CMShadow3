@@ -116,9 +116,11 @@ if ($('[data-api]').length > 0) {
 
 if ($('[data-api-load]').length > 0) {
 	$.each($('[data-api-load]'), function(k, el) {
-		var data = $(el).data('api-load');
-		var $el = $(el);
+		if (typeof $(el).attr('data-api-prevent') === 'undefined') {
+			var data = $(el).data('api-load');
+			var $el = $(el);
 
-		APICommands.call($el, data, true);
+			APICommands.call($el, data, true);
+		}
 	});
 }
