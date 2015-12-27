@@ -31,9 +31,13 @@
 
       </td>
   		<td class="text-right">
-        <a href="#" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-edit-frame"></span></a>
-        <span class="glyphicon-alt glyphicon-larger glyphicon-alt-ok"></span></td>
-  	</tr>	
+        <?php if ((int) $page['Locked'] === 0) { ?>
+          <a href="#"  data-toggle="modal" data-target="#projectQuickEdit" data-arguments='{"pageId": "<?php echo $page['ID']; ?>", "pageName": "<?php echo $page['Title']; ?>"}' class="nolink" data-edit title="{_'pages_page_list_add_to_project'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-plus"></span></a>
+          <a href="#" class="nolink" data-delete title="{_'pages_page_list_delete_page'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-cross"></span></a>
+        <?php } ?>
+        <a href="#" class="nolink" title="{_'pages_page_list_show_more_info'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-selection-down"></span></a>
+      </td>
+    </tr>	
   	<?php
 
   }
