@@ -135,6 +135,23 @@ $Hiearchy = array(
 			)
 		),
 
+		"/admin/layouts/" => array(
+			"Config" => array(
+				"Title" => "{_'pages_layouts_title'}",
+				"NavigationShow" => array(
+					"RightNavigation" => array(
+						"Visible" => true,
+						"Weight" => 35
+					)
+				)
+			),
+			"Content" => array(
+				"main" => array(
+
+				)
+			)
+		),		
+
 		"/admin/stringtables/" => array(
 			"Config" => array(
 				"Title" => "{_'pages_stringtables_title'}",
