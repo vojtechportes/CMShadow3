@@ -105,7 +105,7 @@ CMSAPI.prototype = {
 			.done(function(data) {
 				if (typeof cbsuccess !== 'undefined') {
 					cbsuccess.call(data);
-					if (modulePath[modulePathLength -1] === 'form') {
+					if (modulePath[modulePathLength -1].split('.')[0] === 'form') {
 						$(window).trigger('apiReload.' + 'admin/form');
 					} else {
 						$(window).trigger('apiReload.' + query.module);
