@@ -8,6 +8,7 @@ $Stringtable = array(
 	'pages_api_test_title' => '(DEV) API Test',	
 	'pages_projects_title' => 'Projects',	
 	'pages_templates_title' => 'Templates',
+	'pages_layouts_title' => 'Layouts',
 	'pages_stringtables_title' => 'Stringtables',
 	'pages_catalog_title' => 'Catalog',
 	'pages_tags_title' => 'Tags',
