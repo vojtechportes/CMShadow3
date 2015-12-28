@@ -2,18 +2,13 @@
 
 global $M;
 
+require_once(DEFAULT_CORE_PATH."modulerights.conf.php");
+require_once(DEFAULT_CORE_PATH."noderights.conf.php");
+require_once(DEFAULT_CORE_PATH."apirights.conf.php");
+
 $ModuleRights = array();
 $NodeRights = array();
 $APIRights = array();
-
-$MRights = file_get_contents(DEFAULT_CORE_PATH."modulerights.conf.json", false);
-$MRights = (array) json_decode($MRights);
-
-$NRights = file_get_contents(DEFAULT_CORE_PATH."noderights.conf.json", false);
-$NRights = (array) json_decode($NRights);
-
-$ARights = file_get_contents(DEFAULT_CORE_PATH."apirights.conf.json", false);
-$ARights = (array) json_decode($ARights);
 
 $Files = new FileSystem (false, true);
 $Files->path = DEFAULT_MODULE_PATH;
@@ -29,6 +24,7 @@ foreach ($Modules as $Module) {
 		}
 	} else {
 		$ModuleRights[] = array("Module" => $Module, "Group" => 1);		
+		$ModuleRights[] = array("Module" => $Module, "Group" => 2);
 	}
 }
 
@@ -110,7 +106,13 @@ $Database = array(
 	),	
 	array(
 		"query" => "CREATE TABLE IF NOT EXISTS `T_ProjectOwners` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Project` INT(11) NOT NULL, `User` INT(11) NOT NULL, `Role` INT(11)) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"
-	)				
+	),
+	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_Layouts` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `User` INT(11) NOT NULL, `Name` TEXT(200) NOT NULL, `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `ModifiedAt` TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"	
+	),	
+	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_LayoutSlots` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Layout` INT(11) NOT NULL, `Parent` INT(11) NOT NULL DEFAULT 0, `Name` TEXT(100) NOT NULL, `Path` BLOB NOT NULL, `Class` BLOB NULL DEFAULT '', `Identifier` TEXT(200) NULL DEFAULT '', `Data` BLOB NULL DEFAULT '') ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"
+	)						
 );
 
 $DatabaseValues = array(
