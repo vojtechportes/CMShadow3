@@ -20,7 +20,7 @@ Class Page Extends Minimal {
 	public $pageRefference = 0;
 	private $status;
 
-	private function getPageAttributes () {
+	private function getAttributes () {
 		return "
 			T_Pages.`ID`,
 			T_Pages.`Parent`,
@@ -37,7 +37,7 @@ Class Page Extends Minimal {
 			T_PageDetails.`Title`";
 	}
 
-	private function getPageAttributesDetailed () {
+	private function getAttributesDetailed () {
 		return "
 			T_Pages.`ID`,
 			T_Pages.`Parent`,
@@ -193,7 +193,7 @@ Class Page Extends Minimal {
 	public function getPageByID ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributesDetailed()}
+		{$this->getAttributesDetailed()}
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
 		ON T_Pages.`ID` = T_PageDetails.`Page` WHERE T_Pages.`ID` = :ID AND T_Pages.`Version` = :Version LIMIT 1");			
@@ -207,7 +207,7 @@ Class Page Extends Minimal {
 	public function getPageByParent ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributesDetailed()}
+		{$this->getAttributesDetailed()}
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
 		ON T_Pages.`ID` = T_PageDetails.`Page` AND T_Pages.`Version` = T_PagesDetails.`Version` WHERE T_Pages.`Parent` = :Parent AND T_Pages.`Version` = :Version LIMIT 1");			
@@ -233,7 +233,7 @@ Class Page Extends Minimal {
 		}
 
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributes()}
+		{$this->getAttributes()}
 		{$SubQuery}	
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
@@ -257,7 +257,7 @@ Class Page Extends Minimal {
 		}
 
 		$Stm = $DB->prepare("SELECT
-		{$this->getPageAttributesDetailed()}
+		{$this->getAttributesDetailed()}
 		{$SubQuery}	
 		FROM T_Pages
 		LEFT JOIN T_PageDetails
