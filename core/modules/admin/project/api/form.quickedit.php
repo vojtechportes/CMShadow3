@@ -26,7 +26,7 @@ if ($canDisplay) {
 
 	$form->addElement(new FormElement_Text("{_'forms_project_name'}", "form_project_quick-name", array("required" => true, "value" => "{_'projects_project_quick_edit'}{$return['pageName']}")));
 	$form->addElement(new FormElement_Text("{_'forms_project_release_date'}", "form_project_quick-release_date", array("required" => true)));
-	$form->addElement(new FormElement_Hidden(false, "form_project_quick-pages", array("required" => true, "value" => $return['pageId'])));
+	$form->addElement(new FormElement_Hidden(false, "form_project_quick-pages", array("required" => true, "value" => $return['pageID'])));
 	$form->addElement(new FormElement_Submit(false, "submit_project", array("value" => "{_'forms_project_submit'}", "classInput" => "btn btn-block btn-primary")));
 
 	$Output = $form->output($return);
@@ -37,6 +37,7 @@ if ($canDisplay) {
 		/* Project */
 
 		$Project->name = filter_input(INPUT_POST, "form_project_quick-name");
+		$Project->description = filter_input(INPUT_POST, "form_project_quick-description");
 		$Project->relese_date = filter_input(INPUT_POST, "form_project_quick-release_date");
 
 		/* Project Owners */
@@ -45,25 +46,25 @@ if ($canDisplay) {
 		$Project->editors = array($UserID);	
 
 		/* Pages */
-		$page = (int) filter_input(INPUT_POST, "form_project_quick-pages", FILTER_SANITIZE_STRING);				
+		$Page = (int) filter_input(INPUT_POST, "pages", FILTER_SANITIZE_STRING);				
 
 		$Page = new Page();
 		$Page->version = 0;
 		$PagesFailed = array();
 
 		if ($Project->createProject() && $Project->setProjectOwners()) {
-			if (!$Page->isLocked($page)) {
-				$Page->lockPage($page);
-				$Page->clonePage($page, $Project->status);
+			if (!$Page->isLocked($Page)) {
+				$Page->lockPage($Page);
+				$Page->clonePage($Page, $Project->status);
 			} else {
-				array_push($PagesFailed, $page);
+				array_push($PagesFailed, $Page);
 			}
 
 
 			if (empty($PagesFailed)) {
-				$message = "{_'forms_project_form_quick_created', sprintf([\"{$Project->name}\", \"/admin/projects/edit/{$Project->getCurrentProjectID()}\", \"#\"])}";
+				$message = "{_'forms_project_form_created', sprintf([\"{$Project->name}\", \"/admin/projects/edit/{$Project->getCurrentProjectID()}\", \"#\"])}";
 			} else {
-				$message = "{_'forms_project_form_quick_created_exception', sprintf([\"{$Project->name}\", \"/admin/projects/edit/{$Project->getCurrentProjectID()}\", \"#\", \"".implode(', ', $PagesFailed)."\"])}";
+				$message = "{_'forms_project_form_created_exception', sprintf([\"{$Project->name}\", \"/admin/projects/edit/{$Project->getCurrentProjectID()}\", \"#\", \"".implode(', ', $PagesFailed)."\"])}";
 			}
 			$Message = new Module();
 			$Message->addModule(new Message(), array("html" => $message, "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
@@ -79,5 +80,10 @@ if ($canDisplay) {
 	$Code->template = '/code';
 	$Code->addModule(false, array("html" => '<div class="clearfix"></div></div>'));
 	$Code->output();
+} else {
+	if ($projectExist) { $msg = "{_'forms_project_form_cant_modify'}"; } else { $msg = "{_'forms_project_form_doesnt_exist'}"; }
+	$Message = new Module();
+	$Message->addModule(new Message(), array("html" => $msg, "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->output();			
 }
 ?>
