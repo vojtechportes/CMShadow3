@@ -147,7 +147,8 @@ $Hiearchy = array(
 			),
 			"Content" => array(
 				"main" => array(
-
+					array("module" => "admin/layout/controls"),
+					array("module" => "admin/layout/api/list.loader")
 				)
 			)
 		),		
