@@ -6866,6 +6866,22 @@ body.login {
 .project-list td .nolink {
   color: #333333;
 }
+.layout-list {
+  margin: 30px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.layout-list td {
+  padding: 12px 15px !important;
+  background: #fafafa;
+}
+.layout-list td:last-child .glyphicon-alt:last-child {
+  margin-right: 0;
+}
+.layout-list td .nolink {
+  color: #333333;
+}
 .project-details {
   margin: 0 0 30px;
 }
