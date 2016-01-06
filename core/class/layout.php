@@ -62,6 +62,27 @@ Class Layout Extends Minimal {
 		return $Layout;
 	}
 
+	public function getLayouts ($limit = array(0, 20), $order = 'DESC') {
+		global $DB, $M;
+
+		$Stm = $DB->prepare("SELECT
+			{$this->getAttributes()}
+			FROM T_Layouts
+			ORDER BY T_Layouts.`ID` {$order}
+			LIMIT {$limit[0]}, {$limit[1]}");
+		$Stm->execute();
+		return $Stm->fetchAll(PDO::FETCH_ASSOC);
+	}	
+
+	public function getLayoutCount ($filter = false) {
+		global $DB;
+		$Stm = $DB->prepare("SELECT
+		COUNT(T_Layouts.`ID`) AS LayoutCount
+		FROM T_Layouts");
+		$Stm->execute();
+		return $Stm->fetch(PDO::FETCH_ASSOC);
+	}
+
 	public function getLayoutByIdDetailed ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
@@ -215,7 +236,7 @@ Class Layout Extends Minimal {
 
 			foreach ($Slots as $slot) {
 				$Stm->execute(array(
-					':ID' => $slot['ID'];
+					':ID' => $slot['ID']
 				));
 			}
 
@@ -240,7 +261,7 @@ Class Layout Extends Minimal {
 		
 		$Stm = $DB->prepare("DELETE FROM T_Layout WHERE T_Layout.`ID` = :ID LIMIT 1");
 		$Stm->execute(array(
-			':ID' => $this->id;
+			':ID' => $this->id
 		));
 	}
 
