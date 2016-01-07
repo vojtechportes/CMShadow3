@@ -37,12 +37,12 @@
 								}
 							}
 							$val = preg_replace("/VALUES\s(\(.*\))/", 'VALUES '.str_replace('$', '\\$', implode($Query, ', ')), $val);
-							$status[] = $DB->exec($val);
+							$status[] = $DB->exec($val);;
 						}
 					}
 				}
 			}
-
+			
 			return $status;
 
 		}
