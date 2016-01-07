@@ -15,6 +15,7 @@ Class Layout Extends Minimal {
 	public $identifier;
 	public $data;
 	public $slotTree;
+	public $status;
 
 	private function getAttributes () {
 		return "
@@ -61,6 +62,10 @@ Class Layout Extends Minimal {
 
 		return $Layout;
 	}
+
+	public function getCurrentLayoutID () {
+		return $this->status;
+	}	
 
 	public function getLayouts ($limit = array(0, 20), $order = 'DESC') {
 		global $DB, $M;
@@ -172,6 +177,7 @@ Class Layout Extends Minimal {
 			':User' => $this->user
 		));
 
+		$this->status = $DB->lastInsertId();
 		return $Stm->rowCount();
 	}
 
@@ -190,7 +196,8 @@ Class Layout Extends Minimal {
 			':Identifier' => $this->identifier,
 			':Data' => $this->data
 		));
-
+		
+		$this->status = $DB->lastInsertId();
 		return $Stm->rowCount();
 	}
 
