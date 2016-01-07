@@ -46,7 +46,28 @@ $Stringtable = array(
 	'forms_project_form_updated_exception' => 'Project "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>.<br><br>Following pages were not added to project because they are already in different project or locked: "%s"',
 	'forms_project_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_project_form_state_changed' => 'Project state was successfully changed.',
-	'forms_project_form_state_change_failed' => 'Sorry, you are not allowed to change state of this project.'
+	'forms_project_form_state_change_failed' => 'Sorry, you are not allowed to change state of this project.',
+
+	/* Layout Form */
+	'forms_layout_submit' => 'Create',
+	'forms_layout_submit_edit' => 'Edit',
+	'forms_layout_name' => 'Name',
+
+	/* Layout Slot Form */
+
+	'forms_layout_slot_submit' => 'Add',
+	'forms_layout_slot_submit_edit' => 'Edit',
+	'forms_layout_slot_name' => 'Name',
+	'forms_layout_form_help' => 'Layout is part of template and is saying where on page you can place modules and how the page will be structured. Part of layout are also slots, that are creating page structure. You will be able to add them after layout is created.'
+	'forms_layout_form_error' => 'Unexpected error ocured. Layout "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_layout_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_layout_form_cant_modify' => 'Sorry, you are not allowed to modify this layout.',
+	'forms_layout_form_doesnt_exist' => 'Sorry, you can\'t modify this layout. This layout doesn\'t exist. You might have wrong ID or layout was deleted.',
+	'forms_layout_slot_parent' => 'Parent',
+	'forms_layout_slot_weight' => 'Weight',
+	'forms_layout_slot_class' => 'Class',
+	'forms_layout_slot_identifier' => 'ID (CSS)',
+	'forms_layout_slot_data' => 'Data attributes',
 
 )
 
