@@ -58,16 +58,18 @@ $Stringtable = array(
 	'forms_layout_slot_submit' => 'Add',
 	'forms_layout_slot_submit_edit' => 'Edit',
 	'forms_layout_slot_name' => 'Name',
-	'forms_layout_form_help' => 'Layout is part of template and is saying where on page you can place modules and how the page will be structured. Part of layout are also slots, that are creating page structure. You will be able to add them after layout is created.'
+	'forms_layout_form_help' => 'Layout is part of template and is saying where on page you can place modules and how the page will be structured. Part of layout are also slots, that are creating page structure. You will be able to add them after layout is created.',
 	'forms_layout_form_error' => 'Unexpected error ocured. Layout "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_layout_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_layout_form_cant_modify' => 'Sorry, you are not allowed to modify this layout.',
 	'forms_layout_form_doesnt_exist' => 'Sorry, you can\'t modify this layout. This layout doesn\'t exist. You might have wrong ID or layout was deleted.',
+	'forms_layout_form_created' => 'Layout "%s" was succesfully created. To add slots to layout, <a href="%s">open layout</a>. You can also <a data-api-reload href="%s">create another layout.</a>',
+	'forms_layout_form_updated' => 'Layout "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>',
 	'forms_layout_slot_parent' => 'Parent',
 	'forms_layout_slot_weight' => 'Weight',
 	'forms_layout_slot_class' => 'Class',
 	'forms_layout_slot_identifier' => 'ID (CSS)',
-	'forms_layout_slot_data' => 'Data attributes',
+	'forms_layout_slot_data' => 'Data attributes'
 
 )
 
