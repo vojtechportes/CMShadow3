@@ -145,9 +145,13 @@ $Hiearchy = array(
 					)
 				)
 			),
+			"Scripts" => array(
+				array("style/script/application-modules/layoutlist.js")
+			),
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/layout/controls"),
+					array("module" => "admin/layout/api/form.loader", "class" => "collapse layout-form-element", "dependencies" => array("admin/layout/list")),					
 					array("module" => "admin/layout/api/list.loader")
 				)
 			)
