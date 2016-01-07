@@ -104,7 +104,7 @@ Class Layout Extends Minimal {
 
 	}
 
-	public function getLayoutById ($id) {
+	public function getLayoutByID ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
 		{$this->getSlotAttributes()}
@@ -117,7 +117,7 @@ Class Layout Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);		
 	}
 
-	public function getLayoutSlotById () {
+	public function getLayoutSlotByID () {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
 		{$this->getAttributes()}
