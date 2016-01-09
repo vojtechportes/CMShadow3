@@ -49,6 +49,8 @@ function APITest (data, load, html, e) {
 
 						var parentData = $.extend({}, $el.data('api-load'), {'form_open': 1});
 						APICommands.call($el, parentData, true);
+
+						console.log('reload');
 					});
 				}
 			});
