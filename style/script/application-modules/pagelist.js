@@ -33,7 +33,6 @@
 				if ($parent.length > 0) {
 					var parentData = $.extend({}, $parent.data('api-load'));
 						parentData['arguments'] = $.extend({}, parentData['arguments'], arguments);
-					console.log(parentData);
 					APICommands.call($parent, parentData, true);
 				}
 			});
