@@ -118,7 +118,11 @@ if ($('[data-api-load]').length > 0) {
 	$.each($('[data-api-load]'), function(k, el) {
 		if (typeof $(el).attr('data-api-prevent') === 'undefined') {
 			var data = $(el).data('api-load');
-			var $el = $(el);
+			if (typeof data['load-to'] !== 'undefined') {
+				var $el = $(data['load-to']);
+			} else {
+				var $el = $(el);
+			}
 
 			APICommands.call($el, data, true);
 		}
