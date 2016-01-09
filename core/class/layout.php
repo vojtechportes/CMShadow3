@@ -258,18 +258,22 @@ Class Layout Extends Minimal {
 		$Stm->execute(array(
 			':Layout' => $this->layout
 		));
+
 		return $Stm->rowCount();
 	}
 
 	public function deleteLayout () {
 		global $DB;
 
+		$this->layout = $this->id;
 		$this->deleteLayoutSlotsByLayout();
 		
-		$Stm = $DB->prepare("DELETE FROM T_Layout WHERE T_Layout.`ID` = :ID LIMIT 1");
+		$Stm = $DB->prepare("DELETE FROM T_Layouts WHERE T_Layouts.`ID` = :ID LIMIT 1");
 		$Stm->execute(array(
 			':ID' => $this->id
 		));
+
+		return $Stm->rowCount();
 	}
 
 }
