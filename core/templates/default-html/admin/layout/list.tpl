@@ -19,7 +19,10 @@
       <td><?php echo $layout['LayoutName'] ?></td>
       <td><?php echo $layout['CreatedAt'] ?></td>
       <td><?php echo $layout['ModifiedAt'] ?></td>
-      <td class="text-right"><a href="<?php echo ADMIN_PATH ?>layout/edit/<?php echo $layout['LayoutID'] ?>" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a></td>
+      <td class="text-right">
+        <a href="#" class="nolink" data-toggle="modal" data-target="#layoutDelete" data-arguments='{"layoutId": "<?php echo $layout['LayoutID']; ?>", "layoutName": "<?php echo $layout['LayoutName']; ?>"}' class="nolink" data-delete title="{_'layouts_layout_delete'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-cross"></span></a>
+        <a href="<?php echo ADMIN_PATH ?>layout/edit/<?php echo $layout['LayoutID'] ?>" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a>
+      </td>
     </tr> 
     <?php
   }
