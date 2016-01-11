@@ -40,8 +40,11 @@ Class Layout Extends Minimal {
 	}	
 
 	private function extractLayout ($data) {
+		global $M;
+
 		$Layout = array();
 		$Layout['Slots'] = array();
+		$_Slots = array();
 
 		$Layout['Layout'] = array(
 			'ID' => $data[0]['LayoutID'],
@@ -51,15 +54,19 @@ Class Layout Extends Minimal {
 			'ModifiedAt' => $data[0]['ModifiedAt']
 		);
 
-		foreach ($Layout as $key => $slot) {
-			$Layout['Slots'][$key] = $slot;
-			unset($Layout['Slots'][$key]['LayoutID']);
-			unset($Layout['Slots'][$key]['User']);
-			unset($Layout['Slots'][$key]['LayoutName']);
-			unset($Layout['Slots'][$key]['CreatedAt']);
-			unset($Layout['Slots'][$key]['ModifiedAt']);
-		}
+		if (count($data) !== 0 && $data[0]['ID'] !== NULL) {
+			foreach ($data as $key => $slot) {
+				$_Slots[$slot['ID']] = $slot;
+				unset($_Slots[$slot['ID']]['LayoutID']);
+				unset($_Slots[$slot['ID']]['User']);
+				unset($_Slots[$slot['ID']]['LayoutName']);
+				unset($_Slots[$slot['ID']]['CreatedAt']);
+				unset($_Slots[$slot['ID']]['ModifiedAt']);
+				//unset($Layout['Slots'][$slot['ID']]['numChildSlots']);
+			}
 
+			$Layout['Slots'] = array_parent_sort('ID', 'Parent', $_Slots);
+		}
 		return $Layout;
 	}
 
@@ -89,11 +96,12 @@ Class Layout Extends Minimal {
 	}
 
 	public function getLayoutByIdDetailed ($id) {
-		global $DB;
+		global $DB, $M;
 		$Stm = $DB->prepare("SELECT
 		{$this->getAttributes()},
 		{$this->getSlotAttributes()},
 		(SELECT COUNT(T_LayoutSlotsB.`ID`)
+			FROM T_LayoutSlots T_LayoutSlotsB
 			WHERE T_LayoutSlots.`ID` = T_LayoutSlotsB.`Parent`
 			AND T_LayoutSlots.`Layout` = T_LayoutSlotsB.`Layout`) AS numChildSlots		
 		FROM T_Layouts
@@ -104,15 +112,19 @@ Class Layout Extends Minimal {
 		$Stm->execute(array(
 			':ID' => $id
 		));
+
 		$Data = $Stm->fetchAll(PDO::FETCH_ASSOC);
 		return $this->extractLayout($Data);
 
 	}
 
-	public function getLayoutByID ($id) {
+	public function getLayoutSlotByID ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
-		{$this->getSlotAttributes()}
+		{$this->getSlotAttributes()},
+		(SELECT COUNT(T_LayoutSlotsB.`ID`)
+			FROM T_LayoutSlots T_LayoutSlotsB
+			WHERE T_LayoutSlots.`ID` = T_LayoutSlotsB.`Parent`) AS numChildSlots	
 		FROM T_LayoutSlots
 		WHERE T_LayoutSlots.`ID` = :ID
 		LIMIT 1");			
@@ -122,7 +134,7 @@ Class Layout Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);		
 	}
 
-	public function getLayoutSlotByID () {
+	public function getLayoutByID  ($id) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
 		{$this->getAttributes()}
@@ -135,19 +147,22 @@ Class Layout Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);	
 	}
 
-	public static function getLayoutSlotsByParent ($parent = 0, $id = false) {
-		if ($id) {
+	public function getLayoutSlotsByParent ($parent = 0, $layout = false) {
+		if ($layout) {
 			global $DB;
 			$Stm = $DB->prepare("SELECT
 				{$this->getSlotAttributes()},
 				(SELECT COUNT(T_LayoutSlotsB.`ID`)
+					FROM T_LayoutSlots T_LayoutSlotsB
 					WHERE T_LayoutSlots.`ID` = T_LayoutSlotsB.`Parent`
 					AND T_LayoutSlots.`Layout` = T_LayoutSlotsB.`Layout`) AS numChildSlots
-				WHERE T_LayoutSlots.`Parent` = :Parent AND T_LayoutSlots.`Layout` = :ID
+				FROM T_LayoutSlots
+				WHERE T_LayoutSlots.`Parent` = :Parent AND T_LayoutSlots.`Layout` = :Layout
 				ORDER BY T_LayoutSlots.`Weight` ASC, T_LayoutSlots.`Path` ASC");
+
 			$Stm->execute(array(
 				':Parent' => $parent,
-				':ID' => $id
+				':Layout' => $layout
 			));
 
 			return $Stm->fetchAll(PDO::FETCH_ASSOC);
@@ -156,13 +171,13 @@ Class Layout Extends Minimal {
 	}
 
 	public function getLayoutSlotsTree ($parent = 0, $id = false, $depth = 0) {
-		$slots = self::getLayoutSlotsByParent($parent, $id);
+		$slots = $this->getLayoutSlotsByParent($parent, $id);
 
 		foreach ($slots as $slot) {
 			$slot['Depth'] = $depth;
 			$this->slotsTree[] = $slot;		
 			if ($slot['numChildSlots'] > 0) {
-				self::getLayoutSlotsTree($slot['ID'], $id, $depth + 1);
+				$this->getLayoutSlotsTree($slot['ID'], $id, $depth + 1);
 			}
 		}
 
@@ -225,16 +240,17 @@ Class Layout Extends Minimal {
 		return $Stm->rowCount();
 	}
 
-	public function deleteLayoutSlot () {
-		global $DB;
+	public function deleteLayoutSlot ($id) {
+		global $DB, $M;
 
-		$Slot = $this->getLayoutById();
+		$Slot = $this->getLayoutSlotByID($id);
 		if (!empty($Slot)) {
-			if ($Slot['hasChildSlots'] > 0) {
+			if ($Slot['numChildSlots'] > 0) {
 				$Layout = $Slot['Layout'];
 
-				$this->getLayoutSlotsTree($this->id, $Slot, 0);
-				$Slots = $this->slotTree;
+				$this->getLayoutSlotsTree($Slot['ID'], $Slot['Layout'], 0);
+				$Slots = $this->slotsTree;
+				$Slots[] = $Slot;
 			} else {
 				$Slots = array($Slot);
 			}
@@ -247,7 +263,9 @@ Class Layout Extends Minimal {
 				));
 			}
 
-			return $Stm->rowCount();
+			if ($Stm->rowCount() > 0) {
+				return $Slots;
+			}
 		}
 	}
 
