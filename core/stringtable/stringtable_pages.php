@@ -16,6 +16,7 @@ $Stringtable = array(
 	'pages_users_title' => 'Users',
 	'pages_login_title' => 'Login',
 	'pages_projects_edit_title' => 'Edit Project',
+	'pages_layouts_edit_title' => 'Edit Layout',
 
 	/* Settings tiles */
 	'pages_settings-module-rights_title' => 'Module Rights',

@@ -65,11 +65,14 @@ $Stringtable = array(
 	'forms_layout_form_doesnt_exist' => 'Sorry, you can\'t modify this layout. This layout doesn\'t exist. You might have wrong ID or layout was deleted.',
 	'forms_layout_form_created' => 'Layout "%s" was succesfully created. To add slots to layout, <a href="%s">open layout</a>. You can also <a data-api-reload href="%s">create another layout.</a>',
 	'forms_layout_form_updated' => 'Layout "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>',
+	'forms_layout_slot_parent_root' => '--- Root ---',
 	'forms_layout_slot_parent' => 'Parent',
 	'forms_layout_slot_weight' => 'Weight',
 	'forms_layout_slot_class' => 'Class',
 	'forms_layout_slot_identifier' => 'ID (CSS)',
-	'forms_layout_slot_data' => 'Data attributes'
+	'forms_layout_slot_data' => 'Data attributes',
+
+	'forms_layout_slot_form_help' => 'Slot is part of layout and is making page structure. You can nest the slots, add classes, data attributes or ids.'
 
 )
 
