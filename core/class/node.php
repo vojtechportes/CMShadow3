@@ -251,7 +251,7 @@ Class Node Extends Minimal {
 							try {
 								parent::load(DEFAULT_MODULE_PATH.$module['module'].'.php', $module + array("OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);			
 							} catch (Exception $e) {
-								parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_not_found_error', sprintf([\"{$module['module']}\", \"".str_replace(array("(", ")"), " ", $e->getMessage())."\"])}", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
+								parent::load(DEFAULT_MODULE_PATH.'message/show.php', array("html" => "{_'default_module_not_found_error', sprintf([\"{$module['module']}\"])} <div class=\"bs-callout bs-callout-danger\"><h3>{_'default_message_details'}</h3>{$e->getMessage()}</div>", "class" => "alert-danger", "OutputStyle" => $OutputStyle, "OutputType" => $OutputType), false);						
 							}
 							ExceptionThrower::Stop();
 						} else {
