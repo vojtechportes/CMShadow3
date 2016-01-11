@@ -6750,6 +6750,9 @@ body.login {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.nolink {
+  color: #333333 !important;
+}
 .categories .category-item a {
   height: auto;
   display: block;
@@ -6835,9 +6838,6 @@ body.login {
 .page-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
 }
-.page-list td .nolink {
-  color: #333333;
-}
 .page-list td .glyphicon-alt {
   margin-right: 10px;
 }
@@ -6863,9 +6863,6 @@ body.login {
 .project-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
 }
-.project-list td .nolink {
-  color: #333333;
-}
 .layout-list {
   margin: 30px 0;
   -webkit-user-select: none;
@@ -6878,9 +6875,6 @@ body.login {
 }
 .layout-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
-}
-.layout-list td .nolink {
-  color: #333333;
 }
 .project-details {
   margin: 0 0 30px;
