@@ -21,6 +21,7 @@ if (array_key_exists('type', $return)) {
 		$type = 'edit';
 		$return = concat_property('class', ' in', $return);
 		$id = $M->extractID($return['Path']);
+
 		if ($id) {
 			$Layout = new Layout();
 			$Layout = $Layout->getLayoutByID($id);
@@ -50,7 +51,7 @@ if ($canDisplay) {
 		$form->addElement(new FormElement_Text("{_'forms_layout_name'}", "name", array("required" => true)));
 		$form->addElement(new FormElement_Submit(false, "submit_layout", array("value" => "{_'forms_layout_submit'}", "classInput" => "btn btn-block btn-primary")));
 	} else {
-		$form->addElement(new FormElement_Text("{_'forms_layout_name'}", "name", array("required" => true, "value" => $Layout['Name'])));
+		$form->addElement(new FormElement_Text("{_'forms_layout_name'}", "name", array("required" => true, "value" => $Layout['LayoutName'])));
 		$form->addElement(new FormElement_Submit(false, "submit_layout", array("value" => "{_'forms_layout_submit_edit'}", "classInput" => "btn btn-block btn-primary")));			
 	}
 
