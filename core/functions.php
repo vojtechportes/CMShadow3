@@ -84,6 +84,23 @@ function array_search_multi ($array, $key, $depth = 0) {
 	}
 }
 
+function array_parent_sort($idField, $parentField, $els, $parentID = 0, &$result = array(), &$depth = 0){
+    foreach ($els as $key => $value) {
+        if ($value[$parentField] == $parentID){
+            $value['depth'] = $depth;
+            array_push($result, $value);
+            unset($els[$key]);
+            $oldParent = $parentID; 
+            $parentID = $value[$idField];
+            $depth++;
+            array_parent_sort($idField,$parentField, $els, $parentID, $result, $depth);
+            $parentID = $oldParent;
+            $depth--;
+        }
+    }
+    return $result;
+}
+
 function json_validate ($string) {
 	json_decode($string);
 	return (json_last_error() == JSON_ERROR_NONE);
