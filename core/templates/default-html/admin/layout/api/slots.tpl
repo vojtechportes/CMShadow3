@@ -1,0 +1,1 @@
+<div class="layoutSlots" data-api-load='{"command": "loadModule", "message": false, "module": "admin/layout/slots", "arguments": <?php echo json_encode($return); ?>}'></div>
