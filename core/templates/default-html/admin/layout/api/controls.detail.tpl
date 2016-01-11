@@ -1,0 +1,1 @@
+<div class="layoutControls" data-api-load='{"command": "loadModule", "message": false, "module": "admin/layout/controls.detail"}'></div>
