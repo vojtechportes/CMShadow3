@@ -153,10 +153,28 @@ $Hiearchy = array(
 			),
 			"Content" => array(
 				"main" => array(
-					array("module" => "admin/layout/controls"),
+					array("module" => "admin/layout/api/controls.loader"),
 					array("module" => "admin/layout/api/form.loader", "class" => "collapse layout-form-element", "dependencies" => array("admin/layout/list")),					
 					array("module" => "admin/layout/api/list.loader"),
 					array("module" => "admin/layout/api/delete.loader", "dependencies" => array("admin/layout/list", "admin/layout/api/form"))
+				)
+			),
+
+			"/admin/layouts/edit/*/" => array(
+				"Config" => array(
+					"Title" => "{_'pages_layouts_edit_title'}"
+				),
+				"Scripts" => array(
+					array("style/script/application-modules/layoutdetail.js",)
+				),
+				"Content" => array(
+					"main" => array(
+						array("module" => "admin/layout/api/controls.detail.loader"),
+						array("module" => "admin/layout/api/slots.loader"),
+						array("module" => "admin/layout/api/form.loader", "class" => "collapse project-form-element", "type" => "edit", "message" => 0),
+						array("module" => "admin/layout/api/delete.slot.loader", "dependencies" => array("admin/layout/slots")),
+						array("module" => "admin/layout/api/form.slot.loader", "dependencies" => array("admin/layout/slots"))				
+					)
 				)
 			)
 		),		
