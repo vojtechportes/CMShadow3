@@ -72,8 +72,12 @@ $Stringtable = array(
 	'forms_layout_slot_identifier' => 'ID (CSS)',
 	'forms_layout_slot_data' => 'Data attributes',
 
-	'forms_layout_slot_form_help' => 'Slot is part of layout and is making page structure. You can nest the slots, add classes, data attributes or ids.'
-
+	'forms_layout_slot_form_help' => 'Slot is part of layout and is making page structure. You can nest the slots, add classes, data attributes or ids.',
+	'forms_layout_slot_form_success' => 'Slot "%s" was succesfully added. You can <a data-dismiss="modal" href="%s">close this window</a> or <a data-api-reload href="%s">add another one.</a>',
+	'forms_layout_slot_form_error' => 'Unexpected error ocured. Slot "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_layout_slot_form_update_success' => 'Slot "%s" was succesfully updated. You can <a data-dismiss="modal" href="%s">close this window</a> or <a data-api-reload href="%s">you can change more.</a>',	
+	'forms_layout_slot_form_update_error' => 'Unexpected error occured. Slot "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_layout_slot_form_update_exception' => 'Unexpected error occured. Slot "%s" was updated, but some of nested slots was not. Please <a data-api-reload href="%s">try it again later.</a>',	
 )
 
 ?>
