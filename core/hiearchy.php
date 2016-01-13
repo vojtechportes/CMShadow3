@@ -147,8 +147,8 @@ $Hiearchy = array(
 			),
 			"Scripts" => array(
 				array(
-					"style/script/application-modules/layoutlist.js",
-					"style/script/application-modules/layoutform.create.js"
+					"style/script/application-modules/layoutlist.js"/*,
+					"style/script/application-modules/layoutform.create.js"*/
 				)
 			),
 			"Content" => array(
@@ -165,7 +165,10 @@ $Hiearchy = array(
 					"Title" => "{_'pages_layouts_edit_title'}"
 				),
 				"Scripts" => array(
-					array("style/script/application-modules/layoutdetail.js",)
+					array(
+						"style/script/application-modules/layoutdetail.js",
+						"style/script/application-modules/layoutform.slot.js"
+					)
 				),
 				"Content" => array(
 					"main" => array(
