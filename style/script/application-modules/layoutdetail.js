@@ -37,10 +37,31 @@
 			$action.off('click.delete').on('click.delete', function(e){
 				e.preventDefault();
 
-				console.log('click.delete');
+				var $this = $(this),
+					arguments = $this.data('arguments'),
+					$parent = $($this.data('target')).find('[data-api-load]');
+
+				console.log(arguments);
+
+				if ($parent.length > 0) {
+					var parentData = $.extend({}, $parent.data('api-load'));
+						parentData['arguments'] = $.extend({}, parentData['arguments'], arguments);
+
+					$parent.data('api-load', parentData);
+
+					APICommands.call($parent, parentData, true);
+				}
+			});
+		}
+
+		if ($(parent).find(actions.edit).length > 0) {
+			var $action = $(parent).find(actions.edit);
+
+			$action.off('click.edit').on('click.edit', function(e){
+				e.preventDefault();
 
 				var $this = $(this),
-					arguments = $this.data('arguments');
+					arguments = $this.data('arguments'),
 					$parent = $($this.data('target')).find('[data-api-load]');
 
 				if ($parent.length > 0) {
