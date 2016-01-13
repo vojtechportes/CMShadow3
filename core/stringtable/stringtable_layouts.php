@@ -20,6 +20,7 @@ $Stringtable = array(
     /**/
 
     'layouts_layout_delete_slot' => 'Delete slot',
+    'layouts_layout_create_update_slot' => 'Create/Update slot',
     'layouts_layout_delete_slot_message_question' => '<p>Are you sure you want to delete slot "%s"? If this slot contains any nested slots, those will be deleted as well.</p>',
     'layouts_layout_delete_slot_message_success' => '<p>Slot "%s" was successfully deleted.</p>',
     'layouts_layout_delete_slot_message_error' => '<p>Unexpected error occured. Slot "%s" was not deleted. Please <a data-api-reload href="%s">try it again later</a></p>'
