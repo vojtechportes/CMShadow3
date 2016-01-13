@@ -16,6 +16,9 @@ $canDisplay = true;
 $projectExist = true;
 $type = 'create';
 
+if (!array_key_exists('Path', $return))
+	$return['Path'] = $Path;
+
 if (array_key_exists('type', $return)) {
 	if ($return['type'] === 'edit') {
 		$type = 'edit';
@@ -66,7 +69,8 @@ if ($canDisplay) {
 			$Layout->id = $id;
 
 		$Layout->name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
-		$Layout->user = User::getUserID();
+		if ($type !== 'edit')
+			$Layout->user = User::getUserID();
 
 		switch ($type) {
 			case 'create':
