@@ -1,3 +1,4 @@
+
 <?php
 
 Class Layout Extends Minimal {
@@ -196,23 +197,52 @@ Class Layout Extends Minimal {
 		return $Stm->rowCount();
 	}
 
+	public function updateLayout () {
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_Layouts SET
+			`Name` = :Name
+			WHERE T_Layouts.`ID` = :ID");
+		$Stm->execute(array(
+			':Name' => $this->name,
+			':ID' => $this->id
+		));
+
+		return $Stm->rowCount();
+
+	}
+
 	public function createLayoutSlot () {
 		global $DB;
-		$Stm = $DB->prepare("INSERT INTO T_Layouts
+
+		$Stm = $DB->prepare("INSERT INTO T_LayoutSlots
 			(`Layout`, `Parent`, `Weight`, `Name`, `Path`, `Class`, `Identifier`, `Data`)
-			VALUES (:Layout, :Parent, :Weight, :Name, :Path, :Class, :Identifier, :Data)");
+			VALUES (:Layout, :Parent, :Weight, :Name, :SlotPath, :Class, :Identifier, :Data)");
 		$Stm->execute(array(
 			':Layout' => $this->layout,
 			':Parent' => $this->parent,
 			':Weight' => $this->weight,
-			':Name' => $this->name,
-			':Path' => $this->path,
+			':Name' => $this->slotName,
+			':SlotPath' => $this->path,
 			':Class' => $this->class,
 			':Identifier' => $this->identifier,
 			':Data' => $this->data
 		));
 		
 		$this->status = $DB->lastInsertId();
+		return $Stm->rowCount();
+	}
+
+	public function updateLayoutSlotPath () {	
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_LayoutSlots SET
+			`Path` = :Path WHERE T_LayoutSlots.`ID` = :ID");
+		$Stm->execute(array(
+			':ID' => $this->id,
+			':Path' => $this->path
+		));
+
 		return $Stm->rowCount();
 	}
 
@@ -228,9 +258,10 @@ Class Layout Extends Minimal {
 			`Identifier` = :Identifier,
 			`Data` = :Data WHERE T_LayoutSlots.`ID` = :ID");
 		$Stm->execute(array(
+			':ID' => $this->id,
 			':Parent' => $this->parent,
 			':Weight' => $this->weight,
-			':Name' => $this->name,
+			':Name' => $this->slotName,
 			':Path' => $this->path,
 			':Class' => $this->class,
 			':Identifier' => $this->identifier,
@@ -238,6 +269,31 @@ Class Layout Extends Minimal {
 		));
 
 		return $Stm->rowCount();
+	}
+
+	public function updateLayoutSlotChildPaths () {
+		global $DB, $M;
+
+		$this->slotsTree = array();
+		$this->getLayoutSlotsTree($this->id, $this->layout, 0);
+		$Slots = $this->slotsTree;
+		$ParentPath = $this->path;
+		$Result = array();
+
+		foreach ($Slots as $slot) {
+			$this->path = $ParentPath.get_seo_name($slot['Name']).'--';
+			$this->id = $slot['ID'];
+			if ($this->updateLayoutSlotPath()) {
+				$Result[] = true;
+			}
+		}
+
+		if (count($Result) === count($Slots)) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	public function deleteLayoutSlot ($id) {
