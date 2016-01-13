@@ -8,6 +8,7 @@
 	}
 
 	$(window).on('apiReloadForce.admin/layout/api/form', function(){
+		console.log('apiReloadForce.admin/layout/api/form');
 		reload();
 	});	
 })();
