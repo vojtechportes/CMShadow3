@@ -106,4 +106,53 @@ function json_validate ($string) {
 	return (json_last_error() == JSON_ERROR_NONE);
 }
 
+function replace_dc ($name) {
+	$orig = array('á','č','ď','é','ě','í','ň','ó','ř','š','ť','ú','ů','ý','ž','ö','ü','ä','ë','Á','Č','Ď','É','Ě','Í','Ň','Ó','Ř','Š','Ť','Ú','Ů','Ý','Ž','Ö','Ü','Ä','Ë');
+	$repl = array('a','c','d','e','e','i','n','o','r','s','t','u','u','y','z','o','u','a','e','a','c','d','e','e','i','n','o','r','s','t','u','u','y','z','o','u','a','e');
+	
+	return str_replace($orig, $repl, $name);
+}
+
+function get_seo_name ($name, $allow_dot = true, $path_mode = false, $max_len = 250, $spaces = false) {
+	if ($name == '') {
+		return '';
+	} else {
+		$name = replace_dc($name);
+		$ret = iconv('UTF-8', 'UTF-8//IGNORE', $name);		// remove invalid non-utf8
+
+		if ($path_mode) {
+			$ret = str_replace('_', '?', $ret);		// release underscore
+			$ret = str_replace('--', '_', $ret);		// ... for double dash
+		}
+
+		$ret   = iconv('UTF-8', 'ASCII//TRANSLIT', $ret);
+		$ret   = trim(strtolower($ret));
+		
+		if ($allow_dot) { $dot = '.'; } else { $dot = ''; };
+		if ($path_mode) { $pm_ch = '/_'; } else { $pm_ch = ''; };
+
+		$ret   = preg_replace('|[\'"`]|i', '', $ret);
+		$ret   = preg_replace('|[^0-9a-z'.$dot.$pm_ch.'-]|i', '-', $ret);
+		$ret   = preg_replace('|-+|', '-', $ret);
+		$ret   = str_replace('$', '--', $ret);
+
+		if ($path_mode) {
+			$ret = str_replace('_', '--', $ret);		// return double dash
+		}
+
+		$ret   = trim($ret, '-');
+
+		if ($spaces) { $ret = str_replace('-', ' ', $ret); }
+		if ($ret == '') {
+			return '-';
+		} else {
+			if ($max_len > 0) {
+				return substr($ret, 0, $max_len);
+			} else {
+				return $ret;
+			}
+		}
+	}
+}
+
 ?>
