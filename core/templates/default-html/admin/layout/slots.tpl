@@ -15,6 +15,7 @@ $Layout = $return['Layout']['Layout'];
 					<div class="panel-heading">
 						<?php echo $slot['Name']; ?>
 						<div class="pull-right">
+        					<a href="#" data-add data-toggle="modal" data-target="#slotLayoutForm" data-arguments='{"slotId": "<?php echo $slot['ID']; ?>", "type": "subordinate"}' class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-plus"></span></a>							
         					<a href="#" data-delete data-toggle="modal" data-target="#slotDelete" data-arguments='{"slotId": "<?php echo $slot['ID']; ?>", "slotName": "<?php echo $slot['Name']; ?>"}' class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-cross"></span></a>						
         					<a href="#" data-edit data-toggle="modal" data-target="#slotLayoutForm" data-arguments='{"slotId": "<?php echo $slot['ID']; ?>", "type": "edit"}' class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a>
 						</div>
