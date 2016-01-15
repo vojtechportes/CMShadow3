@@ -29,7 +29,7 @@
 
 	var update = function () {
 		var parent = '.layoutSlots[data-api-load]',
-			actions = {'edit': '[data-edit]', 'delete': '[data-delete]'};
+			actions = {'edit': '[data-edit]', 'delete': '[data-delete]', 'add': '[data-add]'};
 
 		if ($(parent).find(actions.delete).length > 0) {
 			var $action = $(parent).find(actions.delete);
@@ -58,6 +58,28 @@
 			var $action = $(parent).find(actions.edit);
 
 			$action.off('click.edit').on('click.edit', function(e){
+				e.preventDefault();
+
+				var $this = $(this),
+					arguments = $this.data('arguments'),
+					$parent = $($this.data('target')).find('[data-api-load]');
+
+				if ($parent.length > 0) {
+					var parentData = $.extend({}, $parent.data('api-load'));
+						parentData['arguments'] = $.extend({}, parentData['arguments'], arguments);
+
+					$parent.data('api-load', parentData);
+
+					APICommands.call($parent, parentData, true);
+				}
+			});
+		}
+
+
+		if ($(parent).find(actions.add).length > 0) {
+			var $action = $(parent).find(actions.add);
+
+			$action.off('click.add').on('click.add', function(e){
 				e.preventDefault();
 
 				var $this = $(this),
