@@ -6,8 +6,6 @@
 				parentData = $.extend({}, parentData);
 				parentData['arguments'] = $.extend({}, parentData['arguments'], {'type': 'create'});
 
-			console.log(parentData);
-
 			$(el).data('api-load', parentData);
 
 			APICommands.call($(el), parentData, true);
@@ -23,7 +21,6 @@
 			$trigger.off('click.create').on('click.create', function(e){
 				e.preventDefault();
 
-				console.log('create');
 				$(window).trigger('apiReloadForce.admin/layout/api/form.slot');
 			});
 		}
