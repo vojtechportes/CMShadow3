@@ -15,6 +15,7 @@ $id = false;
 $canDisplay = true;
 $projectExist = true;
 $type = 'create';
+$parentPreselect = array();
 
 if (!array_key_exists('Path', $return))
 	$return['Path'] = $Path;
@@ -29,10 +30,22 @@ if (array_key_exists('type', $return)) {
 		$Slot = $Slot->getLayoutSlotByID((int) $return['slotId']);
 	} else if ($return['type'] === 'create') {
 		$id = $M->extractID($return['Path']);	
+	} else if ($return['type'] === 'subordinate') {
+		$id = $M->extractID($return['Path']);
+
+		$Slot = new Layout();
+		$Slot = $Slot->getLayoutSlotByID((int) $return['slotId']);
+		$parentPreselect = array($Slot['ID']);
 	}
 } else { 
 	$id = $M->extractID($return['Path']);	
 }
+
+$Layout = new Layout();
+$Layout = $Layout->getLayoutByID($id);
+
+if (!$Layout)
+	$canDisplay = false;
 
 if ($canDisplay) {
 	$Code = new Module();
@@ -63,7 +76,7 @@ if ($canDisplay) {
 
 	if ($type === 'create') {
 		$form->addElement(new FormElement_Text("{_'forms_layout_slot_name'}", "name", array("required" => true)));
-		$form->addElement(new FormElement_Select("{_'forms_layout_slot_parent'}", "parent", array("required" => true, "options" => $slots)));
+		$form->addElement(new FormElement_Select("{_'forms_layout_slot_parent'}", "parent", array("required" => true, "options" => $slots, "selected" => $parentPreselect)));
 		$form->addElement(new FormElement_Text("{_'forms_layout_slot_weight'}", "weight", array("required" => false)));
 		$form->addElement(new FormElement_Text("{_'forms_layout_slot_class'}", "class", array("required" => false)));
 		$form->addElement(new FormElement_Text("{_'forms_layout_slot_identifier'}", "identifier", array("required" => false)));
@@ -163,9 +176,8 @@ if ($canDisplay) {
 	$Code->addModule(false, array("html" => '<div class="clearfix"></div></div>'));
 	$Code->output();
 } else {
-	if ($projectExist) { $msg = "{_'forms_project_form_cant_modify'}"; } else { $msg = "{_'forms_project_form_doesnt_exist'}"; }
 	$Message = new Module();
-	$Message->addModule(new Message(), array("html" => $msg, "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+	$Message->addModule(new Message(), array("html" => "{_'forms_layout_form_cant_modify'}", "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 	$Message->output();			
 }
 ?>
