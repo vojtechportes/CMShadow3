@@ -28,6 +28,9 @@ if (array_key_exists('type', $return)) {
 		if ($id) {
 			$Layout = new Layout();
 			$Layout = $Layout->getLayoutByID($id);
+
+			if (!$Layout)
+				$canDisplay = false;
 		}
 	}
 }
