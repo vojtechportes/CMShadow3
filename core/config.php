@@ -1,5 +1,11 @@
 <?php
 
+if (isset($_SERVER['HTTPS'])) {
+	define('SERVER_PROTOCOL', 'https');
+} else {
+	define('SERVER_PROTOCOL', 'http');
+}
+
 define('BASE_PATH', '/');
 define('DEFAULT_OUTPUT', 'default-html');
 define('DEFAULT_FORM_ROW_OUTPUT', 'default-html');
