@@ -307,7 +307,7 @@ Class Node Extends Minimal {
 				if (array_key_exists('Stringtables', $this->template)) {
 					$Stringtables = new Stringtable();
 					foreach ($this->template['Stringtables'] as $stringtable) {
-						$Stringtables->load($stringtable);
+						$Stringtables->loadStringtable($stringtable);
 					}
 
 					$this->stringtable = $Stringtables->output();
