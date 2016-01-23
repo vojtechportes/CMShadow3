@@ -12,6 +12,8 @@ Class User Extends Minimal {
 		global $DB;
 		$User = $this->getUserByNamePassword();
 
+		session_regenerate_id();
+
 		if ($User["name"] !== false && $User["password"] !== false) {
 			$_SESSION["UserID"] = $User["id"];
 			$_SESSION["UserName"] = $User["name"];
