@@ -2499,19 +2499,29 @@ th {
 .table-condensed > tfoot > tr > td {
   padding: 5px;
 }
+.table-transparent {
+  background-color: transparent !important;
+}
+.table-transparent th,
+.table-transparent td,
+.table-transparent tr,
+.table-transparent thead,
+.table-transparent tbody {
+  background-color: transparent !important;
+}
 .table-bordered {
   border: 1px solid #dddddd;
 }
-.table-bordered > thead > tr > th,
-.table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > th,
-.table-bordered > thead > tr > td,
-.table-bordered > tbody > tr > td,
-.table-bordered > tfoot > tr > td {
+.table-bordered > thead > tr > th:not(.no-border),
+.table-bordered > tbody > tr > th:not(.no-border),
+.table-bordered > tfoot > tr > th:not(.no-border),
+.table-bordered > thead > tr > td:not(.no-border),
+.table-bordered > tbody > tr > td:not(.no-border),
+.table-bordered > tfoot > tr > td:not(.no-border) {
   border: 1px solid #dddddd;
 }
-.table-bordered > thead > tr > th,
-.table-bordered > thead > tr > td {
+.table-bordered > thead > tr > th:not(.no-border),
+.table-bordered > thead > tr > td:not(.no-border) {
   border-bottom-width: 2px;
 }
 .table-striped > tbody > tr:nth-child(odd) {
@@ -6850,6 +6860,9 @@ body.login {
 .page-list td .glyphicon-alt.not-visible {
   color: #DDD;
 }
+.page-list th {
+  padding: 12px 15px !important;
+}
 .project-list {
   margin: 30px 0;
   -webkit-user-select: none;
@@ -6863,6 +6876,9 @@ body.login {
 .project-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
 }
+.project-list th {
+  padding: 12px 15px !important;
+}
 .layout-list {
   margin: 30px 0;
   -webkit-user-select: none;
@@ -6875,6 +6891,43 @@ body.login {
 }
 .layout-list td:last-child .glyphicon-alt:last-child {
   margin-right: 0;
+}
+.layout-list th {
+  padding: 12px 15px !important;
+}
+.template-list {
+  margin: 30px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.template-list table .pages-container {
+  border-left: 1px dashed #dddddd;
+  padding-left: 30px;
+  width: 75%;
+}
+.template-list table td {
+  padding: 12px 15px !important;
+  background: #fafafa;
+}
+.template-list table td.inner-list {
+  border-bottom: 1px solid #dddddd;
+  border-top: 0;
+  background: none;
+  padding: 0 !important;
+}
+.template-list table td.inner-list > div {
+  border-top: 1px dashed #dddddd;
+  padding: 12px 0 12px 15px !important;
+}
+.template-list table td.inner-list + td {
+  border-top: 0;
+}
+.template-list table td:last-child .glyphicon-alt:last-child {
+  margin-right: 0;
+}
+.template-list table th {
+  padding: 12px 15px !important;
 }
 .project-details {
   margin: 0 0 30px;
