@@ -130,7 +130,8 @@ $Hiearchy = array(
 			),
 			"Content" => array(
 				"main" => array(
-
+					array("module" => "admin/template/api/controls.loader", "dependencies" => array()),
+					array("module" => "admin/template/api/list.loader")
 				)
 			)
 		),
