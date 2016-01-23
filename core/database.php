@@ -45,6 +45,9 @@ $Database = array(
 		"query" => "CREATE TABLE IF NOT EXISTS `T_Install` (`Status` INT(11) NOT NULL) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"
 	),
 	array(
+		"query" => "CREATE TABLE IF NOT EXISTS `T_IDSCache` (`Type` VARCHAR(32) NOT NULL, `Data` TEXT NOT NULL, `Created` DATETIME NOT NULL, `Modified` DATETIME NOT NULL) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"
+	),
+	array(
 		"query" => "CREATE TABLE IF NOT EXISTS `T_UserGroups` (`ID` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `Name` CHAR(60) NOT NULL) ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci"
 	),
 	array(
