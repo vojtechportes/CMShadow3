@@ -10,7 +10,7 @@ Class Message Extends Module {
 			$this->output["class"] = "alert-success";
 	}
 
-	public function output () {
+	public function output ($unescape = true) {
 		parent::output();
 	}
 }
