@@ -6,7 +6,7 @@ Class Stringtable Extends Minimal {
 	private $placeholder = "(\{[!]?_'([^{}]+)'(?:,\s?)?(?:(sprintf)\(([^()]+)\)|(replace)\(([^()]+),\s?([^()]+)\))?\})";
 	public $source = "file";
 
-	public function load ($path) {
+	public function loadStringtable ($path) {
 		if ($this->source == 'file') {
 			if (file_exists(DEFAULT_STRINGTABLE_PATH.$path.'.php')) {
 				require_once DEFAULT_STRINGTABLE_PATH.$path.'.php';
