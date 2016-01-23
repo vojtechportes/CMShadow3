@@ -52,7 +52,8 @@ function redirect($path, $query) {
 	
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');	
 	if ($uri.'/' !== $Path) {
-		header("Location: http://$host$uri$path$query");
+		header("Location:".SERVER_PROTOCOL."://$host$uri$path$query");
+		die();
 	} else {
 		return;
 	}
