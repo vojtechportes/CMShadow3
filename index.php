@@ -1,10 +1,49 @@
 <?php
 
-/*ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);*/
+error_reporting(E_ALL);
 
-session_start();
+ini_set('session.use_strict_mode', 1);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.use_trans_sid', 0);
+ini_set('session.cache_limiter', 'nocache');
+ini_set('session.cookie_path', '/');
+
+/*
+* CMS Autoloader
+* ==============
+*/
+
+global $Register;
+
+require_once '/core/phpids/Register.php';
+
+$Register = array();
+$Register += $IDSRegister;
+
+
+spl_autoload_register(function ($class_name) {
+	global $Register;
+
+	if (explode('\\', $class_name)[0] === 'IDS') {
+		if (array_key_exists($class_name, $Register)) {
+			include $Register[$class_name];
+		}
+	} else {
+		if (!strstr(strtolower($class_name), 'less'))
+    		include '/core/class/'.strtolower($class_name).'.php';
+	}
+});
+
+require_once '/core/phpids/IDS.php';
+
+if (!session_id()) {
+	session_start();
+}
+
+//phpinfo();
 
 /**/
 
@@ -42,18 +81,6 @@ require_once '/core/config.php';
 */
 
 require_once '/core/functions.php';
-
-/*
-* CMS Autoloader
-* ==============
-*/
-
-function cms_autoload($class_name) {
-	if (!strstr(strtolower($class_name), 'less'))
-    	include '/core/class/'.strtolower($class_name).'.php';
-}
-
-spl_autoload_register('cms_autoload');
 
 $M = new Minimal ();
 $Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
