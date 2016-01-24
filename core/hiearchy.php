@@ -41,7 +41,7 @@ $Hiearchy = array(
 				)
 			),
 			"Scripts" => array(
-				array("style/script/application-modules/pagelist.js")
+				array("assets/admin/style/script/application-modules/pagelist.js")
 			),
 			"Content" => array(
 				"main" => array(
@@ -65,7 +65,7 @@ $Hiearchy = array(
 				)
 			),
 			"Scripts" => array(
-				array("style/script/application-modules/pagelist.js")
+				array("assets/admin/style/script/application-modules/pagelist.js")
 			),
 			"Content" => array(
 				"main" => array(
@@ -88,7 +88,7 @@ $Hiearchy = array(
 				)
 			),
 			"Scripts" => array(
-				array("style/script/application-modules/projectlist.js")
+				array("assets/admin/style/script/application-modules/projectlist.js")
 			),
 			"Content" => array(
 				"main" => array(
@@ -103,9 +103,9 @@ $Hiearchy = array(
 					"Title" => "{_'pages_projects_edit_title'}"
 				),
 				"Scripts" => array(
-					array("style/script/application-modules/workflow.js"),
-					array("style/script/application-modules/projectdetails.js"),
-					array("style/script/application-modules/pagelistflat.js")
+					array("assets/admin/style/script/application-modules/workflow.js"),
+					array("assets/admin/style/script/application-modules/projectdetails.js"),
+					array("assets/admin/style/script/application-modules/pagelistflat.js")
 				),
 				"Content" => array(
 					"main" => array(
@@ -148,8 +148,8 @@ $Hiearchy = array(
 			),
 			"Scripts" => array(
 				array(
-					"style/script/application-modules/layoutlist.js"/*,
-					"style/script/application-modules/layoutform.create.js"*/
+					"assets/admin/style/script/application-modules/layoutlist.js"/*,
+					"assets/admin/style/script/application-modules/layoutform.create.js"*/
 				)
 			),
 			"Content" => array(
@@ -167,8 +167,8 @@ $Hiearchy = array(
 				),
 				"Scripts" => array(
 					array(
-						"style/script/application-modules/layoutdetail.js",
-						"style/script/application-modules/layoutform.slot.js"
+						"assets/admin/style/script/application-modules/layoutdetail.js",
+						"assets/admin/style/script/application-modules/layoutform.slot.js"
 					)
 				),
 				"Content" => array(
