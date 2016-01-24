@@ -11,7 +11,7 @@ Class Message Extends Module {
 	}
 
 	public function output ($unescape = true) {
-		parent::output();
+		parent::output($unescape);
 	}
 }
 
