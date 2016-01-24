@@ -23,7 +23,7 @@
     - IDS security (done)
     - Data input security (done)
     - Session/Cookie security (done)
-    - CSRF security
+    - CSRF security (done)
     - Basic Home screen gadgets
     - File Manager
   - Production
