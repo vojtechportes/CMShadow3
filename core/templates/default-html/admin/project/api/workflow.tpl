@@ -1,1 +1,0 @@
-<div class="workflow" data-api-load='{"command": "loadModule", "message": false, "module": "admin/project/workflow", "arguments": <?php echo json_encode($return); ?>}'></div>

@@ -1,1 +1,0 @@
-<div class="formLoader pageForm" data-api-load='{"command": "loadModule", "message": false, "module": "admin/project/api/form", "arguments": <?php echo json_encode($return); ?>}'></div>

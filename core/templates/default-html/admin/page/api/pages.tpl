@@ -1,1 +1,0 @@
-<div class="pageList flatList" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/pages", "arguments": <?php echo json_encode($return); ?>}'></div>

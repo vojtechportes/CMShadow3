@@ -1,1 +1,0 @@
-<div class="templateList" data-api-load='{"command": "loadModule", "message": false, "module": "admin/template/list"}'></div>

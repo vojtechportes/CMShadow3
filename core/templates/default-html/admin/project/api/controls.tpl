@@ -1,1 +1,0 @@
-<div class="projectControls" data-api-load='{"command": "loadModule", "message": false, "module": "admin/project/controls"}'></div>

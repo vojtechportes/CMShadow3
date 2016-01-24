@@ -1,1 +1,0 @@
-<div class="pageControls" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/controls"}'></div>
