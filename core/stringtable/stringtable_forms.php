@@ -60,7 +60,7 @@ $Stringtable = array(
 	'forms_layout_slot_name' => 'Name',
 	'forms_layout_form_help' => 'Layout is part of template and is saying where on page you can place modules and how the page will be structured. Part of layout are also slots, that are creating page structure. You will be able to add them after layout is created.',
 	'forms_layout_form_error' => 'Unexpected error ocured. Layout "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
-	'forms_layout_form_update_error' => 'Unexpected error ocured. Project "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_layout_form_update_error' => 'Unexpected error ocured. Layout "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_layout_form_cant_modify' => 'Sorry, you are not allowed to modify this layout.',
 	'forms_layout_form_doesnt_exist' => 'Sorry, you can\'t modify this layout. This layout doesn\'t exist. You might have wrong ID or layout was deleted.',
 	'forms_layout_form_created' => 'Layout "%s" was succesfully created. To add slots to layout, <a href="%s">open layout</a>. You can also <a data-api-reload href="%s">create another layout.</a>',
@@ -78,6 +78,26 @@ $Stringtable = array(
 	'forms_layout_slot_form_update_success' => 'Slot "%s" was succesfully updated. You can <a data-dismiss="modal" href="%s">close this window</a> or <a data-api-reload href="%s">you can change more.</a>',	
 	'forms_layout_slot_form_update_error' => 'Unexpected error occured. Slot "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
 	'forms_layout_slot_form_update_exception' => 'Unexpected error occured. Slot "%s" was updated, but some of nested slots was not. Please <a data-api-reload href="%s">try it again later.</a>',	
+
+	/* Template Form */
+
+	'forms_template_submit' => 'Create',
+	'forms_template_submit_edit' => 'Edit',
+	'forms_template_name' => 'Name',
+	'forms_template_layout' => 'Layout',
+	'forms_template_output_style' => 'Output style',
+	'forms_template_output_type' => 'Output type',
+	'forms_template_style' => 'Style',
+	'forms_template_template_pages' => 'Pages',
+
+	'forms_template_form_help' => 'Template is predefined part of page that consits of template itself and optionally template pages.',
+	'forms_template_form_no_layout' => 'No layout found. Please create one first.',
+	'forms_template_form_error' => 'Unexpected error ocured. Template "%s" was not created. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_template_form_update_error' => 'Unexpected error ocured. Template "%s" was not updated. Please <a data-api-reload href="%s">try it again later.</a>',
+	'forms_template_form_cant_modify' => 'Sorry, you are not allowed to modify this template.',
+	'forms_template_form_doesnt_exist' => 'Sorry, you can\'t modify this template. This template doesn\'t exist. You might have wrong ID or layout was deleted.',
+	'forms_template_form_created' => 'Template "%s" was succesfully created. To assign or dissociate template pages <a href="%s">open this template</a>. You can also <a data-api-reload href="%s">create another template.</a>',
+	'forms_template_form_updated' => 'Template "%s" was successfully updated. <a data-api-reload href="%s">Change more.</a>',
 )
 
 ?>
