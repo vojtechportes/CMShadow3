@@ -2,15 +2,15 @@
 
 $Template = array(
 	"default" => array(
-		"Output" => "default-html/default",
+		"Output" => "admin/default-html/default",
 		"Slots" => array("main"),
 		"Scripts" => array(
-			"style/script/require.js",
-			"style/script/main.js",
-			array("style/script/application-modules/form.js")
+			"assets/admin/style/script/require.js",
+			"assets/admin/style/script/main.js",
+			array("assets/admin/style/script/application-modules/form.js")
 		),
 		"Styles" => array(
-			"style/css/bootstrap.css"
+			"assets/admin/style/css/bootstrap.css"
 		),
 		"Stringtables" => array(
 			"stringtable_default",
@@ -42,14 +42,14 @@ $Template = array(
 		)
 	),
 	"login" => array(
-		"Output" => "default-html/login",
+		"Output" => "admin/default-html/login",
 		"Slots" => array("main"),
 		"Scripts" => array(
-			"style/script/require.js",
-			"style/script/main.js"
+			"assets/admin/style/script/require.js",
+			"assets/admin/style/script/main.js"
 		),
 		"Styles" => array(
-			"style/css/bootstrap.css"
+			"assets/admin/style/css/bootstrap.css"
 		),
 		"Stringtables" => array(
 			"stringtable_default",
@@ -62,14 +62,14 @@ $Template = array(
 		)
 	),
 	"error-404" => array(
-		"Output" => "default-html/default",
+		"Output" => "admin/default-html/default",
 		"Slots" => array("main"),
 		"Scripts" => array(
-			"style/script/require.js",
-			"style/script/main.js"
+			"assets/admin/style/script/require.js",
+			"assets/admin/style/script/main.js"
 		),
 		"Styles" => array(
-			"style/css/bootstrap.css"
+			"assets/admin/style/css/bootstrap.css"
 		),
 		"Stringtables" => array(
 			"stringtable_default",
@@ -98,14 +98,14 @@ $Template = array(
 		)
 	),
 	"error" => array(
-		"Output" => "default-html/error",
+		"Output" => "admin/default-html/error",
 		"Slots" => array("main"),
 		"Scripts" => array(
-			"style/script/require.js",
-			"style/script/main.js"
+			"assets/admin/style/script/require.js",
+			"assets/admin/style/script/main.js"
 		),
 		"Styles" => array(
-			"style/css/bootstrap.css"
+			"assets/admin/style/css/bootstrap.css"
 		),
 		"Stringtables" => array(
 			"stringtable_default"
@@ -118,7 +118,7 @@ $Template = array(
 		)
 	),
 	"error-json" => array(
-		"Output" => "default-json/json",
+		"Output" => "admin/default-json/json",
 		"OutputStyle" => "default-json",
 		"OutputType" => "JSON",
 		"Slots" => array("main"),
@@ -133,7 +133,7 @@ $Template = array(
 		)
 	),	
 	"api" => array(
-		"Output" => "default-json/json",
+		"Output" => "admin/default-json/json",
 		"OutputStyle" => "default-json",
 		"OutputType" => "JSON",
 		"Stringtables" => array(
