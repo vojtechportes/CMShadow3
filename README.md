@@ -10,6 +10,7 @@
     - Modules user rights (done)
     - Nodes user rights (done)
     - Page user rights
+    - Pages (in development)
     - Projects (done)
       - Project workflow (in development)
       - Page versioning (done)
@@ -24,6 +25,7 @@
     - Session/Cookie security (done)
     - CSRF security
     - Basic Home screen gadgets
+    - File Manager
   - Production
 - Stable release (late 2/2016)
 - Technical documentation (early 3/2016)
