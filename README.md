@@ -32,10 +32,12 @@
 ### Q2 2016
 
 - Stable release (end 4/2016)
-  - Localization (Import/Export)
-  - Package manager (Import/Export)
-  - Internal statistics
-  - Home screen gadgets
+  - Administration 
+    - Localization (Import/Export)
+    - Package manager (Import/Export)
+    - Internal statistics
+    - Home screen gadgets
+  - Production 
 
 - Stable release (end 5/2016)
   - Auto updates
@@ -65,3 +67,4 @@
     - Workflow workers
     - Localization workers
     - Package manager workers
+  - Production
