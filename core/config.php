@@ -7,6 +7,8 @@ if (isset($_SERVER['HTTPS'])) {
 }
 
 define('BASE_PATH', '/');
+define('ADMIN_OUTPUT', 'admin');
+define('PRODUCTION_OUTPUT', 'production');
 define('DEFAULT_OUTPUT', 'default-html');
 define('DEFAULT_FORM_ROW_OUTPUT', 'default-html');
 define('DEFAULT_CORE_PATH', './core/');
@@ -15,7 +17,7 @@ define('DEFAULT_STRINGTABLE_PATH', './core/stringtable/');
 define('DEFAULT_CLASS_PATH', './core/class/');
 define('DEFAULT_MODULE_PATH', './core/modules/');
 define('DEFAULT_LESS_PATH', 'core/source/less/bootstrap.less');
-define('DEFAULT_CSS_PATH', 'style/css/bootstrap.css');
+define('DEFAULT_CSS_PATH', 'assets/admin/style/css/bootstrap.css');
 
 define('DEFAULT_ERROR_FORM_VALIDATION_REQUIRED', 'This field is required.');
 define('DEFAULT_ERROR_FORM_VALIDATION_MINLENGTH', 'Minimal length is %s.');
