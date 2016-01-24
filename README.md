@@ -6,22 +6,22 @@
 
 - Beta release (mid 2/2016)
   - Administration
-    - API user rights
-    - Modules user rights
-    - Nodes user rights
+    - API user rights (done)
+    - Modules user rights (done)
+    - Nodes user rights (done)
     - Page user rights
-    - Projects
-      - Project workflow
-      - Page versioning
+    - Projects (done)
+      - Project workflow (in development)
+      - Page versioning (done)
       - Module versioning
-    - Templates
-    - Template pages
-    - Layouts
+    - Templates (done)
+    - Template pages (in development)
+    - Layouts (in development)
     - Preview
     - Production modules
-    - IDS security
-    - Data input security
-    - Session/Cookie security
+    - IDS security (done)
+    - Data input security (done)
+    - Session/Cookie security (done)
     - CSRF security
     - Basic Home screen gadgets
   - Production
