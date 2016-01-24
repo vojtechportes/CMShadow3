@@ -16,12 +16,44 @@ Class TemplatePages Extends Minimal {
 		T_TemplatePages.`ModifiedAt`";
 	}
 
-	public function getTemplatePages() {
+	public function getTemplatePages($limit = array(0, 20), $order = 'DESC') {
+		global $DB;
 
+		$Stm = $DB->prepare("SELECT
+			{$this->getAttributes()}
+			FROM T_TemplatePages
+			ORDER BY T_TemplatePages.`ID` {$order}
+			LIMIT {$limit[0]}, {$limit[1]}");	
+
+		$Stm->execute();
+
+		return $Stm->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function getTemplatePageCount() {
 
+
+	public function getTemplatePageCount() {
+		global $DB;
+
+		$Stm = $DB->prepare("SELECT
+		COUNT(T_TemplatePages.`ID`) AS TemplatePagesCount
+		FROM T_TemplatePages");
+		$Stm->execute();
+
+		return $Stm->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public function getAllTemplatePages() {
+		global $DB;
+
+		$Stm = $DB->prepare("SELECT
+			{$this->getAttributes()}
+			FROM T_TemplatePages
+			ORDER BY T_TemplatePages.`ID` DESC");	
+
+		$Stm->execute();
+
+		return $Stm->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function getTemplatePageByID() {
