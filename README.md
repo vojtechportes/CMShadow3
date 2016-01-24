@@ -27,6 +27,7 @@
     - Basic Home screen gadgets
     - File Manager
   - Production
+
 - Stable release (late 2/2016)
 - Technical documentation (early 3/2016)
 - User documentation (early 3/2016)
