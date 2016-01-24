@@ -58,7 +58,7 @@ Class Form Extends Minimal {
 	public $styleInput = '';
 	public $type = 'linear';
 	public $templateOutput = DEFAULT_OUTPUT;
-	public $errorMessages = array("required" => DEFAULT_ERROR_FORM_VALIDATION_REQUIRED, "minLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "maxLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "pattern" => DEFAULT_ERROR_FORM_VALIDATION_PATTERN, "equalTo" => DEFAULT_ERROR_FORM_VALIDATION_EQUALTO);
+	public $errorMessages = array("required" => DEFAULT_ERROR_FORM_VALIDATION_REQUIRED, "minLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "maxLength" => DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH, "pattern" => DEFAULT_ERROR_FORM_VALIDATION_PATTERN, "equalTo" => DEFAULT_ERROR_FORM_VALIDATION_EQUALTO, "forgery" => DEFAULT_ERROR_FORM_VALIDATION_FORGERY);
 	public $template = '/form/form';
 	protected $defaultTemplate = '/form/form';	
 	protected $elements = array();
@@ -66,6 +66,8 @@ Class Form Extends Minimal {
 	protected $id;
 	protected $name;
 	protected $filterInput;
+	protected $token;
+	protected $csrfValidateName;
 
 	public function __construct ($name = 'form', $api = false) {
 		global $M;
@@ -80,8 +82,17 @@ Class Form Extends Minimal {
 		$submitted = filter_input($this->filterInput, $this->id.'-form_submitted_element');
 
 		$this->name = $name;
+		$this->csrfValidateName = $this->id.'_token';
 
 		$this->submitted = (($submitted) ? true : false);	
+
+		if ($this->submitted === false) {
+			$token = bin2hex(openssl_random_pseudo_bytes(16));
+			unset($_SESSION['form_token']);
+			$this->token = $_SESSION['form_token'] = $token;
+		} else {
+			$this->token = $_SESSION['form_token'];
+		}
 	}
 
 	public function configure (array $properties = null) {
@@ -246,7 +257,11 @@ Class Form Extends Minimal {
 			}
 		}
 
-		return array("result" => $result, "data" => $formData);
+		if (filter_input($this->filterInput, $this->csrfValidateName, FILTER_SANITIZE_STRING) !== $this->token) {
+			return array("result" => false, "forgery" => true);
+		} else {
+			return array("result" => $result, "data" => $formData, "forgery" => false);
+		}
 	}
 
 	public function output ($return) {
@@ -254,12 +269,14 @@ Class Form Extends Minimal {
 		$view['views'] = array();
 		$view['object'] = $this;
 		$validateName = $this->id.'-form_submitted_element';
+		
 		$this->elements[] = new FormElement_TextHidden(false, $validateName, array("id" => $validateName, "required" => true, "value" => 1, "className" => "FormElement_TextHidden"));		
+		$this->elements[] = new FormElement_TextHidden(false, $this->csrfValidateName, array("id" => $this->csrfValidateName, "required" => true, "value" => $this->token, "className" => "FormElement_TextHidden"));		
 		$showForm = true;
 
 		if ($this->submitted) {
 			$validation = $this->validate();
-			if ($validation["result"]) {
+			if ($validation["result"] || $validation["forgery"] === false) {
 				if ($this->method == "POST") {
 					/*$ch = curl_init();
 
@@ -281,6 +298,13 @@ Class Form Extends Minimal {
 				}
 
 				$showForm = false;	
+
+			} else if ($validation["forgery"] === true) {
+				$Message = new Module();
+				$Message->addModule(new Message(), array("html" => $this->errorMessages["forgery"], "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+				$Message->output();
+
+				$showForm = true;
 			} else {
 
 			}
