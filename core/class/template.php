@@ -12,6 +12,7 @@ Class Template Extends Minimal {
 	public $createdAt;
 	public $modifiedAt;
 	public $page;
+	public $pages;
 	private $status;
 
 	private function getAttributes () {
@@ -238,6 +239,33 @@ Class Template Extends Minimal {
 		return $Stm->rowCount();
 	}
 
+	public function setTemplatePages ($newTemplate = false) {
+		global $DB;
+
+		$Stm = $DB->prepare("INSERT INTO T_TemplatePageRefference
+			(`Page`, `Template`)
+			VALUES
+			(:Page, :Template)");
+
+		if ($newTemplate) {
+			foreach ($this->pages as $page) {
+				$Stm->execute(array(
+					':Page' => $page,
+					':Template' => $this->status
+				));
+			}
+		} else {
+			foreach ($this->pages as $page) {
+				$Stm->execute(array(
+					':Page' => $page,
+					':Template' => $this->id
+				));
+			}
+		}
+
+		return $Stm->rowCount();		
+	}
+
 	public function unsetTemplatePage () {
 		global $DB;
 
@@ -248,6 +276,21 @@ Class Template Extends Minimal {
 		));
 
 		return $Stm->rowCount();
+	}
+
+	public function unsetTemplatePages () {
+		global $DB;
+
+		$Stm = $DB->prepare("DELETE FROM T_TemplatePageRefference
+			WHERE T_TemplatePageRefference.`ID` = :ID");
+
+		foreach ($this->pages as $page) {
+			$Stm->execute(array(
+				':ID' => $page
+			));
+		}
+
+		return $Stm->rowCount();		
 	}
 
 }
