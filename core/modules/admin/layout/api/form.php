@@ -79,7 +79,7 @@ if ($canDisplay) {
 			case 'create':
 				if ($Layout->createLayout()) {
 					$Message = new Module();
-					$Message->addModule(new Message(), array("html" => "{_'forms_layout_form_created', sprintf([\"{$Layout->name}\", \"/admin/layout/edit/{$Layout->getCurrentLayoutID()}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+					$Message->addModule(new Message(), array("html" => "{_'forms_layout_form_created', sprintf([\"{$Layout->name}\", \"/admin/layouts/edit/{$Layout->getCurrentLayoutID()}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 					$Message->output();	
 				} else {
 					$Message = new Module();
