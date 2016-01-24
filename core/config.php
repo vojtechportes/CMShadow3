@@ -14,6 +14,7 @@ define('DEFAULT_FORM_ROW_OUTPUT', 'default-html');
 define('DEFAULT_CORE_PATH', './core/');
 define('DEFAULT_TEMPLATE_PATH', './core/templates/');
 define('DEFAULT_STRINGTABLE_PATH', './core/stringtable/');
+define('DEFAULT_ASSETS_PATH', './assets/');
 define('DEFAULT_CLASS_PATH', './core/class/');
 define('DEFAULT_MODULE_PATH', './core/modules/');
 define('DEFAULT_LESS_PATH', 'core/source/less/bootstrap.less');
