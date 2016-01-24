@@ -25,6 +25,7 @@ define('DEFAULT_ERROR_FORM_VALIDATION_MINLENGTH', 'Minimal length is %s.');
 define('DEFAULT_ERROR_FORM_VALIDATION_MAXLENGTH', 'Maximal length is %s.');
 define('DEFAULT_ERROR_FORM_VALIDATION_PATTERN', 'This field has to match pattern "%s".');
 define('DEFAULT_ERROR_FORM_VALIDATION_EQUALTO', 'This fields value has to be equal to field "%s".');
+define('DEFAULT_ERROR_FORM_VALIDATION_FORGERY', 'Sending this form was considered as insecure. If you are sure this is an error, please contact system administrator.');
 define('DEFUALT_ERROR_DB_CONNECTION', 'Database conection was not established.');
 
 define('DEFAULT_LOGIN_ATTEMPS', 9);
