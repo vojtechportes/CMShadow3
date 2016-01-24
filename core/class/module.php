@@ -57,7 +57,7 @@ Class Module Extends Minimal {
 			if (array_key_exists("OutputStyle", $this->output))
 				$this->templateOutput = $this->output["OutputStyle"];
 
-			$path = DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template;
+			$path = DEFAULT_TEMPLATE_PATH.ADMIN_OUTPUT.'/'.$this->templateOutput.$this->template;
 
 			ob_start();
 			if (file_exists($path.'.tpl')) {
