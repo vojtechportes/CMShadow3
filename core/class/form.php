@@ -301,9 +301,9 @@ Class Form Extends Minimal {
 						$type = $this->type;
 					}
 					ob_start();
-					$template = DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template.'.'.$type;
+					$template = DEFAULT_TEMPLATE_PATH.ADMIN_OUTPUT.'/'.$this->templateOutput.$this->template.'.'.$type;
 					if (!file_exists($template)) {
-						$template = DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->defaultTemplate.'.'.$type;
+						$template = DEFAULT_TEMPLATE_PATH.ADMIN_OUTPUT.'/'.$this->templateOutput.$this->defaultTemplate.'.'.$type;
 					}
 					parent::load($template, $output);
 				}
@@ -311,7 +311,7 @@ Class Form Extends Minimal {
 			}
 
 			ob_start();
-			parent::load(DEFAULT_TEMPLATE_PATH.$this->templateOutput.$this->template, $view + array('moduleReturn' => $return));
+			parent::load(DEFAULT_TEMPLATE_PATH.ADMIN_OUTPUT.'/'.$this->templateOutput.$this->template, $view + array('moduleReturn' => $return));
 			$html = ob_get_contents(); ob_end_clean();
 			echo $html;
 		}
