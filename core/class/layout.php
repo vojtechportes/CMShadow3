@@ -208,7 +208,6 @@ Class Layout Extends Minimal {
 		));
 
 		return $Stm->rowCount();
-
 	}
 
 	public function createLayoutSlot () {
