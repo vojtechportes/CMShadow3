@@ -1,0 +1,1 @@
+<div class="breadcrumbs" data-api-load='{"command": "loadModule", "message": false, "module": "admin/page/breadcrumbs", "arguments": {"path": "<?php echo $return["path"]; ?>"}}'></div>

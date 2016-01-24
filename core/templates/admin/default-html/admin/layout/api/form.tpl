@@ -1,0 +1,1 @@
+<div class="formLoader layoutForm" data-api-load='{"command": "loadModule", "message": false, "module": "admin/layout/api/form", "arguments": <?php echo json_encode($return); ?>}'></div>

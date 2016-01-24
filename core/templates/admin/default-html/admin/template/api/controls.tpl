@@ -1,0 +1,1 @@
+<div class="templateControls" data-api-load='{"command": "loadModule", "message": false, "module": "admin/template/controls"}'></div>
