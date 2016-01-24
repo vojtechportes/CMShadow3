@@ -11,6 +11,7 @@ Class Template Extends Minimal {
 	public $user;
 	public $createdAt;
 	public $modifiedAt;
+	public $page;
 	private $status;
 
 	private function getAttributes () {
@@ -95,8 +96,14 @@ Class Template Extends Minimal {
 			}
 		}
 
+		unset($data);
+
 		return $Template;		
 	}
+
+	public function getCurrentTemplateID () {
+		return $this->status;
+	}	
 
 	public function getTemplates ($limit = array(0, 20), $order = 'DESC') {
 		global $DB, $M;
@@ -130,7 +137,7 @@ Class Template Extends Minimal {
 		return $Stm->fetch(PDO::FETCH_ASSOC);		
 	}
 
-	public function getLayoutByID ($id) {
+	public function getTemplateByID ($id) {
 		global $DB;
 
 		$Stm = $DB->prepare("SELECT
@@ -151,6 +158,98 @@ Class Template Extends Minimal {
 		$Data = $Stm->fetchAll(PDO::FETCH_ASSOC);
 		return $this->extractTemplate(array($Data));		
 	}
+
+	public function createTemplate () {
+		global $DB;
+		$Stm = $DB->prepare("INSERT INTO T_Templates
+			(`Name`, `Layout`, `OutputStyle`, `OutputType`, `Style`, `User`)
+			VALUES
+			(:Name, :Layout, :OutputStyle, :OutputType, :Style, :User)");
+		$Stm->execute(array(
+			':Name' => $this->name,
+			':Layout' => $this->layout,
+			':OutputStyle' => $this->outputStyle,
+			':OutputType' => $this->outputType,
+			':Style' => $this->style,
+			':User' => $this->user
+		));
+
+		$this->status = $DB->lastInsertId();
+		return $Stm->rowCount();
+	}
+
+	public function updateTemplate () {
+		global $DB;
+
+		$Stm = $DB->prepare("UPDATE T_Templates SET
+			`Name` = :Name,
+			`Layout` = :Layout,
+			`OutputStyle` = :OutputStyle,
+			`OutputType` = :OutputType,
+			`Style` = :Style
+			WHERE T_Templates.`ID` = :ID");
+		$Stm->execute(array(
+			':Name' => $this->name,
+			':Layout' => $this->layout,
+			':OutputStyle' => $this->outputStyle,
+			':OutputType' => $this->outputType,
+			':Style' => $this->style,
+			':ID' => $this->id
+		));
+
+		return $Stm->rowCount();
+	}
+
+	public function cloneTemplate () {
+
+	}
+
+	public function deleteTemplate () {
+		global $DB;
+
+		$Stm = $DB->prepare("DELETE FROM T_Templates WHERE T_Templates.`ID` = :ID");
+		$Stm->execute(array(
+			':ID' => $this->id
+		));
+
+		return $Stm->rowCount();
+	}
+
+	public function setTemplatePage ($newTemplate = false) {
+		global $DB;
+
+		$Stm = $DB->prepare("INSERT INTO T_TemplatePageRefference
+			(`Page`, `Template`)
+			VALUES
+			(:Page, :Template)");
+
+		if ($newTemplate) {
+			$Stm->execute(array(
+				':Page' => $this->page,
+				':Template' => $this->status
+			));
+		} else {
+			$Stm->execute(array(
+				':Page' => $this->page,
+				':Template' => $this->id
+			));
+		}
+
+		return $Stm->rowCount();
+	}
+
+	public function unsetTemplatePage () {
+		global $DB;
+
+		$Stm = $DB->prepare("DELETE FROM T_TemplatePageRefference
+			WHERE T_TemplatePageRefference.`ID` = :ID");
+		$Stm->execute(array(
+			':ID' => $this->id
+		));
+
+		return $Stm->rowCount();
+	}
+
 }
 
 ?>
