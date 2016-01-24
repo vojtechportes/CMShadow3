@@ -86,6 +86,17 @@ Class Layout Extends Minimal {
 		return $Stm->fetchAll(PDO::FETCH_ASSOC);
 	}	
 
+	public function getAllLayouts () {
+		global $DB;
+
+		$Stm = $DB->prepare("SELECT
+			{$this->getAttributes()}
+			FROM T_Layouts
+			ORDER BY T_Layouts.`ID` DESC");
+		$Stm->execute();
+		return $Stm->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	public function getLayoutCount ($filter = false) {
 		global $DB;
 		$Stm = $DB->prepare("SELECT
