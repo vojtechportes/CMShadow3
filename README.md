@@ -1,4 +1,4 @@
-# cmshadow3
+# CMShadow<sup>3</sup>
 
 ## Roadmap
 
