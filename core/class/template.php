@@ -139,7 +139,7 @@ Class Template Extends Minimal {
 	}
 
 	public function getTemplateByID ($id) {
-		global $DB;
+		global $DB, $M;
 
 		$Stm = $DB->prepare("SELECT
 			{$this->getAttributes()},
@@ -157,11 +157,12 @@ Class Template Extends Minimal {
 		));	
 
 		$Data = $Stm->fetchAll(PDO::FETCH_ASSOC);
-		return $this->extractTemplate(array($Data));		
+		return $this->extractTemplate($Data)[$id];		
 	}
 
 	public function createTemplate () {
 		global $DB;
+
 		$Stm = $DB->prepare("INSERT INTO T_Templates
 			(`Name`, `Layout`, `OutputStyle`, `OutputType`, `Style`, `User`)
 			VALUES
@@ -180,7 +181,7 @@ Class Template Extends Minimal {
 	}
 
 	public function updateTemplate () {
-		global $DB;
+		global $DB, $M;
 
 		$Stm = $DB->prepare("UPDATE T_Templates SET
 			`Name` = :Name,
@@ -273,6 +274,18 @@ Class Template Extends Minimal {
 			WHERE T_TemplatePageRefference.`ID` = :ID");
 		$Stm->execute(array(
 			':ID' => $this->id
+		));
+
+		return $Stm->rowCount();
+	}
+
+	public function unsetTemplatePagesByTemplate () {
+		global $DB;
+
+		$Stm = $DB->prepare("DELETE FROM T_TemplatePageRefference
+			WHERE T_TemplatePageRefference.`Template` = :Template");
+		$Stm->execute(array(
+			':Template' => $this->id
 		));
 
 		return $Stm->rowCount();
