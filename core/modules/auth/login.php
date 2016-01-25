@@ -38,12 +38,12 @@ $form->addElement(new FormElement_Text("{_'forms_login_user_name'}", "username",
 $form->addElement(new FormElement_Password("{_'forms_login_password'}", "password", array("required" => true)));
 $form->addElement(new FormElement_Submit(false, "{_'forms_login_submit'}", array("value" => "Submit", "classInput" => "btn btn-block btn-primary")));
 
-$Output = $form->output();
+$Output = $form->output($return);
 
 if ($Output) {
 	$User = new User();
-	$User->userName = filter_input(INPUT_POST, "username");
-	$User->password = filter_input(INPUT_POST, "password");
+	$User->userName = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+	$User->password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
 	$Result = $User->setUserSession();
 
 	if ($Result === true) {

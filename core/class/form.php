@@ -79,18 +79,18 @@ Class Form Extends Minimal {
 			$this->filterInput = INPUT_GET;			
 		}
 
-		$submitted = filter_input($this->filterInput, $this->id.'-form_submitted_element');
+		$submitted = (bool) filter_input($this->filterInput, $this->id.'-form_submitted_element', FILTER_SANITIZE_STRING);
 
 		$this->name = $name;
 		$this->csrfValidateName = $this->id.'_token';
 
 		$this->submitted = (($submitted) ? true : false);	
 
-		if ($this->submitted === false) {
+		if ($this->submitted === false && !isset($_SESSION['form_token'])) {
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			unset($_SESSION['form_token']);
-			$this->token = $_SESSION['form_token'] = $token;
-		} else {
+			$_SESSION['form_token'] = $token;
+			$this->token = $_SESSION['form_token'];
+		} else {		
 			$this->token = $_SESSION['form_token'];
 		}
 	}
@@ -257,6 +257,8 @@ Class Form Extends Minimal {
 			}
 		}
 
+		$csrf = filter_input($this->filterInput, $this->csrfValidateName, FILTER_SANITIZE_STRING);
+
 		if (filter_input($this->filterInput, $this->csrfValidateName, FILTER_SANITIZE_STRING) !== $this->token) {
 			return array("result" => false, "forgery" => true);
 		} else {
@@ -265,6 +267,8 @@ Class Form Extends Minimal {
 	}
 
 	public function output ($return) {
+		global $M;
+
 		$view = array();
 		$view['views'] = array();
 		$view['object'] = $this;
@@ -291,10 +295,11 @@ Class Form Extends Minimal {
 
 					var_dump(CURLOPT_RETURNTRANSFER);*/
 
+					unset($_SESSION['form_token']);
 					return true;
 				} else if ($this->method == "GET") {
 					//header("Location: ".$this->action."?".http_build_query($validation["data"]));	*/	
-
+					unset($_SESSION['form_token']);
 				}
 
 				$showForm = false;	
@@ -304,7 +309,8 @@ Class Form Extends Minimal {
 				$Message->addModule(new Message(), array("html" => $this->errorMessages["forgery"], "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 				$Message->output();
 
-				$showForm = true;
+				$showForm = false;
+				unset($_SESSION['form_token']);
 			} else {
 
 			}
