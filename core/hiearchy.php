@@ -128,11 +128,25 @@ $Hiearchy = array(
 					)
 				)
 			),
+			"Scripts" => array(
+				array("assets/admin/style/script/application-modules/templatelist.js")
+			),
 			"Content" => array(
 				"main" => array(
 					array("module" => "admin/template/api/controls.loader"),
 					array("module" => "admin/template/api/form.loader", "class" => "collapse template-form-element", "dependencies" => array("admin/template/list")),
 					array("module" => "admin/template/api/list.loader")
+				)
+			),
+
+			"/admin/templates/edit/*/" => array(
+				"Config" => array(
+					"Title" => "{_'pages_template_edit_title'}"
+				),
+				"Content" => array(
+					"main" => array(
+						array("module" => "admin/template/api/form.loader", "class" => "collapse template-form-element", "type" => "edit", "message" => 0)
+					)
 				)
 			)
 		),
