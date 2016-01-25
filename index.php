@@ -37,7 +37,9 @@ spl_autoload_register(function ($class_name) {
 	}
 });
 
-require_once '/core/phpids/IDS.php';
+/* IDS not working properly, need to be replaced by EXPOSE PHP IDS */
+
+//require_once '/core/phpids/IDS.php';
 
 if (!session_id()) {
 	session_start();
