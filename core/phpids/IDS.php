@@ -18,8 +18,8 @@
 
 use IDS\Init;
 use IDS\Monitor;
-use IDS\Log\CompositeLogger;
-use IDS\Log\FileLogger;
+/*use IDS\Log\CompositeLogger;
+use IDS\Log\FileLogger;*/
 
 if (!session_id()) {
     session_start();
@@ -79,14 +79,17 @@ try {
     * a __toString method.
     */
     if (!$result->isEmpty()) {
-        //echo $result;
+        echo $result;
 
         /*
         * The following steps are optional to log the results
         */
-        $compositeLog = new CompositeLogger();
 
-        $compositeLog->addLogger(FileLogger::getInstance($init));
+        //require_once './core/phpids/Log/File.php';
+        //require_once './core/phpids/Log/Composite.php';
+
+        //$compositeLog = new IDS_Log_Composite();
+        //$compositeLog->addLogger(IDS_Log_File::getInstance($init));
 
 
         /*
@@ -102,7 +105,7 @@ try {
             IDS\Log\DatabaseLogger::getInstance($init)
         );
         */
-        $compositeLog->execute($result);
+        //$compositeLog->execute($result);
     } else {
 
     }
