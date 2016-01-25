@@ -20,8 +20,8 @@
 		<td><?php echo $template['Template']['CreatedAt'] ?></td>
 		<td><?php echo $template['Template']['ModifiedAt'] ?></td>
 		<td class="text-right">
-        	<a href="#" class="nolink" data-toggle="modal" data-target="#layoutDelete" data-arguments='{"templateId": "<?php echo $layout['ID']; ?>", "templateName": "<?php echo $layout['Name']; ?>"}' class="nolink" data-delete title="{_'templates_template_delete'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-cross"></span></a>
-        	<a href="<?php echo ADMIN_PATH ?>templates/edit/<?php echo $layout['ID'] ?>" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a>
+        	<a href="#" class="nolink" data-toggle="modal" data-target="#layoutDelete" data-arguments='{"templateId": "<?php echo $template['Template']['ID']; ?>", "templateName": "<?php echo $template['Template']['Name']; ?>"}' class="nolink" data-delete title="{_'templates_template_delete'}"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-cross"></span></a>
+        	<a href="<?php echo ADMIN_PATH ?>templates/edit/<?php echo $template['Template']['ID'] ?>" class="nolink"><span class="glyphicon-alt glyphicon-larger glyphicon-alt-in"></span></a>
 		</td>
     </tr>
     <?php
