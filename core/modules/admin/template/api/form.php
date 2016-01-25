@@ -26,7 +26,7 @@ if (array_key_exists('type', $return)) {
 		$id = $M->extractID($return['Path']);
 
 		if ($id) {
-			$Template = new Layout();
+			$Template = new Template();
 			$Template = $Template->getTemplateByID($id);
 
 			if (!$Template)
@@ -52,7 +52,7 @@ if ($canDisplay) {
 	$Layouts = $Layout->getAllLayouts();
 
 	foreach ($Layouts as $layout) {
-		$_Layouts[$layout['ID']] = $layout['Name'];
+		$_Layouts[$layout['LayoutID']] = $layout['LayoutName'];
 	};
 
 	if (count($_Layouts) === 0) {
@@ -121,10 +121,20 @@ if ($canDisplay) {
 			$form->addElement(new FormElement_Select("{_'forms_template_output_style'}", "output_style", array("required" => true, "options" => $OutputStyle)));
 			$form->addElement(new FormElement_Select("{_'forms_template_output_type'}", "output_type", array("required" => true, "options" => $OutputType)));
 			$form->addElement(new FormElement_Select("{_'forms_template_style'}", "style", array("required" => true, "options" => $Styles)));
-			$form->addElement(new FormElement_Select("{_'forms_template_template_pages'}", "template_pages", array("required" => true, "options" => $Pages, "multiple" => true)));
+			$form->addElement(new FormElement_Select("{_'forms_template_template_pages'}", "template_pages[]", array("required" => false, "options" => $Pages, "multiple" => true)));
 			$form->addElement(new FormElement_Submit(false, "submit_template", array("value" => "{_'forms_template_submit'}", "classInput" => "btn btn-block btn-primary")));
 		} else {
-			/**/
+			$PagesSelected = array();
+			foreach ($Template['TemplatePages'] as $tplpage) {
+				$PagesSelected[] = $tplpage['ID'];
+			}
+
+			$form->addElement(new FormElement_Text("{_'forms_template_name'}", "name", array("required" => true, "value" => $Template['Template']['Name'])));
+			$form->addElement(new FormElement_Select("{_'forms_template_layout'}", "layout", array("required" => true, "options" => $_Layouts, "selected" => $Template['Template']['Layout'])));
+			$form->addElement(new FormElement_Select("{_'forms_template_output_style'}", "output_style", array("required" => true, "options" => $OutputStyle, "selected" => $Template['Template']['OutputStyle'])));
+			$form->addElement(new FormElement_Select("{_'forms_template_output_type'}", "output_type", array("required" => true, "options" => $OutputType, "selected" => $Template['Template']['OutputType'])));
+			$form->addElement(new FormElement_Select("{_'forms_template_style'}", "style", array("required" => true, "options" => $Styles, "selected" => $Template['Template']['Style'])));
+			$form->addElement(new FormElement_Select("{_'forms_template_template_pages'}", "template_pages[]", array("required" => false, "options" => $Pages, "multiple" => true, "selected" => $PagesSelected)));
 			$form->addElement(new FormElement_Submit(false, "submit_template", array("value" => "{_'forms_template_submit_edit'}", "classInput" => "btn btn-block btn-primary")));			
 		}
 
@@ -143,14 +153,16 @@ if ($canDisplay) {
 			$Template->outputStyle = filter_input(INPUT_POST, "output_style", FILTER_SANITIZE_STRING);
 			$Template->outputType = filter_input(INPUT_POST, "output_type", FILTER_SANITIZE_STRING);
 			$Template->style = filter_input(INPUT_POST, "style", FILTER_SANITIZE_STRING);
-			$Template->pages = filter_input(INPUT_POST, "template_pages", FILTER_SANITIZE_STRING);
+			$Template->pages = filter_input(INPUT_POST, "template_pages", FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
 
 			if ($type !== 'edit')
 				$Template->user = User::getUserID();
 
 			switch ($type) {
 				case 'create':
-					if ($Template->createTemplate() && $Template->setTemplatePages(true)) {
+					if ($Template->createTemplate()) {
+						$Template->setTemplatePages(true);
+
 						$Message = new Module();
 						$Message->addModule(new Message(), array("html" => "{_'forms_template_form_created', sprintf([\"{$Template->name}\", \"/admin/templates/edit/{$Template->getCurrentTemplateID()}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
 						$Message->output();	
@@ -161,15 +173,13 @@ if ($canDisplay) {
 					}
 					break;
 				case 'edit':
-					if ($Layout->updateLayout()) {
-						$Message = new Module();
-						$Message->addModule(new Message(), array("html" => "{_'forms_template_form_updated', sprintf([\"{$Template->name}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
-						$Message->output();
-					} else {
-						$Message = new Module();
-						$Message->addModule(new Message(), array("html" => "{_'forms_template_form_update_error', sprintf([\"{$Template->name}\", \"#\"])}", "class" => "alert-danger", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
-						$Message->output();	
-					}
+					$Template->unsetTemplatePagesByTemplate();
+					$Template->updateTemplate();
+					$Template->setTemplatePages();
+
+					$Message = new Module();
+					$Message->addModule(new Message(), array("html" => "{_'forms_template_form_updated', sprintf([\"{$Template->name}\", \"#\"])}", "class" => "alert-success", "OutputStyle" => $return["OutputStyle"], "OutputType" => $return["OutputType"], "Header" => 200));
+					$Message->output();
 					break;
 			}
 		}
